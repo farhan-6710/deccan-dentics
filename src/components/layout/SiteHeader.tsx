@@ -6,7 +6,7 @@ import { usePathname } from "next/navigation";
 import { CalendarDays, Menu, X } from "lucide-react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { ThemeToggle } from "@/components/ThemeToggle";
+import { ThemeToggle } from "@/components/layout/ThemeToggle";
 import { NAV_LINKS } from "@/constants/nav";
 import { cn } from "cn";
 
@@ -28,7 +28,7 @@ export function SiteHeader() {
           />
         </Link>
 
-        <nav aria-label="Primary" className="hidden items-center gap-7 lg:flex">
+        <nav aria-label="Primary" className="hidden items-center gap-6 lg:flex xl:gap-7">
           {NAV_LINKS.map((link) => {
             const active =
               link.href === "/"

@@ -46,25 +46,33 @@ Follow consistent naming throughout the project.
 
 ## 4. Architecture & Folder Structure
 
-Use clean architecture pragmatically. Organize code by responsibility under `src/`:
+Organize under `src/` by responsibility. Feature UI is grouped by section:
 
-- `app/` — Next.js App Router pages, layouts, and route handlers.
-- `components/` — Reusable UI components, organized by feature where appropriate.
-- `components/ui/` — shadcn primitives only.
-- `hooks/` — Reusable custom React hooks.
-- `services/` — API communication and external service operations.
-- `utils/` — Reusable helper functions and pure utilities.
-- `constants/` — Shared constants and fixed definitions.
-- `config/` — Centralized application and environment configuration, when environment config exists.
-- `types/` — Shared TypeScript types and interfaces.
-- `lib/` — Reserved for the `cn` re-export. Do not add features here.
+| Folder | What belongs there |
+|---|---|
+| `app/` | Routes, layouts, route handlers |
+| `components/home/` | Hero section and hero-only children |
+| `components/services/` | Services section |
+| `components/why-choose-us/` | Why choose us section |
+| `components/about/` | About section |
+| `components/reviews/` | Reviews section + carousel |
+| `components/branches/` | Branches section + picker |
+| `components/faq/` | FAQ section |
+| `components/contact/` | Contact / enquiry section |
+| `components/layout/` | Header, footer, PageShell, theme helpers |
+| `components/motion/` | Framer Motion helpers (`FadeIn`, `HeroMotion`) |
+| `components/ui/` | shadcn primitives only |
+| `hooks/` | Shared React hooks |
+| `services/` | API / external calls (when added) |
+| `utils/` | Pure helpers |
+| `constants/` | Shared constants |
+| `types/` | Shared types |
+| `lib/` | `cn` re-export only — no features |
+| `data/` | Clinic content modules |
 
-Additional folders are acceptable when they provide a clear organizational benefit.
-
-- Keep UI rendering, business logic, data fetching, and shared utilities separated where appropriate.
-- Keep feature-specific code close to the feature; move genuinely shared code to common folders.
-- Prefer the simplest architecture that satisfies current requirements.
-- Do not introduce unnecessary design patterns, dependencies, or layers.
+- Keep a section and its private children in the same feature folder.
+- Move code to `layout/`, `motion/`, or `ui/` only when it is genuinely shared.
+- Prefer the simplest structure that stays easy to find. No extra layers for their own sake.
 
 ## 5. Centralized Configuration & Consistency
 

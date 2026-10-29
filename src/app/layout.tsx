@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Caveat, Libre_Baskerville, Merriweather } from "next/font/google";
-import { ThemeScript } from "@/components/ThemeScript";
+import { ThemeScript } from "@/components/layout/ThemeScript";
 import "./globals.css";
 
 const libreBaskerville = Libre_Baskerville({

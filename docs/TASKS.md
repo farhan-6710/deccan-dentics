@@ -28,6 +28,8 @@ Mark an item done only after it is in the repo and checked in the browser or by 
 - [x] Fixed header with desktop nav + mobile menu.
 - [x] Hero with clinic tone, CTAs, features, portrait, leaves, trust badge.
 - [x] Services section (tabbed) from live-site treatments.
+- [x] Why choose us section (live-site differentiators + `why-choose-us-img`).
+- [x] Branches section (interactive picker for 5 Hyderabad clinics).
 - [x] About section with 10+ years / 25k+ / 5 branches / emergency stats.
 - [x] Reviews Embla carousel (1 / 2 / 3 visible; focused center scale).
 - [x] FAQ accordion.
@@ -35,6 +37,7 @@ Mark an item done only after it is in the repo and checked in the browser or by 
 - [x] Professional footer.
 - [x] Routes: `/`, `/about`, `/services`, `/reviews`, `/faq`, `/contact`.
 - [x] Scroll / entrance animations via Framer Motion.
+- [x] Components grouped by feature folder (`home`, `services`, `about`, `reviews`, `faq`, `contact`, `layout`).
 - [ ] Replace placeholder reviews with clinic-approved quotes.
 - [ ] Confirm patient count line on trust badge (site says 25k+).
 

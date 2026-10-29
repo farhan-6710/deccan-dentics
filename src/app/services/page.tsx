@@ -1,11 +1,5 @@
-import { PageShell } from "@/components/PageShell";
-import { ServicesSection } from "@/components/ServicesSection";
-
-export const metadata = {
-  title: "Services | Deccan Dentics",
-  description:
-    "Dental implants, cosmetic care, root canals, whitening, crowns, and kids dentistry.",
-};
+import { PageShell } from "@/components/layout/PageShell";
+import { ServicesSection } from "@/components/services/ServicesSection";
 
 export default function ServicesPage() {
   return (

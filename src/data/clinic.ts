@@ -21,29 +21,49 @@ export const CLINIC = {
   },
   branches: [
     {
+      id: "kondapur",
       name: "Kondapur",
+      clinicName: "Deccan Dentics Kondapur",
       address:
         "Flat No. 304, 4th floor, Ace Monte Carlo apartments, junction, beside TCS, Land Mark Residency, Kondapur, Kothaguda, Hyderabad, Telangana 500084",
+      mapLink:
+        "https://www.google.com/maps/search/?api=1&query=Deccan+Dentics+Kondapur+Hyderabad",
     },
     {
+      id: "manikonda",
       name: "Manikonda",
+      clinicName: "Deccan Dentics Manikonda",
       address:
         "1-3-13/1, Opposite Hallmark Tranquil, Puppalaguda – Manikonda Main Rd, near Sloka The School, Hyderabad, Telangana 500089",
+      mapLink:
+        "https://www.google.com/maps/search/?api=1&query=Deccan+Dentics+Manikonda+Hyderabad",
     },
     {
+      id: "malakpet",
       name: "Malakpet",
+      clinicName: "Deccan Dentics Malakpet",
       address:
         "First floor, Health front speciality clinics, Azampura, New Malakpet, Hyderabad, Telangana 500024",
+      mapLink:
+        "https://www.google.com/maps/search/?api=1&query=Deccan+Dentics+Malakpet+Hyderabad",
     },
     {
+      id: "toli-chowki",
       name: "Toli Chowki",
+      clinicName: "Deccan Dentics Toli Chowki",
       address:
         "Paramount Heights, Street Number 2, opp. Gate, Paramount Hills, Toli Chowki, Hyderabad, Telangana 500008",
+      mapLink:
+        "https://www.google.com/maps/search/?api=1&query=Deccan+Dentics+Toli+Chowki+Hyderabad",
     },
     {
-      name: "Rajendra Nagar (Videnta)",
+      id: "rajendra-nagar",
+      name: "Rajendra Nagar",
+      clinicName: "Videnta Dental Clinic",
       address:
         "Pillar no 179, Videnta dental clinic near, Naidu Colony, Rajendra Nagar, Upperpally, Hyderabad, Telangana 500048",
+      mapLink:
+        "https://www.google.com/maps/search/?api=1&query=Videnta+Dental+Clinic+Rajendra+Nagar+Hyderabad",
     },
   ],
   about: {

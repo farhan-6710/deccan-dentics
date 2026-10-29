@@ -4,8 +4,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { CalendarDays, Play } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { HeroFeatures } from "@/components/HeroFeatures";
-import { HeroTrustBadge } from "@/components/HeroTrustBadge";
+import { HeroFeatures } from "@/components/home/HeroFeatures";
+import { HeroTrustBadge } from "@/components/home/HeroTrustBadge";
 import { HeroMotion } from "@/components/motion/FadeIn";
 
 export function HeroSection() {

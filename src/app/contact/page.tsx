@@ -1,15 +1,11 @@
-import { ContactSection } from "@/components/ContactSection";
-import { PageShell } from "@/components/PageShell";
-
-export const metadata = {
-  title: "Contact | Deccan Dentics",
-  description:
-    "Contact Deccan Dentics Manikonda — phone 079956 86661 for enquiries.",
-};
+import { BranchesSection } from "@/components/branches/BranchesSection";
+import { ContactSection } from "@/components/contact/ContactSection";
+import { PageShell } from "@/components/layout/PageShell";
 
 export default function ContactPage() {
   return (
     <PageShell>
+      <BranchesSection />
       <ContactSection />
     </PageShell>
   );

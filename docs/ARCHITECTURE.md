@@ -1,89 +1,103 @@
 # Architecture — Deccan Dentics
 
-The site is a Next.js App Router application. Pages are mostly server-rendered. Client islands handle theme, menus, carousels, accordions, service tabs, and the enquiry form.
+Next.js App Router marketing site. Most pages are server-rendered. Client islands handle theme, menus, carousels, accordions, service tabs, the enquiry form, and motion.
 
-There is no database and no authentication in the current build.
+No database or auth in the current build.
 
 ## 1. Stack
 
 | Piece | Choice |
 |---|---|
 | Runtime | Bun 1.4 |
-| Framework | Next.js 16.4 App Router, React 19 |
-| Language | TypeScript, `strict` |
-| Styling | Tailwind CSS 4, tokens in `src/app/globals.css` |
-| UI | shadcn `base-nova` on Base UI |
+| Framework | Next.js 16 App Router, React 19 |
+| Language | TypeScript (`strict`) |
+| Styling | Tailwind CSS 4 — tokens in `src/app/globals.css` |
+| UI | shadcn `base-nova` (Base UI) |
 | Icons | lucide-react |
 | Motion | Framer Motion (`FadeIn`, `HeroMotion`) |
-| Carousel | Embla Carousel React + Autoplay |
-| Fonts | `next/font`: Libre Baskerville, Merriweather, Caveat |
-| Path alias | `@/*` → `src/*` |
+| Carousel | Embla + Autoplay |
+| Fonts | Libre Baskerville, Merriweather, Caveat via `next/font` |
+| Alias | `@/*` → `src/*` |
 
-`next.config.ts` enables `cacheComponents`, `partialPrefetching`, and `experimental.agentFeedback`. Dev uses `next dev --webpack` with `@tailwindcss/postcss`.
+Dev uses `next dev --webpack` with `@tailwindcss/postcss`.
 
 ## 2. Runtime shape
 
 ```text
 Browser
-  └─ Next.js server
-       ├─ Server components: layout, pages, About, Reviews shell, FAQ, Footer
-       ├─ Client islands: header, theme, services tabs, Embla reviews, contact form, motion
-       └─ Route handlers: none yet
+  └─ Next.js
+       ├─ Server: layout, pages, most section shells, footer
+       ├─ Client: header, theme, services tabs, Embla, contact form, motion
+       └─ API routes: none yet
 ```
 
-Clinic facts live in `src/data/` (`clinic.ts`, `services.ts`, `faqs.ts`, `reviews.js`). Navigation is in `src/constants/nav.ts`.
+Clinic facts live in `src/data/`. Nav links live in `src/constants/nav.ts`.
 
 ## 3. Folder map
 
 ```text
-src/app/                 routes (/, /about, /services, /reviews, /faq, /contact)
-src/components/          feature sections + SiteHeader / SiteFooter / PageShell
-src/components/ui/       shadcn primitives
-src/components/motion/   Framer Motion helpers
-src/constants/           nav links
-src/data/                clinic content and reviews
-src/lib/                 cn re-export
-public/images/           logo, hero, doctor, leaves, services art
-docs/                    product and engineering docs
+src/app/                     Routes: /, /about, /services, /reviews, /faq, /contact
+src/components/
+  home/                      Hero + hero-only pieces (features, trust badge)
+  services/                  Services section
+  why-choose-us/             Why choose us + reason rows
+  about/                     About section
+  reviews/                   Reviews section + Embla carousel
+  branches/                  Branches section + interactive picker
+  faq/                       FAQ section
+  contact/                   Contact / enquiry section
+  layout/                    SiteHeader, SiteFooter, PageShell, theme helpers
+  motion/                    FadeIn, HeroMotion
+  ui/                        shadcn primitives only
+src/constants/               Shared constants (nav)
+src/data/                    Clinic content (clinic, services, faqs, reviews, why-choose-us)
+src/lib/                     cn re-export only
+public/images/               Brand and section images
+docs/                        Product + engineering docs
 ```
+
+**Rule of thumb:** put a section and its private children in the matching feature folder. Shared chrome goes in `layout/`. Shared motion helpers go in `motion/`. Never put feature UI in `ui/`.
 
 ## 4. Routes
 
 | Route | Content |
 |---|---|
-| `/` | Full marketing page: Hero → Services → About → Reviews → FAQ → Contact |
-| `/about` | Header + About + Footer |
-| `/services` | Header + Services + Footer |
-| `/reviews` | Header + Reviews + Footer |
-| `/faq` | Header + FAQ + Footer |
-| `/contact` | Header + Contact enquiry + Footer |
+| `/` | Hero → Services → Why us → About → Reviews → Branches → FAQ → Contact |
+| `/about` | About + Why choose us |
+| `/services` | Services only |
+| `/reviews` | Reviews only |
+| `/faq` | FAQ only |
+| `/contact` | Branches + Contact |
 
-`PageShell` wraps every page with fixed `SiteHeader`, main padding for the header offset, and `SiteFooter`.
+Every page uses `PageShell` (`layout/PageShell.tsx`): fixed header, main offset, footer.
 
 ## 5. Key components
 
-| Component | Role |
+| Path | Role |
 |---|---|
-| `SiteHeader` | Fixed top nav, mobile menu, theme, Book Appointment → `/contact` |
-| `SiteFooter` | Brand, explore links, Manikonda visit details, hours |
-| `HeroSection` | Landing hero with staggered Framer entrance |
-| `ServicesSection` | Tabbed services from `src/data/services.ts` |
-| `AboutSection` | Clinic story + stats from `dddental.in` |
-| `ReviewsCarousel` | Embla: 1 / 2 / 3 slides visible; selected slide scaled |
-| `FaqSection` | Accordion from `src/data/faqs.ts` |
-| `ContactSection` | Enquiry form (not booking), map embed, clinic details |
-| `FadeIn` / `HeroMotion` | Scroll-in and hero entrance motion |
+| `layout/SiteHeader` | Fixed nav, mobile menu, theme, Book → `/contact` |
+| `layout/SiteFooter` | Brand, explore links, visit details, hours |
+| `home/HeroSection` | Landing hero + staggered entrance |
+| `services/ServicesSection` | Tabbed treatments from `data/services` |
+| `why-choose-us/WhyChooseUsSection` | Six differentiators + tooth art |
+| `about/AboutSection` | Clinic story + stats |
+| `reviews/ReviewsCarousel` | Embla; 1 / 2 / 3 slides; focused scale |
+| `branches/BranchesSection` | Interactive Hyderabad branch picker |
+| `faq/FaqSection` | Interactive FAQ picker from `data/faqs` |
+| `contact/ContactSection` | Enquiry form, map, clinic details rail |
+| `motion/FadeIn` | Scroll-in when section is in view |
+| `motion/HeroMotion` | Load-time hero entrance only |
 
 ## 6. Theme
 
-`ThemeScript` runs before paint to apply `dark` from `localStorage` or `prefers-color-scheme`. `ThemeToggle` flips the class without storing React theme state (avoids hydration lint issues).
+`layout/ThemeScript` applies `dark` before paint from `localStorage` or `prefers-color-scheme`. `layout/ThemeToggle` flips the class without React theme state (avoids hydration lint issues).
 
 ## 7. Content source
 
-Facts are taken from [dddental.in](https://dddental.in/): phone `079956 86661`, email `drsadiqali2000@gmail.com`, Manikonda primary branch, five Hyderabad locations, hours, services, and clinic narrative. Reviews in `reviews.js` are placeholder UX content until the clinic supplies approved quotes.
+Facts from [dddental.in](https://dddental.in/): phone, email, Manikonda primary branch, Hyderabad locations, hours, services, clinic narrative. Reviews in `reviews.js` are placeholders until the clinic supplies approved quotes.
 
 ## 8. Boundaries
 
 - No runtime WordPress fetch.
-- Enquiry form does not claim success until a real delivery API exists.
+- Enquiry form must not claim success until a real delivery API exists.
 - No secrets in client components.

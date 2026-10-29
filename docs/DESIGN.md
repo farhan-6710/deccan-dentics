@@ -96,13 +96,15 @@ Native `<select>` is not used. Links that look like buttons use `Button` as a ch
 ## 6. Page pattern
 
 1. Header, sticky in feel, with a translucent background.
-2. Hero: eyebrow, display title with one primary-colored phrase, short paragraph, two buttons, four feature chips, portrait with leaf edges and a trust pill.
-3. Services: eyebrow, title, a selected service card with a photo and a text column.
-4. About: short clinic story, visit steps, no fake founder if the name is unverified.
-5. Reviews: three cards, stars in `--chart-4`, quote, name.
-6. FAQ: accordion.
-7. Contact: form card beside branch addresses.
-8. Footer: phone, hours, branches.
+2. Hero: eyebrow, display title with one primary-colored phrase, short paragraph, two buttons, four feature chips, portrait with a trust pill.
+3. Services: eyebrow, title, tabbed treatments with photo + points.
+4. Why choose us: tooth art + numbered differentiators (from live site).
+5. About: short clinic story and stats—no unverified founder names.
+6. Reviews: Embla cards, stars in `--chart-4`, quote, name.
+7. Branches: selectable Hyderabad locations with address + directions.
+8. FAQ: accordion.
+9. Contact: enquiry form beside map + clinic details.
+10. Footer: phone, hours, explore links.
 
 Leaf images from `public/images/` are decorative and `alt=""`. They must not cover text or controls.
 

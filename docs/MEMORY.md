@@ -1,6 +1,6 @@
 # Memory — Deccan Dentics
 
-Last updated 30 Oct 2026 (full marketing sections + routes shipped). Read this before changing brand, scope, or structure.
+Last updated 30 Oct 2026 (components grouped by feature folder). Read this before changing brand, scope, or structure.
 
 ## 1. What this is
 
@@ -45,7 +45,8 @@ Checked 30 Oct 2026.
 - Bun is the package manager. Commands go through `bun` or `bunx`.
 - shadcn style is `base-nova`. Primitives sit on Base UI, not Radix.
 - `cn` comes from the `cn` package. `src/lib/utils.ts` re-exports it.
-- Theme is a `dark` class on `<html>`, written by `ThemeToggle`. Move this to `next-themes` rather than adding a second toggle.
+- Components are grouped by feature under `src/components/` (`home`, `services`, `why-choose-us`, `about`, `reviews`, `branches`, `faq`, `contact`, plus `layout`, `motion`, `ui`). See `ARCHITECTURE.md`.
+- Theme is a `dark` class on `<html>`, written by `layout/ThemeToggle`. Move this to `next-themes` rather than adding a second toggle.
 - Dev server is `next dev --webpack` even though `next.config.ts` also mentions Turbopack CSS. Leave that alone unless dev is being fixed on purpose.
 - No database, auth, or email provider is installed. Do not add one inside a visual change.
 - Appointment delivery is undecided. The form must not fake a successful send.
