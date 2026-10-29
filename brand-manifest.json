@@ -1,0 +1,239 @@
+{
+  "name": "Deccan Dentics",
+  "version": "1.0.0",
+  "updated": "2026-10-30",
+  "category": "Dental clinic",
+  "locale": "en-IN",
+  "city": "Hyderabad",
+  "region": "Telangana",
+  "country": "India",
+  "websites": {
+    "live": "https://dddental.in/",
+    "contact": "https://dddental.in/contact-us/"
+  },
+  "positioning": {
+    "tagline": "Healthy smiles. Happier lives.",
+    "headline": "Expert Dental Care for a Brighter, Healthier You",
+    "legacyHeadline": "Don't Just Smile, Shine with Confidence!",
+    "description": "Family dental care in Hyderabad. Calm, precise, and patient-first, for checkups through complex treatment.",
+    "promise": "Comprehensive care for the whole family, explained clearly before treatment begins."
+  },
+  "voice": {
+    "tone": ["calm", "precise", "warm", "adult"],
+    "person": "second person",
+    "language": "Indian English",
+    "do": [
+      "Explain the visit in plain language.",
+      "Name the branch, hours, and next step.",
+      "Sound like a careful clinic, not a campaign."
+    ],
+    "dont": [
+      "Use baby talk, cartoons, or fear headlines.",
+      "Invent doctor names, prices, guarantees, or reviews.",
+      "Publish a branch or statistic until it is confirmed against the live site."
+    ]
+  },
+  "logo": {
+    "file": "/images/logo.png",
+    "wordmark": "Deccan Dentics",
+    "clearSpace": "At least the height of the tooth mark on every side.",
+    "minHeight": "2.75rem"
+  },
+  "color": {
+    "light": {
+      "background": "#f7faf7",
+      "foreground": "#1b3026",
+      "card": "#ffffff",
+      "cardForeground": "#1b3026",
+      "popover": "#ffffff",
+      "popoverForeground": "#1b3026",
+      "primary": "#287a52",
+      "primaryForeground": "#ffffff",
+      "secondary": "#e5f0e7",
+      "secondaryForeground": "#28583d",
+      "muted": "#edf3ed",
+      "mutedForeground": "#687b6d",
+      "accent": "#d9efdf",
+      "accentForeground": "#205c3b",
+      "destructive": "#dc4545",
+      "destructiveForeground": "#ffffff",
+      "border": "#dce7dd",
+      "input": "#dce7dd",
+      "ring": "#409566"
+    },
+    "dark": {
+      "background": "#101914",
+      "foreground": "#e6f0e8",
+      "card": "#18241c",
+      "cardForeground": "#e6f0e8",
+      "popover": "#1b2a20",
+      "popoverForeground": "#e6f0e8",
+      "primary": "#65bd86",
+      "primaryForeground": "#102719",
+      "secondary": "#24382a",
+      "secondaryForeground": "#c6e7ce",
+      "muted": "#202e24",
+      "mutedForeground": "#a0b5a4",
+      "accent": "#294533",
+      "accentForeground": "#b9e7c5",
+      "destructive": "#f87171",
+      "destructiveForeground": "#250b0b",
+      "border": "#2b3d30",
+      "input": "#354a39",
+      "ring": "#65bd86"
+    },
+    "chart": ["#287a52", "#6ba77e", "#a4c9a8", "#d2a66c", "#5b8d83"],
+    "roles": {
+      "primary": "Actions and links. Forest green, not neon.",
+      "secondary": "Soft sage surfaces and quiet chips.",
+      "accent": "Hover and selected menu rows.",
+      "muted": "Supporting copy and footer bands.",
+      "destructive": "Errors only. Not a marketing color."
+    }
+  },
+  "typography": {
+    "heading": {
+      "family": "Libre Baskerville",
+      "weights": [400, 700],
+      "cssVariable": "--font-libre-baskerville",
+      "tracking": "-0.02em",
+      "lineHeight": 1.2
+    },
+    "body": {
+      "family": "Merriweather",
+      "weights": [300, 400, 700],
+      "cssVariable": "--font-merriweather",
+      "lineHeight": 1.6
+    },
+    "script": {
+      "family": "Caveat",
+      "weights": [500, 600, 700],
+      "cssVariable": "--font-caveat",
+      "use": "One short handwritten accent per view. Never for body, buttons, or forms."
+    },
+    "scale": {
+      "xs": "0.75rem",
+      "sm": "0.875rem",
+      "base": "1rem",
+      "lg": "1.125rem",
+      "xl": "1.25rem",
+      "2xl": "1.5rem",
+      "3xl": "1.875rem",
+      "4xl": "2.25rem",
+      "5xl": "3rem",
+      "6xl": "3.75rem"
+    }
+  },
+  "shape": {
+    "radius": "0.875rem",
+    "radiusXl": "1.225rem",
+    "buttons": "var(--radius)",
+    "fields": "var(--radius)",
+    "cards": "var(--radius-xl)"
+  },
+  "spacing": {
+    "scaleRem": [0.25, 0.5, 0.75, 1, 1.25, 1.5, 2, 2.5, 3, 4, 5, 6, 8],
+    "containerMax": "72rem",
+    "containerPadding": "1.5rem",
+    "sectionPaddingY": "5rem"
+  },
+  "elevation": {
+    "buttons": "Raised face, inset highlight, colored shadow, 1px lift on hover, 1px press on active.",
+    "fields": "Slightly recessed. No lift.",
+    "cards": "Quiet raised surface. No press.",
+    "menus": "Floating overlay. Rows stay flat.",
+    "accordion": "Same raised surface as cards. Open state uses a green edge, not a button press."
+  },
+  "motion": {
+    "duration": "150ms",
+    "easing": "ease",
+    "reducedMotion": "Remove transforms. Keep color and focus changes."
+  },
+  "contact": {
+    "phoneDisplay": "079956 86661",
+    "phoneTel": "+917995686661",
+    "email": "drsadiqali2000@gmail.com",
+    "hours": {
+      "source": "https://dddental.in/contact-us/",
+      "mondayToSaturday": "09:00–20:00",
+      "sunday": "14:00–18:00",
+      "note": "The homepage has also shown different Sunday hours for Toli Chowki. Confirm per branch before launch."
+    }
+  },
+  "branches": [
+    {
+      "id": "kondapur",
+      "name": "Kondapur",
+      "address": "Flat No. 304, 4th floor, Ace Monte Carlo apartments, junction, beside TCS, Land Mark Residency, Kondapur, Kothaguda, Hyderabad, Telangana 500084",
+      "confirmedOn": "https://dddental.in/contact-us/"
+    },
+    {
+      "id": "manikonda",
+      "name": "Manikonda",
+      "address": "Opposite Hallmark Tranquil, beside AMVI Hospital building, Alkapur Township, Puppalaguda, Manikonda, Hyderabad, Telangana 500089",
+      "confirmedOn": "https://dddental.in/contact-us/"
+    },
+    {
+      "id": "rajendranagar",
+      "name": "Rajendranagar",
+      "address": "Near pillar no. 179, Videnta Dental Clinic, Naidu Colony, Rajendra Nagar, Upperpally, Hyderabad, Telangana 500048",
+      "confirmedOn": "https://dddental.in/contact-us/"
+    },
+    {
+      "id": "toli-chowki",
+      "name": "Toli Chowki",
+      "address": "Gate no. 2, Street Number 2, opposite Aries Restaurant, Paramount Hills, Toli Chowki, Hyderabad, Telangana 500008",
+      "confirmedOn": "https://dddental.in/contact-us/"
+    }
+  ],
+  "branchConflicts": [
+    "The live homepage says 5 branches and has also listed Malakpet, Abids, and Aramghar.",
+    "The contact page publishes the four branches in this file.",
+    "Do not add a fifth branch until the clinic confirms the list."
+  ],
+  "proof": {
+    "liveSite": {
+      "years": "10+",
+      "patients": "25k+",
+      "branchesClaimed": "5",
+      "source": "https://dddental.in/"
+    },
+    "currentHero": {
+      "patients": "1000+",
+      "note": "Taken from the design board. Do not ship this if it contradicts the confirmed clinic figure."
+    }
+  },
+  "services": [
+    { "slug": "dental-implants", "name": "Dental Implants" },
+    { "slug": "cosmetic-dentistry", "name": "Cosmetic Dentistry" },
+    { "slug": "teeth-whitening", "name": "Teeth Whitening" },
+    { "slug": "dental-crowns", "name": "Dental Crowns" },
+    { "slug": "root-canal", "name": "Root Canal" },
+    { "slug": "kids-dentistry", "name": "Kids Dentistry" },
+    { "slug": "dental-cleaning", "name": "Dental Cleaning" },
+    { "slug": "dental-fillings", "name": "Dental Fillings" },
+    { "slug": "dentures", "name": "Dentures" },
+    { "slug": "tooth-extractions", "name": "Tooth Extractions" },
+    { "slug": "gum-disease", "name": "Gum Disease" },
+    { "slug": "dental-sealants", "name": "Dental Sealants" },
+    { "slug": "laser-dentistry", "name": "Laser Dentistry" },
+    { "slug": "oral-cancer-screening", "name": "Oral Cancer Screening" },
+    { "slug": "oral-maxillofacial-surgeries", "name": "Oral and Maxillofacial Surgeries" },
+    { "slug": "flap-surgeries", "name": "Flap Surgeries" }
+  ],
+  "differentiators": [
+    "Experienced doctors",
+    "Personalized care",
+    "Flexible payment options",
+    "Emergency services",
+    "Modern technology",
+    "Family dentistry"
+  ],
+  "visitSteps": [
+    "Schedule",
+    "Consultation and diagnosis",
+    "Personalized treatment plan",
+    "Treatment",
+    "Follow-up care"
+  ]
+}

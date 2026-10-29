@@ -1,0 +1,535 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+@custom-variant dark (&:is(.dark *));
+
+:root {
+  /* Base */
+  --background: #f7faf7;
+  --foreground: #1b3026;
+
+  /* Cards & Popovers */
+  --card: #ffffff;
+  --card-foreground: #1b3026;
+  --popover: #ffffff;
+  --popover-foreground: #1b3026;
+
+  /* Primary — Forest Green */
+  --primary: #287a52;
+  --primary-foreground: #ffffff;
+
+  /* Secondary — Soft Sage */
+  --secondary: #e5f0e7;
+  --secondary-foreground: #28583d;
+
+  /* Muted */
+  --muted: #edf3ed;
+  --muted-foreground: #687b6d;
+
+  /* Accent — Fresh Green */
+  --accent: #d9efdf;
+  --accent-foreground: #205c3b;
+
+  /* Feedback */
+  --destructive: #dc4545;
+  --destructive-foreground: #ffffff;
+
+  /* Borders & Inputs */
+  --border: #dce7dd;
+  --input: #dce7dd;
+  --ring: #409566;
+
+  /* Charts */
+  --chart-1: #287a52;
+  --chart-2: #6ba77e;
+  --chart-3: #a4c9a8;
+  --chart-4: #d2a66c;
+  --chart-5: #5b8d83;
+
+  /* Sidebar */
+  --sidebar: #eff5ef;
+  --sidebar-foreground: #1b3026;
+  --sidebar-primary: #287a52;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #dcecdf;
+  --sidebar-accent-foreground: #28583d;
+  --sidebar-border: #dce7dd;
+  --sidebar-ring: #409566;
+
+  /* Shape */
+  --radius: 0.875rem;
+
+  /* Typography — Libre Baskerville (headings) + Merriweather (body) */
+  --fs-xs: 0.75rem;
+  --fs-sm: 0.875rem;
+  --fs-base: 1rem;
+  --fs-lg: 1.125rem;
+  --fs-xl: 1.25rem;
+  --fs-2xl: 1.5rem;
+  --fs-3xl: 1.875rem;
+  --fs-4xl: 2.25rem;
+  --fs-5xl: 3rem;
+  --fs-6xl: 3.75rem;
+
+  --leading-tight: 1.2;
+  --leading-snug: 1.35;
+  --leading-normal: 1.6;
+  --leading-relaxed: 1.75;
+
+  --tracking-tight: -0.02em;
+  --tracking-normal: 0;
+  --tracking-wide: 0.04em;
+  --tracking-wider: 0.12em;
+
+  /* Spacing scale */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.25rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-10: 2.5rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+  --space-20: 5rem;
+  --space-24: 6rem;
+  --space-32: 8rem;
+
+  /* Layout */
+  --container-max: 72rem;
+  --container-padding: 1.5rem;
+  --section-padding-y: 5rem;
+}
+
+.dark {
+  /* Base */
+  --background: #101914;
+  --foreground: #e6f0e8;
+
+  /* Cards & Popovers */
+  --card: #18241c;
+  --card-foreground: #e6f0e8;
+  --popover: #1b2a20;
+  --popover-foreground: #e6f0e8;
+
+  /* Primary — Soft Emerald */
+  --primary: #65bd86;
+  --primary-foreground: #102719;
+
+  /* Secondary */
+  --secondary: #24382a;
+  --secondary-foreground: #c6e7ce;
+
+  /* Muted */
+  --muted: #202e24;
+  --muted-foreground: #a0b5a4;
+
+  /* Accent */
+  --accent: #294533;
+  --accent-foreground: #b9e7c5;
+
+  /* Feedback */
+  --destructive: #f87171;
+  --destructive-foreground: #250b0b;
+
+  /* Borders & Inputs */
+  --border: #2b3d30;
+  --input: #354a39;
+  --ring: #65bd86;
+
+  /* Charts */
+  --chart-1: #65bd86;
+  --chart-2: #8cc9a0;
+  --chart-3: #badbbd;
+  --chart-4: #e0b779;
+  --chart-5: #78b8a6;
+
+  /* Sidebar */
+  --sidebar: #141f18;
+  --sidebar-foreground: #e6f0e8;
+  --sidebar-primary: #65bd86;
+  --sidebar-primary-foreground: #102719;
+  --sidebar-accent: #24382a;
+  --sidebar-accent-foreground: #c6e7ce;
+  --sidebar-border: #2b3d30;
+  --sidebar-ring: #65bd86;
+
+  /* Shape */
+  --radius: 0.875rem;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-merriweather), ui-serif, Georgia, serif;
+  --font-heading: var(--font-libre-baskerville), ui-serif, Georgia, serif;
+  --font-body: var(--font-merriweather), ui-serif, Georgia, serif;
+  --font-script: var(--font-caveat), ui-serif, Georgia, cursive;
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+  --radius-4xl: calc(var(--radius) * 2.6);
+
+  /* Spacing → Tailwind utilities (space-*, p-*, gap-*, etc.) */
+  --spacing-1: var(--space-1);
+  --spacing-2: var(--space-2);
+  --spacing-3: var(--space-3);
+  --spacing-4: var(--space-4);
+  --spacing-5: var(--space-5);
+  --spacing-6: var(--space-6);
+  --spacing-8: var(--space-8);
+  --spacing-10: var(--space-10);
+  --spacing-12: var(--space-12);
+  --spacing-16: var(--space-16);
+  --spacing-20: var(--space-20);
+  --spacing-24: var(--space-24);
+  --spacing-32: var(--space-32);
+
+  /* Font sizes */
+  --text-xs: var(--fs-xs);
+  --text-sm: var(--fs-sm);
+  --text-base: var(--fs-base);
+  --text-lg: var(--fs-lg);
+  --text-xl: var(--fs-xl);
+  --text-2xl: var(--fs-2xl);
+  --text-3xl: var(--fs-3xl);
+  --text-4xl: var(--fs-4xl);
+  --text-5xl: var(--fs-5xl);
+  --text-6xl: var(--fs-6xl);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+
+  html {
+    @apply font-body antialiased;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-size: var(--fs-base);
+    line-height: var(--leading-normal);
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-heading;
+    line-height: var(--leading-tight);
+    letter-spacing: var(--tracking-tight);
+  }
+
+  h1 {
+    font-size: var(--fs-5xl);
+  }
+
+  h2 {
+    font-size: var(--fs-4xl);
+  }
+
+  h3 {
+    font-size: var(--fs-2xl);
+  }
+
+  h4 {
+    font-size: var(--fs-xl);
+  }
+
+  p {
+    @apply font-body;
+    line-height: var(--leading-relaxed);
+  }
+}
+/* Shared 3D elevated button shell — color comes from each variant utility */
+@utility btn-elevated {
+  border-radius: var(--radius);
+  border: 1px solid transparent;
+  background-origin: border-box;
+  /* beats base `bg-clip-padding` from the Button cva */
+  background-clip: padding-box, border-box !important;
+  transition:
+    transform 0.15s ease,
+    box-shadow 0.15s ease,
+    filter 0.15s ease;
+
+  &:hover {
+    transform: translateY(-1px);
+    filter: brightness(1.05);
+  }
+
+  &:active {
+    transform: translateY(1px);
+    filter: none;
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--ring);
+    outline-offset: 3px;
+  }
+}
+
+@utility btn-primary {
+  color: var(--primary-foreground);
+  background-image:
+    /* face: subtle curve instead of flat fill */
+    linear-gradient(
+      to bottom,
+      color-mix(in srgb, var(--primary) 94%, white),
+      color-mix(in srgb, var(--primary) 94%, black)
+    ),
+    /* border: unchanged */
+    linear-gradient(
+      to bottom,
+      color-mix(in srgb, var(--primary) 55%, white),
+      color-mix(in srgb, var(--primary) 65%, black)
+    );
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.28),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.14),
+    0 1px 2px color-mix(in srgb, var(--primary) 35%, transparent),
+    0 6px 14px color-mix(in srgb, var(--primary) 30%, transparent);
+
+  &:active {
+    box-shadow:
+      inset 0 2px 4px rgba(0, 0, 0, 0.25),
+      0 1px 2px color-mix(in srgb, var(--primary) 30%, transparent);
+  }
+}
+
+@utility btn-secondary {
+  color: var(--secondary-foreground);
+  background-image:
+    linear-gradient(
+      to bottom,
+      color-mix(in srgb, var(--secondary) 55%, white),
+      color-mix(in srgb, var(--secondary) 94%, black)
+    ),
+    linear-gradient(
+      to bottom,
+      color-mix(in srgb, var(--secondary) 70%, white),
+      color-mix(in srgb, var(--secondary) 75%, black)
+    );
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.6),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.06),
+    0 1px 2px color-mix(in srgb, var(--secondary-foreground) 14%, transparent),
+    0 6px 14px color-mix(in srgb, var(--secondary-foreground) 12%, transparent);
+
+  &:active {
+    box-shadow:
+      inset 0 2px 4px rgba(0, 0, 0, 0.12),
+      0 1px 2px color-mix(in srgb, var(--secondary-foreground) 12%, transparent);
+  }
+}
+
+@utility btn-outline {
+  color: var(--foreground);
+  background-image:
+    linear-gradient(
+      to bottom,
+      color-mix(in srgb, var(--background) 40%, white),
+      color-mix(in srgb, var(--background) 96%, black)
+    ),
+    linear-gradient(
+      to bottom,
+      color-mix(in srgb, var(--border) 40%, black 2%),
+      color-mix(in srgb, var(--border) 30%, black 30%)
+    );
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.8),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.04),
+    0 1px 2px color-mix(in srgb, var(--foreground) 10%, transparent),
+    0 6px 14px color-mix(in srgb, var(--foreground) 8%, transparent);
+
+  &:active {
+    box-shadow:
+      inset 0 2px 4px rgba(0, 0, 0, 0.1),
+      0 1px 2px color-mix(in srgb, var(--foreground) 8%, transparent);
+  }
+}
+
+/* Dual-layer border used by fields, cards, and menus */
+@utility control-elevated {
+  border: 1px solid transparent;
+  background-origin: border-box;
+  background-clip: padding-box, border-box !important;
+  transition:
+    box-shadow 0.15s ease,
+    filter 0.15s ease;
+}
+
+/* Recessed field — inputs and select triggers */
+@utility field-inset {
+  border-radius: var(--radius);
+  color: var(--foreground);
+  background-image:
+    linear-gradient(
+      to bottom,
+      color-mix(in srgb, var(--card) 97%, black),
+      var(--card)
+    ),
+    linear-gradient(
+      to bottom,
+      color-mix(in srgb, var(--border) 45%, white),
+      color-mix(in srgb, var(--border) 28%, black)
+    );
+  box-shadow:
+    inset 0 1px 1px rgba(0, 0, 0, 0.045),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.7);
+
+  &:hover:not(:disabled):not([aria-invalid="true"]) {
+    background-image:
+      linear-gradient(
+        to bottom,
+        color-mix(in srgb, var(--card) 97%, black),
+        var(--card)
+      ),
+      linear-gradient(
+        to bottom,
+        color-mix(in srgb, var(--border) 15%, white),
+        color-mix(in srgb, var(--ring) 38%, var(--border))
+      );
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--ring) !important;
+    outline-offset: 2px;
+    background-image:
+      linear-gradient(var(--card), var(--card)),
+      linear-gradient(
+        to bottom,
+        color-mix(in srgb, var(--ring) 50%, white),
+        var(--ring)
+      );
+  }
+
+  /* Border only while open — an outline collides with the menu */
+  &[data-popup-open] {
+    outline: none !important;
+    background-image:
+      linear-gradient(var(--card), var(--card)),
+      linear-gradient(
+        to bottom,
+        color-mix(in srgb, var(--ring) 50%, white),
+        var(--ring)
+      );
+  }
+
+  &[aria-invalid="true"] {
+    background-image:
+      linear-gradient(
+        to bottom,
+        color-mix(in srgb, var(--card) 97%, black),
+        var(--card)
+      ),
+      linear-gradient(
+        to bottom,
+        color-mix(in srgb, var(--destructive) 45%, white),
+        var(--destructive)
+      );
+  }
+
+  &[aria-invalid="true"]:focus-visible {
+    outline-color: var(--destructive) !important;
+  }
+}
+
+/* Quiet raised panel — cards and accordion items */
+@utility surface-raised {
+  border-radius: var(--radius-xl);
+  background-image:
+    linear-gradient(
+      to bottom,
+      color-mix(in srgb, var(--card) 78%, white),
+      var(--card) 42%
+    ),
+    linear-gradient(
+      to bottom,
+      color-mix(in srgb, var(--border) 20%, white),
+      color-mix(in srgb, var(--border) 42%, black)
+    );
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.65),
+    0 1px 2px color-mix(in srgb, var(--foreground) 5%, transparent),
+    0 10px 24px color-mix(in srgb, var(--foreground) 7%, transparent);
+
+  &[data-open] {
+    background-image:
+      linear-gradient(
+        to bottom,
+        color-mix(in srgb, var(--card) 78%, white),
+        var(--card) 42%
+      ),
+      linear-gradient(
+        to bottom,
+        color-mix(in srgb, var(--primary) 30%, white),
+        color-mix(in srgb, var(--primary) 38%, var(--border))
+      );
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.65),
+      0 1px 2px color-mix(in srgb, var(--primary) 10%, transparent),
+      0 10px 24px color-mix(in srgb, var(--primary) 8%, transparent);
+  }
+}
+
+/* Floating menu — shadow lives on the positioner so overflow can scroll */
+@utility surface-overlay {
+  border-radius: var(--radius);
+  background-image:
+    linear-gradient(
+      to bottom,
+      color-mix(in srgb, var(--popover) 86%, white),
+      var(--popover)
+    ),
+    linear-gradient(
+      to bottom,
+      color-mix(in srgb, var(--border) 18%, white),
+      color-mix(in srgb, var(--border) 48%, black)
+    );
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.5);
+}
+
+@utility surface-float {
+  filter: drop-shadow(
+    0 14px 28px color-mix(in srgb, var(--foreground) 14%, transparent)
+  );
+}
