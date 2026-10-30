@@ -1,0 +1,244 @@
+Copy/paste this as the replication prompt:
+
+---
+
+## Prompt: Replicate Digi Carotene app-shell sidebar expand/collapse (exact behavior)
+
+Build a desktop sidebar expand/collapse system that matches this app’s shell exactly. Do not invent alternate patterns.
+
+### Architecture & state
+
+1. **Owner of collapse state is the shell layout**, not the sidebar.
+   - In `AppShellLayout`, keep:
+     - `const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);`
+     - `const [isMobileNavOpen, setIsMobileNavOpen] = useState(false);`
+   - Pass `collapsed={isSidebarCollapsed}` into `ShellSidebar`.
+   - Default is **expanded** (`false`).
+
+2. **Header toggle (desktop only)**
+   In the top header (`h-16`), render a button that toggles collapse:
+   - `variant="secondary"`
+   - Classes: `hidden size-9 items-center justify-center rounded-xl md:inline-flex`
+   - Icon: Lucide `Menu` with `className="size-4"`
+   - `onClick={() => setIsSidebarCollapsed((prev) => !prev)}`
+   - `aria-label={isSidebarCollapsed ? "Expand sidebar" : "Collapse sidebar"}`
+   - Visible only from `md` and up. Below `md`, a separate hamburger opens a mobile sheet (not the collapse).
+
+3. **Mobile is separate**
+   - Below `md`, sidebar width is forced to `w-0` (not `display:none`) so the main content fills the viewport.
+   - Mobile nav uses a left `Sheet` at `w-64 max-w-[85vw]` with the same sidebar content but always `collapsed={false}`.
+   - Closing the sheet happens via `onNavigate` on links.
+
+### Sidebar shell (aside) — widths, border, motion
+
+Use Framer Motion `motion.aside` with this exact mount animation from `SHELL_SIDEBAR_MOTION`:
+
+```ts
+MOTION_EASE = [0.22, 1, 0.36, 1]
+
+SHELL_SIDEBAR_MOTION = {
+  initial: { opacity: 0, x: -20 },
+  animate: { opacity: 1, x: 0 },
+  transition: { duration: 0.38, ease: MOTION_EASE },
+}
+```
+
+Aside classes (exact):
+
+- Base: `min-h-0 w-0 shrink-0 overflow-hidden border-0 bg-sidebar text-sidebar-foreground`
+- Width animation (CSS, not Framer width):
+  `transition-[width] duration-500 ease-[cubic-bezier(0.32,0.72,0,1)]`
+- Desktop border: `md:border-r md:border-sidebar-border/80`
+- Expanded width: `md:w-64` (256px)
+- Collapsed width: `md:w-20` (80px)
+- Inner content wrapper: `hidden h-full md:block` (desktop only)
+
+Wrap the aside in `TooltipProvider` (Radix; default `delayDuration={0}`).
+
+Header uses separate Framer motion (`SHELL_HEADER_MOTION`: fade/slide from `y: -14`, duration `0.38`, delay `0.06`) — do not couple header motion to width.
+
+### Brand / header block inside sidebar
+
+Top brand row:
+
+- Height: `h-16 shrink-0`
+- Classes: `flex items-center justify-center border-b border-sidebar-border/80 px-4`
+- Links to `config.homeLink`
+
+Brand mark:
+
+- Initials box: `flex size-9 shrink-0 items-center justify-center rounded-xl bg-primary text-lg font-bold text-primary-foreground shadow-sm`
+
+Expanded brand text:
+
+- Container: `min-w-0 text-left` with `gap-3` next to initials
+- Name: `truncate text-xl font-bold leading-none tracking-tight`
+  - First word: `text-primary`
+  - Remaining words: `text-accent`
+- Optional subtitle: `mt-0.5 truncate text-[10px] font-semibold uppercase leading-none tracking-wider text-muted-foreground`
+
+Collapsed brand text:
+
+- Entire name/subtitle wrapped in `sr-only` (initials remain visible, centered)
+
+### Nav list padding & spacing
+
+Nav container:
+
+- Expanded: `p-4`
+- Collapsed: `p-3`
+- Always: `min-h-0 flex-1 space-y-1.5 overflow-y-auto`
+
+### Single nav link (icon + label)
+
+Icons from a Lucide map (`shellNavIcons`). Icon size always: `size-4 shrink-0`.
+
+Link base:
+
+- `flex items-center rounded-2xl text-sm font-medium transition gap-3`
+
+Padding / alignment by state:
+
+- **Expanded:** `px-4 py-2.5`
+- **Collapsed:** `justify-center px-4 py-4` (taller hit target for icon-only)
+
+Colors:
+
+- Active: `bg-primary text-primary-foreground shadow-sm`
+- Inactive: `text-sidebar-foreground/75 hover:bg-secondary hover:text-secondary-foreground`
+
+Label:
+
+- Expanded: visible `<span>{label}</span>`
+- Collapsed: `<span className="sr-only">{label}</span>` (still accessible)
+
+### Tooltips when collapsed (required for every leaf link)
+
+When `collapsed === true`, wrap each nav link:
+
+```tsx
+<Tooltip>
+  <TooltipTrigger asChild>
+    <div className="w-full">{navLinkEl}</div>
+  </TooltipTrigger>
+  <TooltipContent side="right" sideOffset={10}>
+    <p className="font-medium">{item.label}</p>
+  </TooltipContent>
+</Tooltip>
+```
+
+Critical details:
+
+- Tooltip only when collapsed; expanded shows no tooltip.
+- Trigger wrapper is a full-width `div` (`asChild`) so the whole row is hoverable.
+- `side="right"`, `sideOffset={10}` (10px gap from sidebar edge).
+- Tooltip content uses the shared tooltip styles: `bg-foreground text-background`, `px-3 py-1.5`, `text-xs`, `rounded-md`, with arrow.
+- Provider delay is `0` so labels appear immediately on hover.
+
+### Expandable nav groups
+
+If item has `children`:
+
+**Expanded sidebar:**
+
+- Parent is a `<button>` (not a link) toggling open state.
+- Classes: `flex w-full items-center gap-3 rounded-2xl px-4 py-2.5 text-sm font-medium transition`
+- Open or group-active text: `text-sidebar-foreground`
+- Closed inactive: `text-sidebar-foreground/75 hover:bg-secondary hover:text-secondary-foreground`
+- Icon `size-4`; label `min-w-0 flex-1 truncate text-left`
+- ChevronDown `size-4 text-muted-foreground`; rotates `rotate-180` when open
+- Open state defaults to “group has active child”; user can manually toggle (`manualOpen ?? groupActive`)
+- Children container: `relative ml-4 space-y-0.5 border-l border-sidebar-border/70 py-0.5 pl-3`
+- Child links: `rounded-xl px-3 py-2 text-sm`
+  - Active: `bg-primary font-medium text-primary-foreground shadow-sm`
+  - Inactive: `text-sidebar-foreground/65 hover:bg-secondary/70 hover:text-secondary-foreground`
+
+**Collapsed sidebar:**
+
+- Groups collapse to a single icon link (parent route) with the same tooltip behavior as leaf links.
+- Do **not** show nested children or chevron when collapsed.
+- Group is “active” if any child path matches.
+
+### Quick action footer
+
+- Render only when `!collapsed && config.quickAction`
+- Padding: `p-4`
+- Card: `rounded-2xl border border-border bg-muted/40 p-4 shadow-xs`
+- Title: `text-xs font-semibold uppercase tracking-wider text-muted-foreground`
+- Description: `mt-1.5 line-clamp-2 text-xs leading-relaxed text-muted-foreground`
+- CTA: `mt-4 inline-flex w-full ... rounded-xl bg-primary px-3 py-2 text-xs font-semibold text-primary-foreground shadow-xs`
+
+Hide entirely when collapsed.
+
+### Color CSS variables to use (Tailwind tokens)
+
+Map to these tokens; do not hardcode hex in components:
+
+**Sidebar-specific**
+
+| Token | Light (`:root`) | Dark (`.dark`) |
+|---|---|---|
+| `--sidebar` / `bg-sidebar` |
+| `--sidebar-foreground` |
+| `--sidebar-primary` |
+| `--sidebar-primary-foreground`
+| `--sidebar-accent` |
+| `--sidebar-accent-foreground` |
+| `--sidebar-border` |
+| `--sidebar-ring` |
+
+**Also used by sidebar UI**
+
+| Token | Light | Dark |
+|---|---|---|
+| `--primary` |
+| `--primary-foreground` |
+| `--accent` |
+| `--secondary` |
+| `--secondary-foreground` |
+| `--muted` / neutrals |
+| `--border` |
+| `--foreground` / `--background` | for tooltip inversion (`bg-foreground text-background`) | dark equivalents |
+
+Opacity usages to preserve:
+`text-sidebar-foreground/75`, `/65`, `border-sidebar-border/80`, `/70`, `hover:bg-secondary/70`, `bg-muted/40`.
+
+### Size cheat sheet (do not change)
+
+| Element | Size |
+|---|---|
+| Expanded sidebar | `w-64` (256px) |
+| Collapsed sidebar | `w-20` (80px) |
+| Brand / header row | `h-16` |
+| Initials tile | `size-9` |
+| Nav / group icons | `size-4` |
+| Chevron | `size-4` |
+| Nav text | `text-sm font-medium` |
+| Brand name | `text-xl font-bold` |
+| Brand subtitle | `text-[10px] uppercase` |
+| Tooltip text | `text-xs` + `font-medium` on label |
+| Tooltip offset | `sideOffset={10}`, `side="right"` |
+| Collapsed nav item padding | `px-4 py-4` centered |
+| Expanded nav item padding | `px-4 py-2.5` |
+| Nav rail padding | `p-4` expanded / `p-3` collapsed |
+| Width transition | `500ms`, ease `cubic-bezier(0.32, 0.72, 0, 1)` |
+| Enter motion | opacity + `x: -20` → 0, `380ms`, ease `[0.22, 1, 0.36, 1]` |
+
+### Behavioral checklist (must all pass)
+
+1. Header Menu toggles expand ↔ collapse on `md+` only.
+2. Width animates 256 ↔ 80 over 500ms with the cubic-bezier above.
+3. Collapsed: icons only, labels `sr-only`, right-side tooltips with 10px offset on every item.
+4. Expanded: icon + text, no tooltips, groups can expand with chevron + left border child rail.
+5. Collapsed groups become a single tooltip’d parent link (no nested list).
+6. Active item uses primary fill + primary-foreground.
+7. Quick action card vanishes when collapsed.
+8. Mobile uses sheet, not collapse; desktop sidebar is `w-0` under `md`.
+9. Framer Motion only for initial aside entrance; width is CSS transition.
+10. Colors come from CSS variables listed above (including dark mode).
+
+Reference implementation files: `AppShellLayout.tsx`, `ShellSidebar.tsx`, `pageMotion.ts` (`SHELL_SIDEBAR_MOTION`), `index.css` sidebar tokens, `shared/ui/tooltip.tsx`.
+
+---
+
+That prompt is intentionally file-faithful to your current shell so a model can rebuild the same expand/shrink UX without drifting.

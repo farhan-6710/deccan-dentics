@@ -1,4 +1,2 @@
-export function ThemeScript() {
-  const code = `(function(){try{var t=localStorage.getItem('theme');var d=t==='dark'||(t!=='light'&&window.matchMedia('(prefers-color-scheme: dark)').matches);if(d)document.documentElement.classList.add('dark');}catch(e){}})();`;
-  return <script dangerouslySetInnerHTML={{ __html: code }} />;
-}
+/** Blocking theme boot — keep in sync with ThemeToggle storage key `theme`. */
+export const THEME_BOOT_SCRIPT = `(function(){try{var t=localStorage.getItem('theme');if(t==='dark')document.documentElement.classList.add('dark');else if(t==='light')document.documentElement.classList.remove('dark');}catch(e){}})();`;

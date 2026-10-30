@@ -1,8 +1,8 @@
 # Architecture — Deccan Dentics
 
-Next.js App Router marketing site. Most pages are server-rendered. Client islands handle theme, menus, carousels, accordions, service tabs, the enquiry form, and motion.
+Next.js App Router marketing site plus a client-side `/admin` operations dashboard. Most marketing pages are server-rendered. Client islands handle theme, menus, carousels, accordions, service tabs, the enquiry form, motion, and the admin shell.
 
-No database or auth in the current build.
+No backend database yet. Admin data lives in Zustand stores seeded in the browser. Admin access is a client password gate in `sessionStorage` — not real server auth.
 
 ## 1. Stack
 
@@ -16,6 +16,7 @@ No database or auth in the current build.
 | Icons | lucide-react |
 | Motion | Framer Motion (`FadeIn`, `HeroMotion`) |
 | Carousel | Embla + Autoplay |
+| Client state | Zustand (`patients`, `appointments`, `schedule` stores) |
 | Fonts | Libre Baskerville, Merriweather, Caveat via `next/font` |
 | Alias | `@/*` → `src/*` |
 
@@ -27,16 +28,16 @@ Dev uses `next dev --webpack` with `@tailwindcss/postcss`.
 Browser
   └─ Next.js
        ├─ Server: layout, pages, most section shells, footer
-       ├─ Client: header, theme, services tabs, Embla, contact form, motion
+       ├─ Client: header, theme, services tabs, Embla, contact form, motion, admin
        └─ API routes: none yet
 ```
 
-Clinic facts live in `src/data/`. Nav links live in `src/constants/nav.ts`.
+Clinic facts live in `src/data/`. Nav links live in `src/constants/nav.ts`. Admin seed data lives in `src/data/admin-seed.ts`.
 
 ## 3. Folder map
 
 ```text
-src/app/                     Routes: /, /about, /services, /reviews, /faq, /contact
+src/app/                     Marketing routes + /admin/*
 src/components/
   home/                      Hero + hero-only pieces (features, trust badge)
   services/                  Services section
@@ -46,11 +47,15 @@ src/components/
   branches/                  Branches section + interactive picker
   faq/                       FAQ section
   contact/                   Contact / enquiry section
+  admin/                     Dashboard shell, auth dialog, schedule/patients/appointments
   layout/                    SiteHeader, SiteFooter, PageShell, theme helpers
   motion/                    FadeIn, HeroMotion
   ui/                        shadcn primitives only
-src/constants/               Shared constants (nav)
-src/data/                    Clinic content (clinic, services, faqs, reviews, why-choose-us)
+src/stores/                  Zustand stores (patients, appointments, schedule)
+src/hooks/                   Shared hooks (incl. use-admin-auth)
+src/constants/               Shared constants (nav, admin)
+src/types/                   Shared types (incl. admin models)
+src/data/                    Clinic content + admin-seed
 src/lib/                     cn re-export only
 public/images/               Assets grouped by feature (see below)
 docs/                        Product + engineering docs
@@ -83,8 +88,12 @@ public/images/
 | `/reviews` | Reviews only |
 | `/faq` | FAQ only |
 | `/contact` | Branches + Contact |
+| `/admin` | Dashboard overview (stats + shortcuts) |
+| `/admin/schedule` | Working days and opening hours |
+| `/admin/patients` | Patient CRUD via `usePatientsStore` |
+| `/admin/appointments` | Appointments linked by `patientId` |
 
-Every page uses `PageShell` (`layout/PageShell.tsx`): fixed header, main offset, footer.
+Marketing pages use `PageShell` (`layout/PageShell.tsx`): fixed header, main offset, footer. Admin routes use `app/admin/layout.tsx` → `AdminShell` (sidebar, header, mandatory auth dialog).
 
 ## 5. Key components
 
@@ -112,8 +121,19 @@ Every page uses `PageShell` (`layout/PageShell.tsx`): fixed header, main offset,
 
 Facts from [dddental.in](https://dddental.in/): phone, email, Manikonda primary branch, Hyderabad locations, hours, services, clinic narrative. Reviews in `reviews.js` are placeholders until the clinic supplies approved quotes.
 
-## 8. Boundaries
+## 8. Admin data models
+
+Minimal, relational-friendly shapes in `src/types/admin.ts`:
+
+- `Patient` — `id`, name, phone, age, profession, optional email/address, timestamps
+- `Appointment` — `id`, `patientId`, date, time, reason, status, optional notes, timestamps
+- `DaySchedule` — weekday, `isOpen`, open/close times
+
+Stores mirror future tables. Deleting a patient also removes their appointments in the UI layer.
+
+## 9. Boundaries
 
 - No runtime WordPress fetch.
 - Enquiry form must not claim success until a real delivery API exists.
-- No secrets in client components.
+- Admin password is a temporary client gate only; replace with server auth before any real patient data.
+- Do not treat `sessionStorage` admin unlock as authorization for a future API.

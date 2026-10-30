@@ -4,13 +4,17 @@ This version is a public website. It does not authenticate users. The sensitive 
 
 ## 1. Authentication and authorization
 
-There is no login, session, or role model. Do not add one as part of the marketing site.
+The marketing site has no login. `/admin` uses a **temporary client password gate** only:
 
-If a staff tool is approved later:
+- Password is checked in the browser and unlock is stored in `sessionStorage`.
+- The dialog cannot be dismissed without a correct password (no close icon, outside click, or Escape).
+- This is **not** access control for an API or database. Anyone can read the client bundle and bypass it.
+
+Before any real patient data:
 
 - Authenticate on the server.
-- Authorize on a stable user id and role, not on an email string comparison in the client.
-- Keep session cookies on the provider. Do not invent a token in `localStorage`.
+- Authorize on a stable user id and role, not a shared password in the client.
+- Keep session cookies on the provider. Do not invent a token in `localStorage` / `sessionStorage` as the sole gate.
 
 Hidden buttons are not access control.
 

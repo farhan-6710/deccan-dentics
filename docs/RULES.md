@@ -59,16 +59,18 @@ Organize under `src/` by responsibility. Feature UI is grouped by section:
 | `components/branches/` | Branches section + picker |
 | `components/faq/` | FAQ section |
 | `components/contact/` | Contact / enquiry section |
+| `components/admin/` | Admin shell, auth dialog, schedule/patients/appointments UI |
 | `components/layout/` | Header, footer, PageShell, theme helpers |
 | `components/motion/` | Framer Motion helpers (`FadeIn`, `HeroMotion`) |
 | `components/ui/` | shadcn primitives only |
 | `hooks/` | Shared React hooks |
+| `stores/` | Zustand client stores (admin entities today) |
 | `services/` | API / external calls (when added) |
 | `utils/` | Pure helpers |
 | `constants/` | Shared constants |
 | `types/` | Shared types |
 | `lib/` | `cn` re-export only — no features |
-| `data/` | Clinic content modules |
+| `data/` | Clinic content modules + admin seed |
 
 - Keep a section and its private children in the same feature folder.
 - Move code to `layout/`, `motion/`, or `ui/` only when it is genuinely shared.

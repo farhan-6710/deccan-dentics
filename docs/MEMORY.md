@@ -1,12 +1,12 @@
 # Memory — Deccan Dentics
 
-Last updated 30 Oct 2026 (components grouped by feature folder). Read this before changing brand, scope, or structure.
+Last updated 30 Oct 2026 (admin dashboard added). Read this before changing brand, scope, or structure.
 
 ## 1. What this is
 
 A redesign of the Deccan Dentics clinic site at [https://dddental.in/](https://dddental.in/). The repository is a Next.js app called `deccan-dentics-dental-clinic`. The live site is still WordPress. This app does not call that WordPress API.
 
-The product is a public brochure plus an appointment request. It is not a patient portal.
+The product is a public brochure plus an appointment request, plus a temporary staff `/admin` dashboard for schedule, patients, and appointments. The admin area is not a patient portal and is not production-grade auth.
 
 ## 2. Brand decisions already made
 
@@ -47,10 +47,12 @@ Checked 30 Oct 2026.
 - `cn` comes from the `cn` package. `src/lib/utils.ts` re-exports it.
 - Components are grouped by feature under `src/components/` (`home`, `services`, `why-choose-us`, `about`, `reviews`, `branches`, `faq`, `contact`, plus `layout`, `motion`, `ui`). See `ARCHITECTURE.md`.
 - Images live under `public/images/{brand,hero,services,faq,about,why-choose-us,tools,decor,source}/`. Floating dental tools use `FloatingTools` (desktop only).
-- Theme is a `dark` class on `<html>`, written by `layout/ThemeToggle`. Move this to `next-themes` rather than adding a second toggle.
+- Theme is a `dark` class on `<html>`. Toggle writes `localStorage.theme` (`light`|`dark`). A head boot script applies **only** that explicit value before paint — it must not use `prefers-color-scheme` (that caused hydration mismatches for users with a dark OS and no stored theme). `suppressHydrationWarning` on `<html>` is required with that boot script (see Next “preventing flash before hydration”). `suppressHydrationWarning` on `<body>` is for browser extensions that inject attributes (e.g. ColorZilla’s `cz-shortcut-listen`) before hydrate — not an app bug and not related to webpack. Move to `next-themes` rather than adding a second toggle.
 - Dev server is `next dev --webpack` even though `next.config.ts` also mentions Turbopack CSS. Leave that alone unless dev is being fixed on purpose.
-- No database, auth, or email provider is installed. Do not add one inside a visual change.
-- Appointment delivery is undecided. The form must not fake a successful send.
+- No database or email provider is installed. Do not add one inside a visual change.
+- Admin unlock is client-only: password `deccan-dentics-1234`, key `deccan-admin-authorized` in `sessionStorage`. Not real authorization. Replace before any real PHI.
+- Admin state: Zustand stores under `src/stores/` (`usePatientsStore`, `useAppointmentsStore`, `useScheduleStore`). Seed data in `src/data/admin-seed.ts`. Models in `src/types/admin.ts`.
+- Appointment delivery is undecided. The public form must not fake a successful send.
 
 ## 6. Lessons from the design work
 

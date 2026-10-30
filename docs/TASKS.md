@@ -48,15 +48,27 @@ Mark an item done only after it is in the repo and checked in the browser or by 
 - [ ] `POST /api/appointments` (or enquiry) after delivery choice.
 - [ ] Until that route exists, do not claim the message was sent.
 
-## 5. Quality
+## 5. Admin dashboard
+
+- [x] `/admin` App Router layout with sidebar + header shell.
+- [x] Mandatory password dialog (`deccan-dentics-1234`), non-dismissible, `sessionStorage` restore.
+- [x] Schedule & timings editor (Zustand).
+- [x] Patients CRUD with `usePatientsStore` + three seed Indian patients.
+- [x] Appointments CRUD linked by `patientId`.
+- [x] DB-friendly models in `types/admin.ts`; seed in `data/admin-seed.ts`.
+- [ ] Replace client password gate with real server auth before production patient data.
+- [ ] Persist admin stores to a backend / database.
+
+## 6. Quality
 
 - [x] `bun run build` passes.
-- [ ] `bun run lint` clean (verify after carousel/theme lint fixes).
+- [x] `bun run lint` clean (admin + marketing).
 - [ ] Keyboard pass on header, carousel, accordion, form.
 - [ ] Light and dark check on every section at ~360px and desktop.
 
-## 6. Suggested next
+## 7. Suggested next
 
 1. Wire enquiry / appointment delivery.
 2. Approved photography and reviews from the clinic.
 3. `prefers-reduced-motion` + `next-themes`.
+4. Harden admin auth and persist clinic data server-side.

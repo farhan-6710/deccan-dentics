@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Caveat, Libre_Baskerville, Merriweather } from "next/font/google";
-import { ThemeScript } from "@/components/layout/ThemeScript";
+import { THEME_BOOT_SCRIPT } from "@/components/layout/ThemeScript";
 import "./globals.css";
 
 const libreBaskerville = Libre_Baskerville({
@@ -29,12 +29,14 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: THEME_BOOT_SCRIPT }} />
+      </head>
       <body
         suppressHydrationWarning
         className={`${libreBaskerville.variable} ${merriweather.variable} ${caveat.variable} h-full antialiased`}
       >
-        <ThemeScript />
         {children}
       </body>
     </html>
