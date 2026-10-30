@@ -12,7 +12,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { APPOINTMENT_STATUSES } from "@/constants/admin";
+import { APPOINTMENT_STATUSES } from "@/constants/appointments/statuses";
 import type { AppointmentInput, Patient } from "@/types/admin";
 
 type AppointmentFormFieldsProps = {

@@ -67,10 +67,10 @@ Organize under `src/` by responsibility. Feature UI is grouped by section:
 | `stores/` | Zustand client stores (admin entities today) |
 | `services/` | API / external calls (when added) |
 | `utils/` | Pure helpers |
-| `constants/` | Shared constants |
+| `constants/` | Shared constants + per-page admin seeds (`patients/`, `appointments/`, …) |
 | `types/` | Shared types |
 | `lib/` | `cn` re-export only — no features |
-| `data/` | Clinic content modules + admin seed |
+| `data/` | Marketing clinic content modules |
 
 - Keep a section and its private children in the same feature folder.
 - Move code to `layout/`, `motion/`, or `ui/` only when it is genuinely shared.

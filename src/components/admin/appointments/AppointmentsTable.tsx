@@ -12,15 +12,16 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { AppointmentFormDialog } from "@/components/admin/appointments/AppointmentFormDialog";
-import { useAppointmentsStore } from "@/stores/appointments-store";
-import { usePatientsStore } from "@/stores/patients-store";
+import { useClinicStore } from "@/stores/clinic-store";
 import type { Appointment, AppointmentInput } from "@/types/admin";
 
 export function AppointmentsTable() {
-  const { appointments, addAppointment, updateAppointment, deleteAppointment } =
-    useAppointmentsStore();
-  const patients = usePatientsStore((s) => s.patients);
-  const getPatient = usePatientsStore((s) => s.getPatient);
+  const appointments = useClinicStore((s) => s.appointments);
+  const addAppointment = useClinicStore((s) => s.addAppointment);
+  const updateAppointment = useClinicStore((s) => s.updateAppointment);
+  const deleteAppointment = useClinicStore((s) => s.deleteAppointment);
+  const patients = useClinicStore((s) => s.patients);
+  const getPatient = useClinicStore((s) => s.getPatient);
   const [open, setOpen] = useState(false);
   const [editing, setEditing] = useState<Appointment | null>(null);
 

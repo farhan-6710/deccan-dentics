@@ -32,7 +32,7 @@ Browser
        └─ API routes: none yet
 ```
 
-Clinic facts live in `src/data/`. Nav links live in `src/constants/nav.ts`. Admin seed data lives in `src/data/admin-seed.ts`.
+Clinic facts live in `src/data/`. Nav links live in `src/constants/nav.ts`. Admin seed/constants live under `src/constants/{patients,appointments,schedule,todos,dashboard}/`.
 
 ## 3. Folder map
 
@@ -51,11 +51,11 @@ src/components/
   layout/                    SiteHeader, SiteFooter, PageShell, theme helpers
   motion/                    FadeIn, HeroMotion
   ui/                        shadcn primitives only
-src/stores/                  Zustand stores (patients, appointments, schedule)
+src/stores/                  Zustand (`useClinicStore` for admin entities)
 src/hooks/                   Shared hooks (incl. use-admin-auth)
-src/constants/               Shared constants (nav, admin)
-src/types/                   Shared types (incl. admin models)
-src/data/                    Clinic content + admin-seed
+src/constants/               Shared + per-page admin seeds (patients, appointments, …)
+src/types/                   Shared types (incl. admin + todo models)
+src/data/                    Marketing clinic content modules
 src/lib/                     cn re-export only
 public/images/               Assets grouped by feature (see below)
 docs/                        Product + engineering docs
@@ -88,9 +88,10 @@ public/images/
 | `/reviews` | Reviews only |
 | `/faq` | FAQ only |
 | `/contact` | Branches + Contact |
-| `/admin` | Dashboard overview (stats + shortcuts) |
+| `/admin` | Redirects to `/admin/dashboard` |
+| `/admin/dashboard` | Dashboard (stats + shortcuts) |
 | `/admin/schedule` | Working days and opening hours |
-| `/admin/patients` | Patient CRUD via `usePatientsStore` |
+| `/admin/patients` | Patient CRUD via `useClinicStore` |
 | `/admin/appointments` | Appointments linked by `patientId` |
 
 Marketing pages use `PageShell` (`layout/PageShell.tsx`): fixed header, main offset, footer. Admin routes use `app/admin/layout.tsx` → `AdminShell` (sidebar, header, mandatory auth dialog).

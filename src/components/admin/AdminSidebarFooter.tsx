@@ -1,7 +1,6 @@
 "use client";
 
-import Link from "next/link";
-import { ArrowLeft } from "lucide-react";
+import { PanelLeftClose, PanelLeftOpen } from "lucide-react";
 import {
   Tooltip,
   TooltipContent,
@@ -11,31 +10,37 @@ import { cn } from "cn";
 
 type AdminSidebarFooterProps = {
   collapsed: boolean;
-  onNavigate?: () => void;
+  onToggleSidebar?: () => void;
 };
 
 export function AdminSidebarFooter({
   collapsed,
-  onNavigate,
+  onToggleSidebar,
 }: AdminSidebarFooterProps) {
-  const link = (
-    <Link
-      href="/"
-      onClick={onNavigate}
+  if (!onToggleSidebar) return null;
+
+  const label = collapsed ? "Expand sidebar" : "Collapse sidebar";
+  const Icon = collapsed ? PanelLeftOpen : PanelLeftClose;
+
+  const button = (
+    <button
+      type="button"
+      onClick={onToggleSidebar}
+      aria-label={label}
       className={cn(
-        "flex items-center gap-3 rounded-2xl text-sm font-medium transition",
+        "flex w-full items-center gap-3 rounded-2xl text-sm font-medium transition",
         collapsed
           ? "justify-center px-4 py-4 text-sidebar-foreground/75 hover:bg-secondary"
           : "px-4 py-2.5 text-sidebar-foreground/75 hover:bg-secondary hover:text-secondary-foreground",
       )}
     >
-      <ArrowLeft className="size-4 shrink-0" />
+      <Icon className="size-4 shrink-0" />
       {collapsed ? (
-        <span className="sr-only">Back to website</span>
+        <span className="sr-only">{label}</span>
       ) : (
-        <span>Back to website</span>
+        <span>Collapse sidebar</span>
       )}
-    </Link>
+    </button>
   );
 
   return (
@@ -48,14 +53,14 @@ export function AdminSidebarFooter({
       {collapsed ? (
         <Tooltip>
           <TooltipTrigger delay={0} render={<div className="w-full" />}>
-            {link}
+            {button}
           </TooltipTrigger>
           <TooltipContent side="right" sideOffset={10}>
-            <p className="font-medium">Back to website</p>
+            <p className="font-medium">{label}</p>
           </TooltipContent>
         </Tooltip>
       ) : (
-        link
+        button
       )}
     </div>
   );

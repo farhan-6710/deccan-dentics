@@ -1,4 +1,7 @@
+"use client";
+
 import {
+  AdminMotion,
   AdminPage,
   AdminPageIntro,
 } from "@/components/admin/AdminPage";
@@ -12,7 +15,9 @@ export default function AdminPatientsPage() {
         title="Patient records"
         description="Keep a lightweight patient list ready for appointments."
       />
-      <PatientsTable />
+      <AdminMotion>
+        <PatientsTable />
+      </AdminMotion>
     </AdminPage>
   );
 }

@@ -19,6 +19,7 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
   const { authorized, login, logout } = useAdminAuth();
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
   const [isMobileNavOpen, setIsMobileNavOpen] = useState(false);
+  const toggleSidebar = () => setIsSidebarCollapsed((prev) => !prev);
 
   const title = useMemo(() => {
     const match = [...ADMIN_NAV]
@@ -32,10 +33,13 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
   }, [pathname]);
 
   return (
-    <div className="flex min-h-dvh bg-muted/30">
+    <div className="flex h-dvh overflow-hidden bg-muted/30">
       <AdminAuthDialog open={!authorized} onLogin={login} />
 
-      <AdminSidebar collapsed={isSidebarCollapsed} />
+      <AdminSidebar
+        collapsed={isSidebarCollapsed}
+        onToggleSidebar={toggleSidebar}
+      />
 
       <Sheet open={isMobileNavOpen} onOpenChange={setIsMobileNavOpen}>
         <SheetContent side="left" className="w-64 max-w-[85vw] p-0" showCloseButton>
@@ -50,16 +54,14 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
         </SheetContent>
       </Sheet>
 
-      <div className="flex min-w-0 flex-1 flex-col">
+      <div className="flex min-h-0 min-w-0 flex-1 flex-col overflow-hidden">
         <AdminHeader
           title={title}
-          isSidebarCollapsed={isSidebarCollapsed}
-          onToggleSidebar={() => setIsSidebarCollapsed((prev) => !prev)}
           onMobileMenuClick={() => setIsMobileNavOpen(true)}
           onLogout={logout}
         />
         <main
-          className="flex-1 px-4 py-6 text-left sm:px-6 lg:px-8"
+          className="min-h-0 flex-1 overflow-y-auto px-4 py-6 text-left sm:px-6 lg:px-8"
           inert={!authorized ? true : undefined}
           aria-hidden={!authorized}
         >

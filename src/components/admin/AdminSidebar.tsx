@@ -12,19 +12,21 @@ import { cn } from "cn";
 type AdminSidebarProps = {
   collapsed: boolean;
   onNavigate?: () => void;
+  onToggleSidebar?: () => void;
   mode?: "rail" | "sheet";
 };
 
 export function AdminSidebar({
   collapsed,
   onNavigate,
+  onToggleSidebar,
   mode = "rail",
 }: AdminSidebarProps) {
   const body = (
     <div className="flex h-full flex-col bg-sidebar text-sidebar-foreground">
       <div className="flex h-16 shrink-0 items-center justify-center border-b border-sidebar-border/80 px-4">
         <Link
-          href="/admin"
+          href="/admin/dashboard"
           onClick={onNavigate}
           className={cn(
             "inline-flex items-center",
@@ -48,14 +50,11 @@ export function AdminSidebar({
         </Link>
       </div>
 
-      {!collapsed ? (
-        <p className="px-4 pt-3 text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
-          Admin dashboard
-        </p>
-      ) : null}
-
       <AdminSidebarNav collapsed={collapsed} onNavigate={onNavigate} />
-      <AdminSidebarFooter collapsed={collapsed} onNavigate={onNavigate} />
+      <AdminSidebarFooter
+        collapsed={collapsed}
+        onToggleSidebar={onToggleSidebar}
+      />
     </div>
   );
 
@@ -68,7 +67,7 @@ export function AdminSidebar({
       <motion.aside
         {...SHELL_SIDEBAR_MOTION}
         className={cn(
-          "min-h-0 w-0 shrink-0 overflow-hidden border-0 bg-sidebar text-sidebar-foreground",
+          "h-dvh min-h-0 w-0 shrink-0 overflow-hidden border-0 bg-sidebar text-sidebar-foreground",
           "transition-[width] duration-500 ease-[cubic-bezier(0.32,0.72,0,1)]",
           "md:border-r md:border-sidebar-border/80",
           collapsed ? "md:w-20" : "md:w-64",

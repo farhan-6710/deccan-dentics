@@ -12,7 +12,7 @@ import { ADMIN_NAV } from "@/constants/admin";
 import { cn } from "cn";
 
 const ICONS = {
-  "/admin": LayoutDashboard,
+  "/admin/dashboard": LayoutDashboard,
   "/admin/schedule": Clock3,
   "/admin/patients": Users,
   "/admin/appointments": CalendarDays,

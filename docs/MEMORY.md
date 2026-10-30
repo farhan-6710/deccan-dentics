@@ -52,7 +52,8 @@ Checked 30 Oct 2026.
 - Dev server is `next dev --webpack` even though `next.config.ts` also mentions Turbopack CSS. Leave that alone unless dev is being fixed on purpose.
 - No database or email provider is installed. Do not add one inside a visual change.
 - Admin unlock is client-only: password `deccan-dentics-1234`, key `deccan-admin-authorized` in `sessionStorage`. Not real authorization. Replace before any real PHI.
-- Admin state: Zustand stores under `src/stores/` (`usePatientsStore`, `useAppointmentsStore`, `useScheduleStore`). Seed data in `src/data/admin-seed.ts`. Models in `src/types/admin.ts`.
+- Admin state: single Zustand store `useClinicStore` (`src/stores/clinic-store.ts`) holds patients, appointments, schedule days, and todos. Seed/constants live under `src/constants/{patients,appointments,schedule,todos,dashboard}/`. Models in `src/types/admin.ts` and `src/types/todo.ts`.
+- Dashboard stats filter against fixed `DASHBOARD_REFERENCE_DATE` (`2026-10-30`) and seed `createdAt`/`updatedAt` values. Do not use `new Date()` during Client Component render on statically prerendered admin pages — defer with `useEffect` (Next blocks prerender otherwise).
 - Appointment delivery is undecided. The public form must not fake a successful send.
 
 ## 6. Lessons from the design work

@@ -1,4 +1,7 @@
+"use client";
+
 import {
+  AdminMotion,
   AdminPage,
   AdminPageIntro,
 } from "@/components/admin/AdminPage";
@@ -12,7 +15,9 @@ export default function AdminAppointmentsPage() {
         title="Visit schedule"
         description="Appointments always link to a patient record via patientId."
       />
-      <AppointmentsTable />
+      <AdminMotion>
+        <AppointmentsTable />
+      </AdminMotion>
     </AdminPage>
   );
 }

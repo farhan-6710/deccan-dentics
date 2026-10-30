@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import { CalendarDays } from "lucide-react";
-import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
 import {
   Popover,
@@ -14,6 +13,7 @@ import {
   parseDateValue,
   toDateValue,
 } from "@/utils/date";
+import { cn } from "cn";
 
 type DatePickerProps = {
   value: string;
@@ -35,18 +35,16 @@ export function DatePicker({
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger
         disabled={disabled}
-        render={
-          <Button
-            id={id}
-            type="button"
-            variant="outline"
-            disabled={disabled}
-            className="h-9 w-full justify-start gap-2 bg-secondary/40 px-3 font-normal"
-          />
-        }
+        id={id}
+        className={cn(
+          "flex h-10 w-full cursor-pointer items-center justify-between gap-1.5 rounded-lg border border-input bg-background px-3 py-2 text-sm outline-none transition-colors",
+          "focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50",
+          "disabled:cursor-not-allowed disabled:opacity-50",
+          !value && "text-muted-foreground",
+        )}
       >
-        <CalendarDays className="size-4 shrink-0 text-primary" />
         <span className="truncate">{formatDateLabel(value)}</span>
+        <CalendarDays className="size-4 shrink-0 text-muted-foreground" />
       </PopoverTrigger>
       <PopoverContent align="start" className="w-auto p-2">
         <Calendar
@@ -57,7 +55,7 @@ export function DatePicker({
             onChange(toDateValue(date));
             setOpen(false);
           }}
-          className="rounded-lg bg-transparent p-0 [--cell-radius:var(--radius-md)]"
+          className="rounded-lg bg-transparent p-0"
         />
       </PopoverContent>
     </Popover>
