@@ -73,13 +73,13 @@ Every elevated control uses a transparent border and two backgrounds: a face, th
 
 | Surface | Utility | Behavior |
 |---|---|---|
-| Primary, secondary, outline buttons | `btn-elevated` plus `btn-primary`, `btn-secondary`, or `btn-outline` | Hover lifts `1px`. Active presses `1px`. Focus ring uses `--ring`. |
-| Ghost, link, destructive | Flat | No fake bevel |
+| Primary, secondary, outline, destructive buttons | `btn-elevated` plus `btn-primary`, `btn-secondary`, `btn-outline`, or `btn-destructive` | Hover lifts `1px`. Active presses `1px`. Focus ring uses `--ring`. |
+| Ghost, link | Flat | No fake bevel |
 | Inputs and select triggers | `control-elevated` `field-inset` | Recessed by about one pixel. No lift. Green edge on focus. Open select uses the green edge without an outline that collides with the menu. |
 | Cards and accordion items | `control-elevated` `surface-raised` | Soft shadow. No hover jump. Open accordion item shifts the edge toward primary. |
 | Select menu | `surface-overlay` on the popup, `surface-float` on the positioner | The positioner carries the drop shadow so the scrolling list does not clip it. |
 
-Ghost and destructive stay flat on purpose. Depth is for the main actions and for surfaces that sit above the page.
+Ghost and link stay flat on purpose. Elevated depth is for the main actions (including destructive) and for surfaces that sit above the page.
 
 ## 5. Components
 

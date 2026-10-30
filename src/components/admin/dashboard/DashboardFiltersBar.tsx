@@ -53,7 +53,7 @@ function FilterSelect<T extends string>({
   onChange,
 }: {
   value: T;
-  options: Option<T>[];
+  options: readonly Option<T>[];
   onChange: (value: T) => void;
 }) {
   const selectedLabel =

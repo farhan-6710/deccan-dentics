@@ -1,8 +1,19 @@
 "use client";
 
+import {
+  PATIENT_STATUSES,
+  PATIENT_STATUS_LABELS,
+} from "@/constants/patients/statuses";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import type { PatientInput } from "@/types/admin";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import type { PatientInput, PatientStatus } from "@/types/admin";
 
 type PatientFormFieldsProps = {
   value: PatientInput;
@@ -45,7 +56,7 @@ export function PatientFormFields({ value, onChange }: PatientFormFieldsProps) {
           required
         />
       </div>
-      <div className="space-y-2 sm:col-span-2">
+      <div className="space-y-2">
         <Label htmlFor="patient-profession">Profession</Label>
         <Input
           id="patient-profession"
@@ -53,6 +64,26 @@ export function PatientFormFields({ value, onChange }: PatientFormFieldsProps) {
           onChange={(e) => set("profession", e.target.value)}
           required
         />
+      </div>
+      <div className="space-y-2">
+        <Label>Status</Label>
+        <Select
+          value={value.status}
+          onValueChange={(status) => {
+            if (status) set("status", status as PatientStatus);
+          }}
+        >
+          <SelectTrigger className="w-full">
+            <SelectValue>{PATIENT_STATUS_LABELS[value.status]}</SelectValue>
+          </SelectTrigger>
+          <SelectContent>
+            {PATIENT_STATUSES.map((status) => (
+              <SelectItem key={status} value={status}>
+                {PATIENT_STATUS_LABELS[status]}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
       </div>
       <div className="space-y-2">
         <Label htmlFor="patient-email">Email (optional)</Label>
@@ -63,7 +94,7 @@ export function PatientFormFields({ value, onChange }: PatientFormFieldsProps) {
           onChange={(e) => set("email", e.target.value || undefined)}
         />
       </div>
-      <div className="space-y-2">
+      <div className="space-y-2 sm:col-span-2">
         <Label htmlFor="patient-address">Address (optional)</Label>
         <Input
           id="patient-address"

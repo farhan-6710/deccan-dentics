@@ -1,16 +1,28 @@
+export type PatientStatus =
+  | "new"
+  | "follow-up-one"
+  | "follow-up-two"
+  | "follow-up-three"
+  | "done";
+
 export type Patient = {
   id: string;
   name: string;
   phone: string;
   age: number;
   profession: string;
+  status: PatientStatus;
   email?: string;
   address?: string;
   createdAt: string;
   updatedAt: string;
 };
 
-export type AppointmentStatus = "scheduled" | "completed" | "cancelled";
+export type AppointmentStatus =
+  | "upcoming"
+  | "completed"
+  | "not-attended"
+  | "cancelled";
 
 export type Appointment = {
   id: string;
@@ -33,11 +45,16 @@ export type Weekday =
   | "saturday"
   | "sunday";
 
+export type ScheduleTimeSlot = {
+  id: string;
+  openTime: string;
+  closeTime: string;
+};
+
 export type DaySchedule = {
   day: Weekday;
   isOpen: boolean;
-  openTime: string;
-  closeTime: string;
+  slots: ScheduleTimeSlot[];
 };
 
 export type PatientInput = Omit<Patient, "id" | "createdAt" | "updatedAt">;

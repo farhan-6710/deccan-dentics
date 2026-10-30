@@ -1,4 +1,5 @@
-import type { DashboardRange, DashboardStatusFilter } from "@/types/dashboard";
+import { APPOINTMENT_STATUS_FILTER_OPTIONS } from "@/constants/appointments/statuses";
+import type { DashboardRange } from "@/types/dashboard";
 
 export const DASHBOARD_RANGE_OPTIONS: {
   value: DashboardRange;
@@ -11,12 +12,4 @@ export const DASHBOARD_RANGE_OPTIONS: {
   { value: "6m", label: "Last 6 months" },
 ];
 
-export const DASHBOARD_STATUS_OPTIONS: {
-  value: DashboardStatusFilter;
-  label: string;
-}[] = [
-  { value: "all", label: "All statuses" },
-  { value: "scheduled", label: "Scheduled" },
-  { value: "completed", label: "Completed" },
-  { value: "cancelled", label: "Cancelled" },
-];
+export const DASHBOARD_STATUS_OPTIONS = APPOINTMENT_STATUS_FILTER_OPTIONS;

@@ -4,9 +4,9 @@ export const ADMIN_PASSWORD = "deccan-dentics-1234";
 export const ADMIN_SESSION_KEY = "deccan-admin-authorized";
 
 export const ADMIN_USER_PROFILE = {
-  name: "Farhan Ahmed",
-  displayName: "Dr. Ahmed",
-  initials: getInitials("Farhan Ahmed"),
+  name: "Shazia",
+  displayName: "Dr. Shazia",
+  initials: getInitials("Shazia"),
 } as const;
 
 export const ADMIN_NAV = [

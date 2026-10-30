@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { AdminPageHeader } from "@/components/admin/AdminPageHeader";
 import { DashboardFiltersBar } from "@/components/admin/dashboard/DashboardFiltersBar";
 import { ADMIN_USER_PROFILE } from "@/constants/admin";
 import type { DashboardFilters } from "@/types/dashboard";
@@ -27,20 +28,17 @@ export function DashboardPageHeader({
   }, []);
 
   return (
-    <div className="flex flex-col gap-4 xl:flex-row xl:items-end xl:justify-between">
-      <div className="min-w-0">
-        <p className="font-heading text-lg text-muted-foreground sm:text-xl">
-          {greeting}
-        </p>
-        <h2 className="mt-1 font-heading text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
+    <AdminPageHeader
+      lead={greeting}
+      title={
+        <>
           {ADMIN_USER_PROFILE.displayName}{" "}
           <span aria-hidden="true">👋</span>
-        </h2>
-        <p className="mt-2 max-w-xl text-muted-foreground">
-          Here&apos;s what&apos;s happening at Deccan Dentics today.
-        </p>
-      </div>
+        </>
+      }
+      description="Here's what's happening at Deccan Dentics today."
+    >
       <DashboardFiltersBar filters={filters} onChange={onChange} />
-    </div>
+    </AdminPageHeader>
   );
 }

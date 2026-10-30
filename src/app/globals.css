@@ -387,6 +387,32 @@
   }
 }
 
+@utility btn-destructive {
+  color: white;
+  background-image:
+    linear-gradient(
+      to bottom,
+      color-mix(in srgb, var(--destructive) 94%, white),
+      color-mix(in srgb, var(--destructive) 94%, black)
+    ),
+    linear-gradient(
+      to bottom,
+      color-mix(in srgb, var(--destructive) 55%, white),
+      color-mix(in srgb, var(--destructive) 65%, black)
+    );
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.28),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.14),
+    0 1px 2px color-mix(in srgb, var(--destructive) 35%, transparent),
+    0 6px 14px color-mix(in srgb, var(--destructive) 30%, transparent);
+
+  &:active {
+    box-shadow:
+      inset 0 2px 4px rgba(0, 0, 0, 0.25),
+      0 1px 2px color-mix(in srgb, var(--destructive) 30%, transparent);
+  }
+}
+
 /* Dual-layer border used by fields, cards, and menus */
 @utility control-elevated {
   border: 1px solid transparent;

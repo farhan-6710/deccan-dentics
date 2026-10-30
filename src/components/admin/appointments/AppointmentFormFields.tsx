@@ -12,7 +12,10 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { APPOINTMENT_STATUSES } from "@/constants/appointments/statuses";
+import {
+  APPOINTMENT_STATUSES,
+  APPOINTMENT_STATUS_LABELS,
+} from "@/constants/appointments/statuses";
 import type { AppointmentInput, Patient } from "@/types/admin";
 
 type AppointmentFormFieldsProps = {
@@ -87,12 +90,14 @@ export function AppointmentFormFields({
           }}
         >
           <SelectTrigger className="w-full">
-            <SelectValue />
+            <SelectValue>
+              {APPOINTMENT_STATUS_LABELS[value.status]}
+            </SelectValue>
           </SelectTrigger>
           <SelectContent>
             {APPOINTMENT_STATUSES.map((status) => (
               <SelectItem key={status} value={status}>
-                {status}
+                {APPOINTMENT_STATUS_LABELS[status]}
               </SelectItem>
             ))}
           </SelectContent>

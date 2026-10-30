@@ -5,12 +5,14 @@ import { SEED_APPOINTMENTS } from "@/constants/appointments/seed";
 import { SEED_PATIENTS } from "@/constants/patients/seed";
 import { SEED_SCHEDULE } from "@/constants/schedule/seed";
 import { SEED_TODOS } from "@/constants/todos/seed";
+import { createScheduleActions } from "@/stores/schedule-actions";
 import type {
   Appointment,
   AppointmentInput,
   DaySchedule,
   Patient,
   PatientInput,
+  ScheduleTimeSlot,
   Weekday,
 } from "@/types/admin";
 import type { ClinicTodo, TodoInput } from "@/types/todo";
@@ -28,7 +30,14 @@ type ClinicState = {
   addAppointment: (input: AppointmentInput) => Appointment;
   updateAppointment: (id: string, input: AppointmentInput) => void;
   deleteAppointment: (id: string) => void;
-  updateDay: (day: Weekday, patch: Partial<Omit<DaySchedule, "day">>) => void;
+  setDayOpen: (day: Weekday, isOpen: boolean) => void;
+  addDaySlot: (day: Weekday) => void;
+  updateDaySlot: (
+    day: Weekday,
+    slotId: string,
+    patch: Partial<Omit<ScheduleTimeSlot, "id">>,
+  ) => void;
+  removeDaySlot: (day: Weekday, slotId: string) => void;
   addTodo: (input: TodoInput) => ClinicTodo;
   toggleTodo: (id: string) => void;
   deleteTodo: (id: string) => void;
@@ -86,11 +95,7 @@ export const useClinicStore = create<ClinicState>((set, get) => ({
       appointments: s.appointments.filter((item) => item.id !== id),
     }));
   },
-  updateDay: (day, patch) => {
-    set((s) => ({
-      days: s.days.map((item) => (item.day === day ? { ...item, ...patch } : item)),
-    }));
-  },
+  ...createScheduleActions(set),
   addTodo: (input) => {
     const todo: ClinicTodo = {
       id: createId("todo"),

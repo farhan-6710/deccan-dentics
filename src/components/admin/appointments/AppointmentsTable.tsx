@@ -1,19 +1,26 @@
 "use client";
 
-import { useState } from "react";
-import { Pencil, Plus, Trash2 } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
+import { useCallback, useMemo, useState } from "react";
+import { DataTable } from "@/components/admin/DataTable";
+import { AppointmentDetailsCard } from "@/components/admin/appointments/AppointmentDetailsCard";
 import { AppointmentFormDialog } from "@/components/admin/appointments/AppointmentFormDialog";
+import { getAppointmentListColumns } from "@/components/admin/appointments/appointment-columns";
+import { AppointmentsToolbar } from "@/components/admin/appointments/AppointmentsToolbar";
+import { ConfirmationModal } from "@/components/ui/ConfirmationModal";
+import { useConfirmDialog } from "@/hooks/use-confirm-dialog";
+import { useSelectedRow } from "@/hooks/use-selected-row";
 import { useClinicStore } from "@/stores/clinic-store";
 import type { Appointment, AppointmentInput } from "@/types/admin";
+import {
+  filterAppointments,
+  type AppointmentListFilters,
+} from "@/utils/filter-appointments";
+
+const INITIAL_FILTERS: AppointmentListFilters = {
+  query: "",
+  status: "all",
+  date: "all",
+};
 
 export function AppointmentsTable() {
   const appointments = useClinicStore((s) => s.appointments);
@@ -22,79 +29,71 @@ export function AppointmentsTable() {
   const deleteAppointment = useClinicStore((s) => s.deleteAppointment);
   const patients = useClinicStore((s) => s.patients);
   const getPatient = useClinicStore((s) => s.getPatient);
+  const [filters, setFilters] = useState(INITIAL_FILTERS);
   const [open, setOpen] = useState(false);
   const [editing, setEditing] = useState<Appointment | null>(null);
+  const { ask, props: confirmProps } = useConfirmDialog();
+
+  const rows = useMemo(
+    () => filterAppointments(appointments, patients, filters),
+    [appointments, patients, filters],
+  );
+  const getId = useCallback((item: Appointment) => item.id, []);
+  const [selectedId, setSelectedId, selected] = useSelectedRow(rows, getId);
+  const columns = useMemo(
+    () => getAppointmentListColumns((id) => getPatient(id)?.name ?? "Unknown"),
+    [getPatient],
+  );
 
   const save = (input: AppointmentInput) => {
     if (editing) updateAppointment(editing.id, input);
     else addAppointment(input);
   };
 
+  const remove = (item: Appointment) => {
+    const name = getPatient(item.patientId)?.name ?? "this appointment";
+    ask({
+      title: "Delete appointment?",
+      description: `This permanently removes the visit for ${name} on ${item.date}.`,
+      confirmLabel: "Delete appointment",
+      onConfirm: () => deleteAppointment(item.id),
+    });
+  };
+
   return (
     <div className="space-y-4">
-      <div className="flex justify-end">
-        <Button
-          type="button"
-          className="gap-1.5"
-          disabled={patients.length === 0}
-          onClick={() => {
-            setEditing(null);
+      <AppointmentsToolbar
+        filters={filters}
+        onChange={setFilters}
+        canAdd={patients.length > 0}
+        onAdd={() => {
+          setEditing(null);
+          setOpen(true);
+        }}
+      />
+      <div className="grid gap-4 lg:grid-cols-[3fr_2fr]">
+        <DataTable
+          columns={columns}
+          rows={rows}
+          getRowId={getId}
+          selectedRowId={selectedId}
+          onRowSelect={(item) => setSelectedId(item.id)}
+          emptyMessage="No appointments match these filters."
+        />
+        <AppointmentDetailsCard
+          appointment={selected}
+          patientName={
+            selected ? (getPatient(selected.patientId)?.name ?? "Unknown") : ""
+          }
+          onEdit={() => {
+            if (!selected) return;
+            setEditing(selected);
             setOpen(true);
           }}
-        >
-          <Plus className="size-4" />
-          Add appointment
-        </Button>
-      </div>
-      <div className="rounded-2xl border border-border bg-card">
-        <Table>
-          <TableHeader>
-            <TableRow>
-              <TableHead>Patient</TableHead>
-              <TableHead>Date</TableHead>
-              <TableHead>Time</TableHead>
-              <TableHead>Reason</TableHead>
-              <TableHead>Status</TableHead>
-              <TableHead className="text-right">Actions</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {appointments.map((item) => (
-              <TableRow key={item.id}>
-                <TableCell className="font-medium">
-                  {getPatient(item.patientId)?.name ?? "Unknown"}
-                </TableCell>
-                <TableCell>{item.date}</TableCell>
-                <TableCell>{item.time}</TableCell>
-                <TableCell>{item.reason}</TableCell>
-                <TableCell className="capitalize">{item.status}</TableCell>
-                <TableCell className="space-x-1 text-right">
-                  <Button
-                    type="button"
-                    size="icon-sm"
-                    variant="ghost"
-                    aria-label="Edit appointment"
-                    onClick={() => {
-                      setEditing(item);
-                      setOpen(true);
-                    }}
-                  >
-                    <Pencil className="size-3.5" />
-                  </Button>
-                  <Button
-                    type="button"
-                    size="icon-sm"
-                    variant="ghost"
-                    aria-label="Delete appointment"
-                    onClick={() => deleteAppointment(item.id)}
-                  >
-                    <Trash2 className="size-3.5 text-destructive" />
-                  </Button>
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
+          onDelete={() => {
+            if (selected) remove(selected);
+          }}
+        />
       </div>
       <AppointmentFormDialog
         open={open}
@@ -103,6 +102,7 @@ export function AppointmentsTable() {
         onClose={() => setOpen(false)}
         onSave={save}
       />
+      {confirmProps ? <ConfirmationModal {...confirmProps} /> : null}
     </div>
   );
 }

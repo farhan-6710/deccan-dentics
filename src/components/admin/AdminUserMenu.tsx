@@ -12,6 +12,7 @@ import { ConfirmationModal } from "@/components/ui/ConfirmationModal";
 import {
   DropdownMenu,
   DropdownMenuContent,
+  DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
@@ -24,14 +25,20 @@ type AdminUserMenuProps = {
 };
 
 export function AdminUserMenu({ onLogout }: AdminUserMenuProps) {
+  const [menuOpen, setMenuOpen] = useState(false);
   const [confirmOpen, setConfirmOpen] = useState(false);
 
   return (
     <>
-      <DropdownMenu>
+      <DropdownMenu open={menuOpen} onOpenChange={setMenuOpen}>
         <DropdownMenuTrigger
           aria-label={`${ADMIN_USER_PROFILE.name} account`}
-          className="inline-flex shrink-0 items-center gap-1.5 rounded-full p-0.5 outline-none transition-colors hover:bg-muted focus-visible:ring-3 focus-visible:ring-ring/50"
+          render={
+            <button
+              type="button"
+              className="inline-flex shrink-0 items-center gap-1.5 rounded-full p-0.5 outline-none transition-colors hover:bg-muted focus-visible:ring-3 focus-visible:ring-ring/50"
+            />
+          }
         >
           <span className="flex size-9 items-center justify-center rounded-full bg-primary text-xs font-semibold text-primary-foreground">
             {ADMIN_USER_PROFILE.initials}
@@ -39,45 +46,54 @@ export function AdminUserMenu({ onLogout }: AdminUserMenuProps) {
           <ChevronDown className="hidden size-4 text-muted-foreground sm:block" />
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end" className="min-w-52" sideOffset={8}>
-          <DropdownMenuLabel className="px-2 py-1.5">
-            <p className="text-sm font-medium text-foreground">
-              {ADMIN_USER_PROFILE.name}
-            </p>
-            <p className="text-xs font-normal text-muted-foreground">
-              Clinic admin
-            </p>
-          </DropdownMenuLabel>
+          <DropdownMenuGroup>
+            <DropdownMenuLabel className="px-2 py-1.5">
+              <p className="text-sm font-medium text-foreground">
+                {ADMIN_USER_PROFILE.name}
+              </p>
+              <p className="text-xs font-normal text-muted-foreground">
+                Clinic admin
+              </p>
+            </DropdownMenuLabel>
+          </DropdownMenuGroup>
           <DropdownMenuSeparator />
-          <DropdownMenuItem>
-            <UserRound />
-            Profile
-          </DropdownMenuItem>
-          <DropdownMenuItem>
-            <Settings />
-            Preferences
-          </DropdownMenuItem>
-          <DropdownMenuItem>
-            <CircleHelp />
-            Help & support
-          </DropdownMenuItem>
+          <DropdownMenuGroup>
+            <DropdownMenuItem onClick={(event) => event.preventDefault()}>
+              <UserRound />
+              Profile
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={(event) => event.preventDefault()}>
+              <Settings />
+              Preferences
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={(event) => event.preventDefault()}>
+              <CircleHelp />
+              Help & support
+            </DropdownMenuItem>
+          </DropdownMenuGroup>
           <DropdownMenuSeparator />
-          <DropdownMenuItem
-            variant="destructive"
-            onClick={() => setConfirmOpen(true)}
-          >
-            <LogOut />
-            Sign out
-          </DropdownMenuItem>
+          <DropdownMenuGroup>
+            <DropdownMenuItem
+              variant="destructive"
+              onClick={() => {
+                setMenuOpen(false);
+                setConfirmOpen(true);
+              }}
+            >
+              <LogOut />
+              Log Out
+            </DropdownMenuItem>
+          </DropdownMenuGroup>
         </DropdownMenuContent>
       </DropdownMenu>
 
       <ConfirmationModal
         open={confirmOpen}
         onOpenChange={setConfirmOpen}
-        title="Sign out?"
+        title="Log out?"
         description="You will need the clinic password again to open the admin dashboard."
         cancelLabel="Cancel"
-        confirmLabel="Sign out"
+        confirmLabel="Log Out"
         confirmVariant="destructive"
         onConfirm={onLogout}
       />

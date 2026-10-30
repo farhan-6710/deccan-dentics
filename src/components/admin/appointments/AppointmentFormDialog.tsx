@@ -17,7 +17,7 @@ const EMPTY: AppointmentInput = {
   date: "",
   time: "10:00",
   reason: "",
-  status: "scheduled",
+  status: "upcoming",
 };
 
 function toInput(

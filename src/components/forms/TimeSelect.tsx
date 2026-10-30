@@ -1,5 +1,6 @@
 "use client";
 
+import { Clock3 } from "lucide-react";
 import {
   Select,
   SelectContent,
@@ -33,6 +34,7 @@ export function TimeSelect({
       }}
     >
       <SelectTrigger id={id} className="w-full">
+        <Clock3 className="size-3.5 text-muted-foreground" />
         <SelectValue placeholder={placeholder}>
           {value ? formatTimeLabel(value) : null}
         </SelectValue>

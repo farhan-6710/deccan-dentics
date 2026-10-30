@@ -17,6 +17,7 @@ const EMPTY: PatientInput = {
   phone: "",
   age: 30,
   profession: "",
+  status: "new",
 };
 
 function toInput(patient?: Patient | null): PatientInput {
@@ -26,6 +27,7 @@ function toInput(patient?: Patient | null): PatientInput {
     phone: patient.phone,
     age: patient.age,
     profession: patient.profession,
+    status: patient.status,
     email: patient.email,
     address: patient.address,
   };

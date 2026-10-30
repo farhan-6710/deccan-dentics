@@ -18,39 +18,6 @@ export function AdminPage({ children, className }: AdminPageProps) {
   );
 }
 
-type AdminPageIntroProps = {
-  eyebrow: string;
-  title: string;
-  description?: string;
-};
-
-/** Same entrance cadence as the marketing hero (blur + rise + stagger). */
-export function AdminPageIntro({
-  eyebrow,
-  title,
-  description,
-}: AdminPageIntroProps) {
-  return (
-    <div>
-      <HeroMotion delay={0.05}>
-        <p className="text-xs font-semibold uppercase tracking-wide text-primary">
-          {eyebrow}
-        </p>
-      </HeroMotion>
-      <HeroMotion delay={0.18}>
-        <h2 className="mt-2 font-heading text-2xl font-bold text-foreground sm:text-3xl">
-          {title}
-        </h2>
-      </HeroMotion>
-      {description ? (
-        <HeroMotion delay={0.32}>
-          <p className="mt-2 max-w-2xl text-muted-foreground">{description}</p>
-        </HeroMotion>
-      ) : null}
-    </div>
-  );
-}
-
 type AdminMotionProps = {
   children: ReactNode;
   className?: string;

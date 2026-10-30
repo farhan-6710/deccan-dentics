@@ -3,14 +3,14 @@
 import {
   AdminMotion,
   AdminPage,
-  AdminPageIntro,
 } from "@/components/admin/AdminPage";
+import { AdminPageHeader } from "@/components/admin/AdminPageHeader";
 import { AppointmentsTable } from "@/components/admin/appointments/AppointmentsTable";
 
 export default function AdminAppointmentsPage() {
   return (
     <AdminPage>
-      <AdminPageIntro
+      <AdminPageHeader
         eyebrow="Appointments"
         title="Visit schedule"
         description="Appointments always link to a patient record via patientId."

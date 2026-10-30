@@ -1,56 +1,62 @@
 "use client";
 
-import { WEEKDAY_LABELS } from "@/constants/schedule/weekdays";
-import { TimeSelect } from "@/components/forms/TimeSelect";
-import { HeroMotion } from "@/components/motion/FadeIn";
-import { Label } from "@/components/ui/label";
-import { Button } from "@/components/ui/button";
+import { ConfirmationModal } from "@/components/ui/ConfirmationModal";
+import { ScheduleDayCard } from "@/components/admin/schedule/ScheduleDayCard";
+import { AdminMotion } from "@/components/admin/AdminPage";
+import { useConfirmDialog } from "@/hooks/use-confirm-dialog";
 import { useClinicStore } from "@/stores/clinic-store";
+import { WEEKDAY_LABELS } from "@/constants/schedule/weekdays";
+import type { Weekday } from "@/types/admin";
 
 export function ScheduleEditor() {
   const days = useClinicStore((s) => s.days);
-  const updateDay = useClinicStore((s) => s.updateDay);
+  const setDayOpen = useClinicStore((s) => s.setDayOpen);
+  const addDaySlot = useClinicStore((s) => s.addDaySlot);
+  const updateDaySlot = useClinicStore((s) => s.updateDaySlot);
+  const removeDaySlot = useClinicStore((s) => s.removeDaySlot);
+  const { ask, props: confirmProps } = useConfirmDialog();
+
+  const requestRemoveSlot = (day: Weekday, slotId: string) => {
+    ask({
+      title: "Remove time slot?",
+      description: `This removes one working window from ${WEEKDAY_LABELS[day]}.`,
+      confirmLabel: "Remove slot",
+      onConfirm: () => removeDaySlot(day, slotId),
+    });
+  };
+
+  const requestToggle = (day: Weekday, isOpen: boolean) => {
+    if (isOpen) {
+      setDayOpen(day, true);
+      return;
+    }
+    ask({
+      title: `Mark ${WEEKDAY_LABELS[day]} as closed?`,
+      description:
+        "Patients will not be able to book visits on this day while it stays closed.",
+      confirmLabel: "Close day",
+      onConfirm: () => setDayOpen(day, false),
+    });
+  };
 
   return (
-    <div className="space-y-3">
-      {days.map((day, index) => (
-        <HeroMotion key={day.day} delay={0.45 + index * 0.06}>
-          <div className="grid gap-3 rounded-2xl border border-border bg-card p-4 sm:grid-cols-[9rem_1fr_1fr] sm:items-end">
-            <div>
-              <p className="font-heading text-base font-bold text-foreground">
-                {WEEKDAY_LABELS[day.day]}
-              </p>
-              <Button
-                type="button"
-                size="sm"
-                variant={day.isOpen ? "secondary" : "outline"}
-                className="mt-2"
-                onClick={() => updateDay(day.day, { isOpen: !day.isOpen })}
-              >
-                {day.isOpen ? "Open" : "Closed"}
-              </Button>
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor={`${day.day}-open`}>Opens</Label>
-              <TimeSelect
-                id={`${day.day}-open`}
-                value={day.openTime}
-                disabled={!day.isOpen}
-                onChange={(openTime) => updateDay(day.day, { openTime })}
-              />
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor={`${day.day}-close`}>Closes</Label>
-              <TimeSelect
-                id={`${day.day}-close`}
-                value={day.closeTime}
-                disabled={!day.isOpen}
-                onChange={(closeTime) => updateDay(day.day, { closeTime })}
-              />
-            </div>
-          </div>
-        </HeroMotion>
-      ))}
-    </div>
+    <>
+      <div className="space-y-3">
+        {days.map((day, index) => (
+          <AdminMotion key={day.day} delay={0.35 + index * 0.05}>
+            <ScheduleDayCard
+              day={day}
+              onToggle={(isOpen) => requestToggle(day.day, isOpen)}
+              onAddSlot={() => addDaySlot(day.day)}
+              onChangeSlot={(slotId, patch) =>
+                updateDaySlot(day.day, slotId, patch)
+              }
+              onRemoveSlot={(slotId) => requestRemoveSlot(day.day, slotId)}
+            />
+          </AdminMotion>
+        ))}
+      </div>
+      {confirmProps ? <ConfirmationModal {...confirmProps} /> : null}
+    </>
   );
 }

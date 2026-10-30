@@ -3,14 +3,14 @@
 import {
   AdminMotion,
   AdminPage,
-  AdminPageIntro,
 } from "@/components/admin/AdminPage";
+import { AdminPageHeader } from "@/components/admin/AdminPageHeader";
 import { PatientsTable } from "@/components/admin/patients/PatientsTable";
 
 export default function AdminPatientsPage() {
   return (
     <AdminPage>
-      <AdminPageIntro
+      <AdminPageHeader
         eyebrow="Patients"
         title="Patient records"
         description="Keep a lightweight patient list ready for appointments."

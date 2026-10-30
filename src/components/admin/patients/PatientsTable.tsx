@@ -1,19 +1,26 @@
 "use client";
 
-import { useState } from "react";
-import { Pencil, Plus, Trash2 } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
+import { useCallback, useMemo, useState } from "react";
+import { DataTable } from "@/components/admin/DataTable";
+import { PatientDetailsCard } from "@/components/admin/patients/PatientDetailsCard";
 import { PatientFormDialog } from "@/components/admin/patients/PatientFormDialog";
+import { PATIENT_LIST_COLUMNS } from "@/components/admin/patients/patient-columns";
+import { PatientsToolbar } from "@/components/admin/patients/PatientsToolbar";
+import { ConfirmationModal } from "@/components/ui/ConfirmationModal";
+import { useConfirmDialog } from "@/hooks/use-confirm-dialog";
+import { useSelectedRow } from "@/hooks/use-selected-row";
 import { useClinicStore } from "@/stores/clinic-store";
 import type { Patient, PatientInput } from "@/types/admin";
+import {
+  filterPatients,
+  type PatientListFilters,
+} from "@/utils/filter-patients";
+
+const INITIAL_FILTERS: PatientListFilters = {
+  query: "",
+  age: "all",
+  status: "all",
+};
 
 export function PatientsTable() {
   const patients = useClinicStore((s) => s.patients);
@@ -22,81 +29,68 @@ export function PatientsTable() {
   const deletePatient = useClinicStore((s) => s.deletePatient);
   const appointments = useClinicStore((s) => s.appointments);
   const deleteAppointment = useClinicStore((s) => s.deleteAppointment);
+  const [filters, setFilters] = useState(INITIAL_FILTERS);
   const [open, setOpen] = useState(false);
   const [editing, setEditing] = useState<Patient | null>(null);
+  const { ask, props: confirmProps } = useConfirmDialog();
+
+  const rows = useMemo(
+    () => filterPatients(patients, filters),
+    [patients, filters],
+  );
+  const getId = useCallback((patient: Patient) => patient.id, []);
+  const [selectedId, setSelectedId, selected] = useSelectedRow(rows, getId);
 
   const save = (input: PatientInput) => {
     if (editing) updatePatient(editing.id, input);
     else addPatient(input);
   };
 
-  const remove = (id: string) => {
-    appointments
-      .filter((item) => item.patientId === id)
-      .forEach((item) => deleteAppointment(item.id));
-    deletePatient(id);
+  const remove = (patient: Patient) => {
+    ask({
+      title: `Delete ${patient.name}?`,
+      description:
+        "This removes the patient and any linked appointments from the clinic list.",
+      confirmLabel: "Delete patient",
+      onConfirm: () => {
+        appointments
+          .filter((item) => item.patientId === patient.id)
+          .forEach((item) => deleteAppointment(item.id));
+        deletePatient(patient.id);
+      },
+    });
   };
 
   return (
     <div className="space-y-4">
-      <div className="flex justify-end">
-        <Button
-          type="button"
-          className="gap-1.5"
-          onClick={() => {
-            setEditing(null);
+      <PatientsToolbar
+        filters={filters}
+        onChange={setFilters}
+        onAdd={() => {
+          setEditing(null);
+          setOpen(true);
+        }}
+      />
+      <div className="grid gap-4 lg:grid-cols-[3fr_2fr]">
+        <DataTable
+          columns={PATIENT_LIST_COLUMNS}
+          rows={rows}
+          getRowId={getId}
+          selectedRowId={selectedId}
+          onRowSelect={(patient) => setSelectedId(patient.id)}
+          emptyMessage="No patients match these filters."
+        />
+        <PatientDetailsCard
+          patient={selected}
+          onEdit={() => {
+            if (!selected) return;
+            setEditing(selected);
             setOpen(true);
           }}
-        >
-          <Plus className="size-4" />
-          Add patient
-        </Button>
-      </div>
-      <div className="rounded-2xl border border-border bg-card">
-        <Table>
-          <TableHeader>
-            <TableRow>
-              <TableHead>Name</TableHead>
-              <TableHead>Phone</TableHead>
-              <TableHead>Age</TableHead>
-              <TableHead>Profession</TableHead>
-              <TableHead className="text-right">Actions</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {patients.map((patient) => (
-              <TableRow key={patient.id}>
-                <TableCell className="font-medium">{patient.name}</TableCell>
-                <TableCell>{patient.phone}</TableCell>
-                <TableCell>{patient.age}</TableCell>
-                <TableCell>{patient.profession}</TableCell>
-                <TableCell className="space-x-1 text-right">
-                  <Button
-                    type="button"
-                    size="icon-sm"
-                    variant="ghost"
-                    aria-label={`Edit ${patient.name}`}
-                    onClick={() => {
-                      setEditing(patient);
-                      setOpen(true);
-                    }}
-                  >
-                    <Pencil className="size-3.5" />
-                  </Button>
-                  <Button
-                    type="button"
-                    size="icon-sm"
-                    variant="ghost"
-                    aria-label={`Delete ${patient.name}`}
-                    onClick={() => remove(patient.id)}
-                  >
-                    <Trash2 className="size-3.5 text-destructive" />
-                  </Button>
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
+          onDelete={() => {
+            if (selected) remove(selected);
+          }}
+        />
       </div>
       <PatientFormDialog
         open={open}
@@ -104,6 +98,7 @@ export function PatientsTable() {
         onClose={() => setOpen(false)}
         onSave={save}
       />
+      {confirmProps ? <ConfirmationModal {...confirmProps} /> : null}
     </div>
   );
 }
