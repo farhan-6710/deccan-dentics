@@ -1,13 +1,18 @@
 import { PATIENT_STATUS_LABELS } from "@/constants/patients/statuses";
+import {
+  STATUS_BADGE_BASE,
+  STATUS_TONES,
+  type StatusTone,
+} from "@/constants/status-tones";
 import type { PatientStatus } from "@/types/admin";
 import { cn } from "cn";
 
-const STATUS_STYLES: Record<PatientStatus, string> = {
-  new: "bg-primary/10 text-primary",
-  "follow-up-one": "bg-secondary text-secondary-foreground",
-  "follow-up-two": "bg-accent text-accent-foreground",
-  "follow-up-three": "bg-muted text-muted-foreground",
-  done: "bg-primary text-primary-foreground",
+const PATIENT_STATUS_TONES: Record<PatientStatus, StatusTone> = {
+  new: "active",
+  "follow-up-one": "muted",
+  "follow-up-two": "muted",
+  "follow-up-three": "muted",
+  done: "success",
 };
 
 type PatientStatusBadgeProps = {
@@ -18,8 +23,8 @@ export function PatientStatusBadge({ status }: PatientStatusBadgeProps) {
   return (
     <span
       className={cn(
-        "inline-flex rounded-full px-2.5 py-0.5 text-xs font-medium",
-        STATUS_STYLES[status],
+        STATUS_BADGE_BASE,
+        STATUS_TONES[PATIENT_STATUS_TONES[status]],
       )}
     >
       {PATIENT_STATUS_LABELS[status]}
