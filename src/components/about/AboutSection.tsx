@@ -10,7 +10,7 @@ export function AboutSection() {
   return (
     <section
       id="about"
-      className="relative overflow-hidden border-b border-border bg-background py-[var(--section-padding-y)]"
+      className="relative overflow-hidden border-b border-border bg-card py-[var(--section-padding-y)]"
     >
       <FloatingTools tools={[...SECTION_TOOLS.about]} />
 
@@ -35,7 +35,7 @@ export function AboutSection() {
         </FadeIn>
 
         <FadeIn delay={0.12} className="min-w-0">
-          <div className="rounded-2xl border border-border bg-card p-5 sm:p-6">
+          <div className="rounded-2xl border border-border bg-background p-5 sm:p-6">
             <p className="font-script text-2xl text-primary sm:text-3xl">
               “{about.quote}”
             </p>

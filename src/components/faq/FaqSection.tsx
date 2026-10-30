@@ -9,7 +9,7 @@ export function FaqSection() {
   return (
     <section
       id="faq"
-      className="relative overflow-hidden border-b border-border bg-muted/40 py-[var(--section-padding-y)]"
+      className="relative overflow-hidden border-b border-border bg-card py-[var(--section-padding-y)]"
     >
       <FloatingTools tools={[...SECTION_TOOLS.faq]} />
       <div className="relative z-10 mx-auto max-w-[var(--container-max)] px-[var(--container-padding)]">

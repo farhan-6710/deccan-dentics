@@ -23,7 +23,7 @@ const TOPICS = [
 
 export function ContactForm() {
   return (
-    <div className="rounded-3xl border border-border bg-card p-6 md:p-8">
+    <div className="rounded-3xl border border-border bg-background p-6 md:p-8">
       <p className="font-script text-2xl text-primary sm:text-3xl">Write to us</p>
       <h3 className="mt-2 font-heading text-xl font-bold text-foreground">
         Enquiry form

@@ -13,7 +13,7 @@ export function FaqPicker() {
 
   return (
     <div className="grid gap-8 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,1fr)] lg:gap-10">
-      <div className="flex flex-col justify-center rounded-3xl border border-border bg-card p-6 sm:p-8 lg:order-none order-2">
+      <div className="flex flex-col justify-center rounded-3xl border border-border bg-background p-6 sm:p-8 lg:order-none order-2">
         <p className="font-script text-2xl text-primary sm:text-3xl">
           Good to know
         </p>

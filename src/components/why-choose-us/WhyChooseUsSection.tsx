@@ -11,7 +11,7 @@ export function WhyChooseUsSection() {
   return (
     <section
       id="why-choose-us"
-      className="relative overflow-hidden border-b border-border bg-muted/40 py-[var(--section-padding-y)]"
+      className="relative overflow-hidden border-b border-border bg-card py-[var(--section-padding-y)]"
     >
       <div
         aria-hidden

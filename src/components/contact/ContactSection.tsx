@@ -9,7 +9,7 @@ export function ContactSection() {
   return (
     <section
       id="contact"
-      className="relative overflow-hidden border-b border-border bg-background py-[var(--section-padding-y)]"
+      className="relative overflow-hidden border-b border-border bg-card py-[var(--section-padding-y)]"
     >
       <FloatingTools tools={[...SECTION_TOOLS.contact]} />
 
