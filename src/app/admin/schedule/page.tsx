@@ -9,6 +9,7 @@ export default function AdminSchedulePage() {
   return (
     <AdminPage>
       <AdminPageHeader
+        eyebrow="Schedule"
         title="Clinic Schedule"
         description="Set your clinic's working hours for each day. You can add multiple time slots if you have breaks during the day."
       >
