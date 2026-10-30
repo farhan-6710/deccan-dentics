@@ -12,7 +12,9 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { useShowToast } from "@/hooks/use-show-toast";
 import type { DashboardFilters } from "@/types/dashboard";
+import { notifyFilterApplied } from "@/utils/filter-toast";
 
 type DashboardFiltersBarProps = {
   filters: DashboardFilters;
@@ -23,23 +25,48 @@ export function DashboardFiltersBar({
   filters,
   onChange,
 }: DashboardFiltersBarProps) {
+  const showToast = useShowToast();
+
   return (
     <div className="flex max-w-full shrink-0 items-center gap-2 overflow-x-auto">
       <FilterSelect
         value={filters.status}
         options={DASHBOARD_STATUS_OPTIONS}
-        onChange={(status) => onChange({ ...filters, status })}
+        onChange={(status) => {
+          onChange({ ...filters, status });
+          notifyFilterApplied(
+            showToast,
+            "Status filter applied",
+            DASHBOARD_STATUS_OPTIONS.find((o) => o.value === status)?.label ??
+              status,
+          );
+        }}
       />
       <FilterSelect
         value={filters.range}
         options={DASHBOARD_RANGE_OPTIONS}
-        onChange={(range) =>
-          onChange({ ...filters, range, dateRange: undefined })
-        }
+        onChange={(range) => {
+          onChange({ ...filters, range, dateRange: undefined });
+          notifyFilterApplied(
+            showToast,
+            "Time filter applied",
+            DASHBOARD_RANGE_OPTIONS.find((o) => o.value === range)?.label ??
+              range,
+          );
+        }}
       />
       <DateRangePicker
         value={filters.dateRange}
-        onChange={(dateRange) => onChange({ ...filters, dateRange })}
+        onChange={(dateRange) => {
+          onChange({ ...filters, dateRange });
+          showToast({
+            title: dateRange?.from ? "Date range applied" : "Date range cleared",
+            description: dateRange?.from
+              ? "Dashboard stats now use the selected dates."
+              : "Dashboard stats use the time filter again.",
+            type: "success",
+          });
+        }}
       />
     </div>
   );

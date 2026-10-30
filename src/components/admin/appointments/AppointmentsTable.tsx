@@ -9,8 +9,10 @@ import { AppointmentsToolbar } from "@/components/admin/appointments/Appointment
 import { ConfirmationModal } from "@/components/ui/ConfirmationModal";
 import { useConfirmDialog } from "@/hooks/use-confirm-dialog";
 import { useSelectedRow } from "@/hooks/use-selected-row";
+import { useShowToast } from "@/hooks/use-show-toast";
 import { useClinicStore } from "@/stores/clinic-store";
 import type { Appointment, AppointmentInput } from "@/types/admin";
+import { appointmentSaveToast } from "@/utils/describe-record-changes";
 import {
   filterAppointments,
   type AppointmentListFilters,
@@ -21,19 +23,18 @@ const INITIAL_FILTERS: AppointmentListFilters = {
   status: "all",
   date: "all",
 };
-
 export function AppointmentsTable() {
   const appointments = useClinicStore((s) => s.appointments);
+  const patients = useClinicStore((s) => s.patients);
+  const getPatient = useClinicStore((s) => s.getPatient);
   const addAppointment = useClinicStore((s) => s.addAppointment);
   const updateAppointment = useClinicStore((s) => s.updateAppointment);
   const deleteAppointment = useClinicStore((s) => s.deleteAppointment);
-  const patients = useClinicStore((s) => s.patients);
-  const getPatient = useClinicStore((s) => s.getPatient);
   const [filters, setFilters] = useState(INITIAL_FILTERS);
   const [open, setOpen] = useState(false);
   const [editing, setEditing] = useState<Appointment | null>(null);
   const { ask, props: confirmProps } = useConfirmDialog();
-
+  const showToast = useShowToast();
   const rows = useMemo(
     () => filterAppointments(appointments, patients, filters),
     [appointments, patients, filters],
@@ -46,17 +47,30 @@ export function AppointmentsTable() {
   );
 
   const save = (input: AppointmentInput) => {
+    const nextName = getPatient(input.patientId)?.name ?? "Patient";
+    const previousName = editing
+      ? (getPatient(editing.patientId)?.name ?? "Patient")
+      : nextName;
+    const toast = appointmentSaveToast(editing, input, previousName, nextName);
     if (editing) updateAppointment(editing.id, input);
     else addAppointment(input);
+    showToast(toast);
   };
 
   const remove = (item: Appointment) => {
     const name = getPatient(item.patientId)?.name ?? "this appointment";
     ask({
       title: "Delete appointment?",
-      description: `This permanently removes the visit for ${name} on ${item.date}.`,
+      description: `Removes the visit for ${name} on ${item.date} at ${item.time}.`,
       confirmLabel: "Delete appointment",
-      onConfirm: () => deleteAppointment(item.id),
+      onConfirm: () => {
+        deleteAppointment(item.id);
+        showToast({
+          title: "Appointment deleted",
+          description: `Visit for ${name} on ${item.date} at ${item.time} was removed.`,
+          type: "success",
+        });
+      },
     });
   };
 
@@ -90,9 +104,7 @@ export function AppointmentsTable() {
             setEditing(selected);
             setOpen(true);
           }}
-          onDelete={() => {
-            if (selected) remove(selected);
-          }}
+          onDelete={() => selected && remove(selected)}
         />
       </div>
       <AppointmentFormDialog

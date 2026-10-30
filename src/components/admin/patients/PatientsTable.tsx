@@ -9,8 +9,10 @@ import { PatientsToolbar } from "@/components/admin/patients/PatientsToolbar";
 import { ConfirmationModal } from "@/components/ui/ConfirmationModal";
 import { useConfirmDialog } from "@/hooks/use-confirm-dialog";
 import { useSelectedRow } from "@/hooks/use-selected-row";
+import { useShowToast } from "@/hooks/use-show-toast";
 import { useClinicStore } from "@/stores/clinic-store";
 import type { Patient, PatientInput } from "@/types/admin";
+import { patientSaveToast } from "@/utils/describe-record-changes";
 import {
   filterPatients,
   type PatientListFilters,
@@ -33,6 +35,7 @@ export function PatientsTable() {
   const [open, setOpen] = useState(false);
   const [editing, setEditing] = useState<Patient | null>(null);
   const { ask, props: confirmProps } = useConfirmDialog();
+  const showToast = useShowToast();
 
   const rows = useMemo(
     () => filterPatients(patients, filters),
@@ -42,8 +45,10 @@ export function PatientsTable() {
   const [selectedId, setSelectedId, selected] = useSelectedRow(rows, getId);
 
   const save = (input: PatientInput) => {
+    const toast = patientSaveToast(editing, input);
     if (editing) updatePatient(editing.id, input);
     else addPatient(input);
+    showToast(toast);
   };
 
   const remove = (patient: Patient) => {
@@ -57,6 +62,11 @@ export function PatientsTable() {
           .filter((item) => item.patientId === patient.id)
           .forEach((item) => deleteAppointment(item.id));
         deletePatient(patient.id);
+        showToast({
+          title: "Patient deleted",
+          description: `${patient.name} was removed from the clinic list.`,
+          type: "success",
+        });
       },
     });
   };

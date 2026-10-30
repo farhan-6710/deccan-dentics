@@ -14,6 +14,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { useShowToast } from "@/hooks/use-show-toast";
+import { notifyFilterApplied } from "@/utils/filter-toast";
 import type { AppointmentListFilters } from "@/utils/filter-appointments";
 
 type AppointmentsToolbarProps = {
@@ -29,6 +31,7 @@ export function AppointmentsToolbar({
   onAdd,
   canAdd,
 }: AppointmentsToolbarProps) {
+  const showToast = useShowToast();
   const statusLabel =
     APPOINTMENT_STATUS_FILTER_OPTIONS.find((o) => o.value === filters.status)
       ?.label ?? "All statuses";
@@ -45,19 +48,27 @@ export function AppointmentsToolbar({
           <input
             type="search"
             value={filters.query}
-            onChange={(event) =>
-              onChange({ ...filters, query: event.target.value })
-            }
+            onChange={(e) => onChange({ ...filters, query: e.target.value })}
+            onBlur={() => {
+              const q = filters.query.trim();
+              if (q) notifyFilterApplied(showToast, "Search applied", q);
+            }}
             placeholder="Search appointments..."
             className="h-8 w-full rounded-lg border border-input bg-background py-1.5 pr-3 pl-9 text-sm outline-none transition-colors placeholder:text-muted-foreground focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50"
           />
         </label>
-
         <Select
           value={filters.date}
           onValueChange={(value) => {
             if (!value) return;
-            onChange({ ...filters, date: value as AppointmentDateFilter });
+            const date = value as AppointmentDateFilter;
+            onChange({ ...filters, date });
+            notifyFilterApplied(
+              showToast,
+              "Date filter applied",
+              APPOINTMENT_DATE_FILTER_OPTIONS.find((o) => o.value === date)
+                ?.label ?? date,
+            );
           }}
         >
           <SelectTrigger size="sm" className="w-auto min-w-[7.5rem] shrink-0">
@@ -71,15 +82,18 @@ export function AppointmentsToolbar({
             ))}
           </SelectContent>
         </Select>
-
         <Select
           value={filters.status}
           onValueChange={(value) => {
             if (!value) return;
-            onChange({
-              ...filters,
-              status: value as AppointmentListFilters["status"],
-            });
+            const status = value as AppointmentListFilters["status"];
+            onChange({ ...filters, status });
+            notifyFilterApplied(
+              showToast,
+              "Status filter applied",
+              APPOINTMENT_STATUS_FILTER_OPTIONS.find((o) => o.value === status)
+                ?.label ?? status,
+            );
           }}
         >
           <SelectTrigger size="sm" className="w-auto min-w-[8.5rem] shrink-0">
@@ -94,13 +108,7 @@ export function AppointmentsToolbar({
           </SelectContent>
         </Select>
       </div>
-
-      <Button
-        type="button"
-        className="gap-1.5 shrink-0"
-        disabled={!canAdd}
-        onClick={onAdd}
-      >
+      <Button type="button" className="gap-1.5 shrink-0" disabled={!canAdd} onClick={onAdd}>
         <Plus className="size-4" />
         Add appointment
       </Button>

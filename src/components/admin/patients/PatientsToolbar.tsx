@@ -14,6 +14,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { useShowToast } from "@/hooks/use-show-toast";
+import { notifyFilterApplied } from "@/utils/filter-toast";
 import type { PatientListFilters } from "@/utils/filter-patients";
 
 type PatientsToolbarProps = {
@@ -27,6 +29,7 @@ export function PatientsToolbar({
   onChange,
   onAdd,
 }: PatientsToolbarProps) {
+  const showToast = useShowToast();
   const statusLabel =
     PATIENT_STATUS_FILTER_OPTIONS.find((o) => o.value === filters.status)
       ?.label ?? "All statuses";
@@ -46,6 +49,10 @@ export function PatientsToolbar({
             onChange={(event) =>
               onChange({ ...filters, query: event.target.value })
             }
+            onBlur={() => {
+              const query = filters.query.trim();
+              if (query) notifyFilterApplied(showToast, "Search applied", query);
+            }}
             placeholder="Search patients..."
             className="h-8 w-full rounded-lg border border-input bg-background py-1.5 pr-3 pl-9 text-sm outline-none transition-colors placeholder:text-muted-foreground focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50"
           />
@@ -55,7 +62,14 @@ export function PatientsToolbar({
           value={filters.age}
           onValueChange={(value) => {
             if (!value) return;
-            onChange({ ...filters, age: value as PatientAgeFilter });
+            const age = value as PatientAgeFilter;
+            onChange({ ...filters, age });
+            notifyFilterApplied(
+              showToast,
+              "Age filter applied",
+              PATIENT_AGE_FILTER_OPTIONS.find((o) => o.value === age)?.label ??
+                age,
+            );
           }}
         >
           <SelectTrigger size="sm" className="w-auto min-w-[7.5rem] shrink-0">
@@ -74,10 +88,14 @@ export function PatientsToolbar({
           value={filters.status}
           onValueChange={(value) => {
             if (!value) return;
-            onChange({
-              ...filters,
-              status: value as PatientListFilters["status"],
-            });
+            const status = value as PatientListFilters["status"];
+            onChange({ ...filters, status });
+            notifyFilterApplied(
+              showToast,
+              "Status filter applied",
+              PATIENT_STATUS_FILTER_OPTIONS.find((o) => o.value === status)
+                ?.label ?? status,
+            );
           }}
         >
           <SelectTrigger size="sm" className="w-auto min-w-[8.5rem] shrink-0">
