@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { CalendarDays, Play } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { HeroEyebrow } from "@/components/home/HeroEyebrow";
 import { HeroFeatures } from "@/components/home/HeroFeatures";
 import { HeroTrustBadge } from "@/components/home/HeroTrustBadge";
 import { HeroMotion } from "@/components/motion/FadeIn";
@@ -22,12 +23,7 @@ export function HeroSection() {
         <div className="relative lg:min-h-[32rem] xl:min-h-[36rem]">
           <div className="relative z-10 max-w-xl lg:max-w-[30rem] xl:max-w-[34rem]">
             <HeroMotion delay={0.05}>
-              <p
-                className="mb-5 text-xs font-semibold uppercase text-primary sm:text-sm"
-                style={{ letterSpacing: "var(--tracking-wider)" }}
-              >
-                Healthy smiles. Happier lives.
-              </p>
+              <HeroEyebrow />
             </HeroMotion>
 
             <HeroMotion delay={0.18}>
