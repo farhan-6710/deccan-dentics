@@ -55,6 +55,7 @@ Mark an item done only after it is in the repo and checked in the browser or by 
 - [x] Schedule & timings editor (Zustand).
 - [x] Patients CRUD with `usePatientsStore` + three seed Indian patients.
 - [x] Appointments CRUD linked by `patientId`.
+- [x] Appointments Calendar (`/admin/calendar`) Month/Week/Day + day details.
 - [x] DB-friendly models in `types/admin.ts`; seed in `data/admin-seed.ts`.
 - [ ] Replace client password gate with real server auth before production patient data.
 - [ ] Persist admin stores to a backend / database.

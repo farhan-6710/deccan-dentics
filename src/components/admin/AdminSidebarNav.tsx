@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
+  Calendar,
   CalendarDays,
   Clock3,
   LayoutDashboard,
@@ -24,6 +25,7 @@ const ICONS: Record<string, LucideIcon> = {
   "/admin/schedule": Clock3,
   "/admin/patients": Users,
   "/admin/appointments": CalendarDays,
+  "/admin/calendar": Calendar,
   "/admin/account": UserRound,
   "/admin/settings": Settings,
 };
@@ -43,8 +45,8 @@ export function AdminSidebarNav({
     <nav
       aria-label="Admin"
       className={cn(
-        "min-h-0 flex-1 space-y-1.5 overflow-y-auto",
-        collapsed ? "p-3" : "p-4",
+        "min-h-0 shrink-0 space-y-1.5 overflow-y-auto",
+        collapsed ? "flex-1 p-3" : "max-h-[55%] p-4",
       )}
     >
       {ADMIN_NAV.map((item) => {
@@ -62,7 +64,7 @@ export function AdminSidebarNav({
               "flex items-center gap-3 rounded-2xl text-sm font-medium transition",
               collapsed ? "justify-center px-4 py-4" : "px-4 py-2.5",
               active
-                ? "bg-primary text-primary-foreground shadow-sm"
+                ? "btn-elevated btn-primary ![background-clip:padding-box,border-box]"
                 : "text-sidebar-foreground/75 hover:bg-secondary hover:text-secondary-foreground",
             )}
           >

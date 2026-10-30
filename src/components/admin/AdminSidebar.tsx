@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
+import { AdminSidebarArt } from "@/components/admin/AdminSidebarArt";
 import { AdminSidebarFooter } from "@/components/admin/AdminSidebarFooter";
 import { AdminSidebarNav } from "@/components/admin/AdminSidebarNav";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -50,7 +51,10 @@ export function AdminSidebar({
         </Link>
       </div>
 
-      <AdminSidebarNav collapsed={collapsed} onNavigate={onNavigate} />
+      <div className="flex min-h-0 flex-1 flex-col">
+        <AdminSidebarNav collapsed={collapsed} onNavigate={onNavigate} />
+        {!collapsed ? <AdminSidebarArt /> : null}
+      </div>
       <AdminSidebarFooter
         collapsed={collapsed}
         onToggleSidebar={onToggleSidebar}

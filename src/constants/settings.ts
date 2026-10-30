@@ -1,4 +1,13 @@
-import type { AdminSettingsKey } from "@/types/settings";
+import type { AdminSettings, AdminSettingsKey } from "@/types/settings";
+
+export const DEFAULT_ADMIN_SETTINGS: AdminSettings = {
+  emailReminders: true,
+  smsReminders: false,
+  appointmentEmails: true,
+  marketingEmails: false,
+  desktopNotifications: true,
+  weeklyDigest: true,
+};
 
 export const SETTINGS_TOGGLES: {
   key: AdminSettingsKey;

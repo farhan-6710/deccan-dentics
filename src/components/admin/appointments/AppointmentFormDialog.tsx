@@ -11,35 +11,13 @@ import {
 } from "@/components/ui/dialog";
 import { AppointmentFormFields } from "@/components/admin/appointments/AppointmentFormFields";
 import type { Appointment, AppointmentInput, Patient } from "@/types/admin";
-
-const EMPTY: AppointmentInput = {
-  patientId: "",
-  date: "",
-  time: "10:00",
-  reason: "",
-  status: "upcoming",
-};
-
-function toInput(
-  appointment: Appointment | null | undefined,
-  patients: Patient[],
-): AppointmentInput {
-  if (appointment) {
-    return {
-      patientId: appointment.patientId,
-      date: appointment.date,
-      time: appointment.time,
-      reason: appointment.reason,
-      status: appointment.status,
-      notes: appointment.notes,
-    };
-  }
-  return { ...EMPTY, patientId: patients[0]?.id ?? "" };
-}
+import { appointmentToInput } from "@/utils/appointment-form";
 
 type AppointmentFormDialogProps = {
   open: boolean;
   appointment?: Appointment | null;
+  /** Prefill create form (ignored when editing). */
+  defaults?: Partial<AppointmentInput>;
   patients: Patient[];
   onClose: () => void;
   onSave: (input: AppointmentInput) => void;
@@ -48,6 +26,7 @@ type AppointmentFormDialogProps = {
 export function AppointmentFormDialog({
   open,
   appointment,
+  defaults,
   patients,
   onClose,
   onSave,
@@ -57,8 +36,9 @@ export function AppointmentFormDialog({
       <DialogContent className="sm:max-w-lg" showCloseButton>
         {open ? (
           <AppointmentFormBody
-            key={appointment?.id ?? "new"}
+            key={appointment?.id ?? `new-${defaults?.date}-${defaults?.time}`}
             appointment={appointment}
+            defaults={defaults}
             patients={patients}
             onClose={onClose}
             onSave={onSave}
@@ -71,11 +51,14 @@ export function AppointmentFormDialog({
 
 function AppointmentFormBody({
   appointment,
+  defaults,
   patients,
   onClose,
   onSave,
 }: Omit<AppointmentFormDialogProps, "open">) {
-  const [value, setValue] = useState(() => toInput(appointment, patients));
+  const [value, setValue] = useState(() =>
+    appointmentToInput(appointment, patients, defaults),
+  );
 
   return (
     <>

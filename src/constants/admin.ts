@@ -18,6 +18,7 @@ export const ADMIN_NAV = [
   { href: "/admin/schedule", label: "Schedule" },
   { href: "/admin/patients", label: "Patients" },
   { href: "/admin/appointments", label: "Appointments" },
+  { href: "/admin/calendar", label: "Calendar" },
   { href: "/admin/account", label: "Account" },
   { href: "/admin/settings", label: "Settings" },
 ] as const;

@@ -1,0 +1,104 @@
+"use client";
+
+import { useMemo } from "react";
+import { format, parseISO } from "date-fns";
+import { CalendarAppointmentDialogs } from "@/components/admin/calendar/CalendarAppointmentDialogs";
+import { CalendarDayDetails } from "@/components/admin/calendar/CalendarDayDetails";
+import { CalendarDayView } from "@/components/admin/calendar/CalendarDayView";
+import { CalendarMonthView } from "@/components/admin/calendar/CalendarMonthView";
+import { CalendarPanel } from "@/components/admin/calendar/CalendarPanel";
+import { CalendarToolbar } from "@/components/admin/calendar/CalendarToolbar";
+import { CalendarWeekView } from "@/components/admin/calendar/CalendarWeekView";
+import { useCalendarDayActions } from "@/hooks/use-calendar-day-actions";
+import { useCalendarState } from "@/hooks/use-calendar-state";
+import { useClinicStore } from "@/stores/clinic-store";
+import type { Appointment } from "@/types/admin";
+import { toDateValue } from "@/utils/date";
+import { formatMonthTitle } from "@/utils/calendar-month";
+import { formatWeekTitle } from "@/utils/calendar-week";
+
+export function CalendarWorkspace() {
+  const appointments = useClinicStore((s) => s.appointments);
+  const {
+    view,
+    setView,
+    today,
+    selectedDate,
+    selectedKey,
+    cursorDate,
+    goPrevious,
+    goNext,
+    selectDate,
+  } = useCalendarState();
+  const actions = useCalendarDayActions(selectedKey);
+
+  const title = useMemo(() => {
+    if (view === "month") return formatMonthTitle(cursorDate);
+    if (view === "week") return formatWeekTitle(cursorDate);
+    return format(cursorDate, "EEEE, d MMMM yyyy");
+  }, [view, cursorDate]);
+
+  const openAppointment = (item: Appointment) => {
+    selectDate(parseISO(item.date));
+    actions.setDetail(item);
+  };
+
+  const openSlot = (date: Date, time: string) => {
+    selectDate(date);
+    actions.openCreate({ date: toDateValue(date), time });
+  };
+
+  return (
+    <div className="grid min-h-0 gap-4 lg:h-[min(40rem,calc(100dvh-14rem))] lg:grid-cols-[minmax(0,1.75fr)_minmax(17.5rem,1fr)]">
+      <CalendarPanel className="flex h-[min(32rem,70dvh)] flex-col overflow-hidden lg:h-full">
+        <CalendarToolbar
+          title={title}
+          view={view}
+          onViewChange={setView}
+          onPrevious={goPrevious}
+          onNext={goNext}
+        />
+        {view === "month" ? (
+          <CalendarMonthView
+            month={cursorDate}
+            selected={selectedDate}
+            today={today}
+            appointments={appointments}
+            onSelectDate={selectDate}
+          />
+        ) : view === "week" ? (
+          <CalendarWeekView
+            cursor={cursorDate}
+            selected={selectedDate}
+            today={today}
+            appointments={appointments}
+            patientName={actions.patientName}
+            onSelectDate={selectDate}
+            onSelectAppointment={openAppointment}
+            onEmptySlot={openSlot}
+          />
+        ) : (
+          <CalendarDayView
+            date={cursorDate}
+            appointments={appointments}
+            patientName={actions.patientName}
+            onEmptySlot={(time) => openSlot(cursorDate, time)}
+            onSelectAppointment={openAppointment}
+          />
+        )}
+      </CalendarPanel>
+
+      <CalendarPanel className="flex h-[min(28rem,60dvh)] flex-col overflow-hidden lg:h-full">
+        <CalendarDayDetails
+          selectedDate={selectedDate}
+          patientName={actions.patientName}
+          canAdd={actions.patients.length > 0}
+          onAdd={() => actions.openCreate()}
+          onOpenAppointment={openAppointment}
+        />
+      </CalendarPanel>
+
+      <CalendarAppointmentDialogs actions={actions} />
+    </div>
+  );
+}

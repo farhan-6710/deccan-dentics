@@ -93,6 +93,7 @@ public/images/
 | `/admin/schedule` | Working days and opening hours |
 | `/admin/patients` | Patient CRUD via `useClinicStore` |
 | `/admin/appointments` | Appointments linked by `patientId` |
+| `/admin/calendar` | Month / week / day appointment calendar |
 
 Marketing pages use `PageShell` (`layout/PageShell.tsx`): fixed header, main offset, footer. Admin routes use `app/admin/layout.tsx` → `AdminShell` (sidebar, header, mandatory auth dialog).
 

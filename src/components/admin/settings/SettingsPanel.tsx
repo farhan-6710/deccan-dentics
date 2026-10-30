@@ -8,11 +8,11 @@ import {
 import { SettingsToggleRow } from "@/components/admin/settings/SettingsToggleRow";
 import { SETTINGS_TOGGLES } from "@/constants/settings";
 import { useShowToast } from "@/hooks/use-show-toast";
-import { useSettingsStore } from "@/stores/settings-store";
+import { useClinicStore } from "@/stores/clinic-store";
 
 export function SettingsPanel() {
   const showToast = useShowToast();
-  const settings = useSettingsStore();
+  const settings = useClinicStore();
 
   return (
     <DashboardCard>

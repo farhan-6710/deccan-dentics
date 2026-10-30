@@ -1,9 +1,10 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { parseISO } from "date-fns";
 import { AdminPageHeader } from "@/components/admin/AdminPageHeader";
 import { DashboardFiltersBar } from "@/components/admin/dashboard/DashboardFiltersBar";
 import { ADMIN_USER_PROFILE } from "@/constants/admin";
+import { DASHBOARD_REFERENCE_DATE } from "@/constants/dashboard/reference";
 import type { DashboardFilters } from "@/types/dashboard";
 
 type DashboardPageHeaderProps = {
@@ -21,11 +22,9 @@ export function DashboardPageHeader({
   filters,
   onChange,
 }: DashboardPageHeaderProps) {
-  const [greeting, setGreeting] = useState("Good Morning,");
-
-  useEffect(() => {
-    setGreeting(greetingForHour(new Date().getHours()));
-  }, []);
+  const greeting = greetingForHour(
+    parseISO(DASHBOARD_REFERENCE_DATE).getHours(),
+  );
 
   return (
     <AdminPageHeader
