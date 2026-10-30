@@ -9,12 +9,13 @@ import { HeroTrustBadge } from "@/components/home/HeroTrustBadge";
 import { HeroMotion } from "@/components/motion/FadeIn";
 import { FloatingTools } from "@/components/motion/FloatingTools";
 import { SECTION_TOOLS } from "@/data/section-tools";
+import BrushMark from "./BrushMark";
 
 export function HeroSection() {
   return (
     <section
       id="home"
-      className="relative overflow-hidden border-b border-border bg-background pb-14 pt-4 md:pb-20 md:pt-16"
+      className="relative overflow-hidden border-b border-border bg-background pb-14 pt-4 md:pb-20 md:pt-24"
     >
       <FloatingTools tools={[...SECTION_TOOLS.hero]} />
       <div className="relative z-10 mx-auto max-w-[var(--container-max)] px-[var(--container-padding)]">
@@ -32,7 +33,10 @@ export function HeroSection() {
             <HeroMotion delay={0.18}>
               <h1 className="font-heading text-[2.35rem] font-bold leading-[1.12] tracking-tight text-foreground sm:text-5xl lg:text-[3.15rem] xl:text-[3.5rem]">
                 Expert Dental Care for a Brighter,{" "}
-                <span className="text-primary">Healthier You</span>
+                <div className="flex gap-4">
+                  <span className="text-primary">Healthier You</span>
+                  <BrushMark width={60} />
+                </div>
               </h1>
             </HeroMotion>
 
