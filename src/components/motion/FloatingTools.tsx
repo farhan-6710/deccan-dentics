@@ -20,20 +20,20 @@ export function FloatingTools({ tools, className }: FloatingToolsProps) {
       )}
     >
       {tools.map((tool, index) => {
-        const duration = tool.duration ?? 6;
+        const duration = tool.duration ?? 8;
         const delay = tool.delay ?? 0;
-        const y = tool.y ?? 28;
-        const x = tool.x ?? 12;
+        const y = tool.y ?? 14;
+        const x = tool.x ?? 6;
         const rotate = tool.rotate ?? 0;
 
         return (
           <motion.div
             key={`${tool.id}-${index}`}
-            className={cn("absolute opacity-[0.22]", tool.className)}
+            className={cn("absolute opacity-[0.18]", tool.className)}
             animate={{
-              y: [0, -y, y * 0.35, 0],
-              x: [0, x, -x * 0.5, 0],
-              rotate: [rotate - 5, rotate + 6, rotate - 3, rotate - 5],
+              y: [0, -y, 0],
+              x: [0, x, 0],
+              rotate: [rotate - 2, rotate + 2.5, rotate - 2],
             }}
             transition={{
               duration,
@@ -45,9 +45,9 @@ export function FloatingTools({ tools, className }: FloatingToolsProps) {
             <Image
               src={TOOLS[tool.id]}
               alt=""
-              width={220}
-              height={280}
-              className="h-auto w-full select-none object-contain drop-shadow-sm"
+              width={180}
+              height={220}
+              className="h-auto w-full select-none object-contain"
             />
           </motion.div>
         );
