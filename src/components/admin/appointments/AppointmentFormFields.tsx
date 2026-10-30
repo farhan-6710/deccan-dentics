@@ -1,5 +1,7 @@
 "use client";
 
+import { DatePicker } from "@/components/forms/DatePicker";
+import { TimeSelect } from "@/components/forms/TimeSelect";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
@@ -53,22 +55,18 @@ export function AppointmentFormFields({
       </div>
       <div className="space-y-2">
         <Label htmlFor="apt-date">Date</Label>
-        <Input
+        <DatePicker
           id="apt-date"
-          type="date"
           value={value.date}
-          onChange={(e) => set("date", e.target.value)}
-          required
+          onChange={(date) => set("date", date)}
         />
       </div>
       <div className="space-y-2">
         <Label htmlFor="apt-time">Time</Label>
-        <Input
+        <TimeSelect
           id="apt-time"
-          type="time"
           value={value.time}
-          onChange={(e) => set("time", e.target.value)}
-          required
+          onChange={(time) => set("time", time)}
         />
       </div>
       <div className="space-y-2 sm:col-span-2">

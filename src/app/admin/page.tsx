@@ -1,4 +1,8 @@
 import Link from "next/link";
+import {
+  AdminPage,
+  AdminPageIntro,
+} from "@/components/admin/AdminPage";
 import { OverviewStats } from "@/components/admin/overview/OverviewStats";
 
 const LINKS = [
@@ -21,19 +25,12 @@ const LINKS = [
 
 export default function AdminOverviewPage() {
   return (
-    <div className="mx-auto max-w-6xl space-y-8">
-      <div>
-        <p className="text-xs font-semibold uppercase tracking-wide text-primary">
-          Overview
-        </p>
-        <h2 className="mt-2 font-heading text-2xl font-bold text-foreground sm:text-3xl">
-          Clinic operations at a glance
-        </h2>
-        <p className="mt-2 max-w-2xl text-muted-foreground">
-          Manage timings, patients, and appointments for Deccan Dentics from one
-          calm workspace.
-        </p>
-      </div>
+    <AdminPage className="space-y-8">
+      <AdminPageIntro
+        eyebrow="Overview"
+        title="Clinic operations at a glance"
+        description="Manage timings, patients, and appointments for Deccan Dentics from one calm workspace."
+      />
 
       <OverviewStats />
 
@@ -51,6 +48,6 @@ export default function AdminOverviewPage() {
           </Link>
         ))}
       </div>
-    </div>
+    </AdminPage>
   );
 }

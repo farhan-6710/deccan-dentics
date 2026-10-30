@@ -2,70 +2,80 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { CalendarDays, Clock3, LayoutDashboard, Users } from "lucide-react";
-import { ADMIN_NAV } from "@/constants/admin";
+import { motion } from "framer-motion";
+import { AdminSidebarFooter } from "@/components/admin/AdminSidebarFooter";
+import { AdminSidebarNav } from "@/components/admin/AdminSidebarNav";
+import { TooltipProvider } from "@/components/ui/tooltip";
+import { SHELL_SIDEBAR_MOTION } from "@/constants/admin-shell";
 import { cn } from "cn";
 
-const ICONS = {
-  "/admin": LayoutDashboard,
-  "/admin/schedule": Clock3,
-  "/admin/patients": Users,
-  "/admin/appointments": CalendarDays,
-} as const;
-
 type AdminSidebarProps = {
+  collapsed: boolean;
   onNavigate?: () => void;
+  mode?: "rail" | "sheet";
 };
 
-export function AdminSidebar({ onNavigate }: AdminSidebarProps) {
-  const pathname = usePathname();
+export function AdminSidebar({
+  collapsed,
+  onNavigate,
+  mode = "rail",
+}: AdminSidebarProps) {
+  const body = (
+    <div className="flex h-full flex-col bg-sidebar text-sidebar-foreground">
+      <div className="flex h-16 shrink-0 items-center justify-center border-b border-sidebar-border/80 px-4">
+        <Link
+          href="/admin"
+          onClick={onNavigate}
+          className={cn(
+            "inline-flex items-center",
+            collapsed ? "justify-center" : "gap-2",
+          )}
+        >
+          <Image
+            src={
+              collapsed
+                ? "/images/brand/logo-mark.png"
+                : "/images/brand/logo.png"
+            }
+            alt="Deccan Dentics"
+            width={collapsed ? 36 : 168}
+            height={collapsed ? 36 : 40}
+            className={
+              collapsed ? "size-9 object-contain" : "h-9 w-auto object-contain"
+            }
+          />
+          <span className="sr-only">Deccan Dentics Admin</span>
+        </Link>
+      </div>
+
+      {!collapsed ? (
+        <p className="px-4 pt-3 text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
+          Admin dashboard
+        </p>
+      ) : null}
+
+      <AdminSidebarNav collapsed={collapsed} onNavigate={onNavigate} />
+      <AdminSidebarFooter collapsed={collapsed} onNavigate={onNavigate} />
+    </div>
+  );
+
+  if (mode === "sheet") {
+    return <div className="h-full w-full">{body}</div>;
+  }
 
   return (
-    <aside className="flex h-full w-64 flex-col border-r border-border bg-card">
-      <div className="flex justify-center items-center border-b border-border px-5 py-4">
-        <Link href="/admin" onClick={onNavigate} className="inline-flex">
-          <Image
-            src="/images/brand/logo.png"
-            alt="Deccan Dentics"
-            width={168}
-            height={40}
-            className="h-9 w-auto object-contain"
-          />
-        </Link>
-      </div>
-      <nav className="flex flex-1 flex-col gap-1 p-3" aria-label="Admin">
-        {ADMIN_NAV.map((item) => {
-          const Icon = ICONS[item.href];
-          const active = "exact" in item && item.exact
-            ? pathname === item.href
-            : pathname.startsWith(item.href);
-          return (
-            <Link
-              key={item.href}
-              href={item.href}
-              onClick={onNavigate}
-              className={cn(
-                "flex items-center gap-2.5 rounded-lg px-3 py-2.5 text-sm transition-colors",
-                active
-                  ? "bg-secondary font-medium text-foreground"
-                  : "text-muted-foreground hover:bg-accent hover:text-foreground",
-              )}
-            >
-              <Icon className="size-4 shrink-0" />
-              {item.label}
-            </Link>
-          );
-        })}
-      </nav>
-      <div className="border-t border-border p-4">
-        <Link
-          href="/"
-          className="text-sm text-muted-foreground hover:text-primary"
-        >
-          ← Back to website
-        </Link>
-      </div>
-    </aside>
+    <TooltipProvider delay={0}>
+      <motion.aside
+        {...SHELL_SIDEBAR_MOTION}
+        className={cn(
+          "min-h-0 w-0 shrink-0 overflow-hidden border-0 bg-sidebar text-sidebar-foreground",
+          "transition-[width] duration-500 ease-[cubic-bezier(0.32,0.72,0,1)]",
+          "md:border-r md:border-sidebar-border/80",
+          collapsed ? "md:w-20" : "md:w-64",
+        )}
+      >
+        <div className="hidden h-full md:block">{body}</div>
+      </motion.aside>
+    </TooltipProvider>
   );
 }

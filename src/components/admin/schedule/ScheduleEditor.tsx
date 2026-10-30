@@ -2,7 +2,7 @@
 
 import { WEEKDAY_LABELS } from "@/constants/admin";
 import { useScheduleStore } from "@/stores/schedule-store";
-import { Input } from "@/components/ui/input";
+import { TimeSelect } from "@/components/forms/TimeSelect";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 
@@ -14,7 +14,7 @@ export function ScheduleEditor() {
       {days.map((day) => (
         <div
           key={day.day}
-          className="grid gap-3 rounded-2xl border border-border bg-card p-4 sm:grid-cols-[9rem_auto_1fr_1fr] sm:items-end"
+          className="grid gap-3 rounded-2xl border border-border bg-card p-4 sm:grid-cols-[9rem_1fr_1fr] sm:items-end"
         >
           <div>
             <p className="font-heading text-base font-bold text-foreground">
@@ -30,29 +30,22 @@ export function ScheduleEditor() {
               {day.isOpen ? "Open" : "Closed"}
             </Button>
           </div>
-          <div className="hidden sm:block" />
           <div className="space-y-2">
             <Label htmlFor={`${day.day}-open`}>Opens</Label>
-            <Input
+            <TimeSelect
               id={`${day.day}-open`}
-              type="time"
               value={day.openTime}
               disabled={!day.isOpen}
-              onChange={(event) =>
-                updateDay(day.day, { openTime: event.target.value })
-              }
+              onChange={(openTime) => updateDay(day.day, { openTime })}
             />
           </div>
           <div className="space-y-2">
             <Label htmlFor={`${day.day}-close`}>Closes</Label>
-            <Input
+            <TimeSelect
               id={`${day.day}-close`}
-              type="time"
               value={day.closeTime}
               disabled={!day.isOpen}
-              onChange={(event) =>
-                updateDay(day.day, { closeTime: event.target.value })
-              }
+              onChange={(closeTime) => updateDay(day.day, { closeTime })}
             />
           </div>
         </div>

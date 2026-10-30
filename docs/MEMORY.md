@@ -46,7 +46,8 @@ Checked 30 Oct 2026.
 - shadcn style is `base-nova`. Primitives sit on Base UI, not Radix.
 - `cn` comes from the `cn` package. `src/lib/utils.ts` re-exports it.
 - Components are grouped by feature under `src/components/` (`home`, `services`, `why-choose-us`, `about`, `reviews`, `branches`, `faq`, `contact`, plus `layout`, `motion`, `ui`). See `ARCHITECTURE.md`.
-- Images live under `public/images/{brand,hero,services,faq,about,why-choose-us,tools,decor,source}/`. Floating dental tools use `FloatingTools` (desktop only).
+- Images live under `public/images/{brand,hero,services,faq,about,why-choose-us,tools,decor,source}/`. Brand mark for collapsed admin sidebar: `public/images/brand/logo-mark.png`. Floating dental tools use `FloatingTools` (desktop only).
+- Admin shell collapse state lives in `AdminShell` (default expanded). Desktop rail animates `md:w-64` ↔ `md:w-20` over 500ms; collapsed nav uses tooltips. Shared admin page frame: `AdminPage` / `AdminPageIntro`. Time fields use `TimeSelect` (30-min slots); dates use `DatePicker` + shadcn `Calendar`.
 - Theme is a `dark` class on `<html>`. Toggle writes `localStorage.theme` (`light`|`dark`). A head boot script applies **only** that explicit value before paint — it must not use `prefers-color-scheme` (that caused hydration mismatches for users with a dark OS and no stored theme). `suppressHydrationWarning` on `<html>` is required with that boot script (see Next “preventing flash before hydration”). `suppressHydrationWarning` on `<body>` is for browser extensions that inject attributes (e.g. ColorZilla’s `cz-shortcut-listen`) before hydrate — not an app bug and not related to webpack. Move to `next-themes` rather than adding a second toggle.
 - Dev server is `next dev --webpack` even though `next.config.ts` also mentions Turbopack CSS. Leave that alone unless dev is being fixed on purpose.
 - No database or email provider is installed. Do not add one inside a visual change.
