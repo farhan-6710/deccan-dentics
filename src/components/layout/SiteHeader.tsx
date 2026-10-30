@@ -6,7 +6,6 @@ import { usePathname } from "next/navigation";
 import { CalendarDays, Menu, X } from "lucide-react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { ThemeToggle } from "@/components/layout/ThemeToggle";
 import { NAV_LINKS } from "@/constants/nav";
 import { cn } from "cn";
 
@@ -52,7 +51,6 @@ export function SiteHeader() {
         </nav>
 
         <div className="flex items-center gap-2 sm:gap-3">
-          <ThemeToggle />
           <Link href="/contact" className="hidden sm:inline-flex">
             <Button size="lg" className="gap-2 px-4 md:px-5">
               <CalendarDays className="size-4" />

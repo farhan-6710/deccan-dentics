@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Caveat, Libre_Baskerville, Merriweather } from "next/font/google";
-import { THEME_BOOT_SCRIPT } from "@/components/layout/ThemeScript";
+import { ThemeProvider } from "@/components/layout/ThemeProvider";
 import { Toaster } from "@/components/ui/sonner";
 import { CLINIC } from "@/data/clinic";
 import "./globals.css";
@@ -73,12 +73,16 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       suppressHydrationWarning
       className={`${libreBaskerville.variable} ${merriweather.variable} ${caveat.variable}`}
     >
-      <head>
-        <script dangerouslySetInnerHTML={{ __html: THEME_BOOT_SCRIPT }} />
-      </head>
       <body suppressHydrationWarning className="h-full font-body antialiased">
-        {children}
-        <Toaster />
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="light"
+          enableSystem={false}
+          disableTransitionOnChange
+        >
+          {children}
+          <Toaster />
+        </ThemeProvider>
       </body>
     </html>
   );

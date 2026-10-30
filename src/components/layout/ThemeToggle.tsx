@@ -1,18 +1,12 @@
 "use client";
 
 import { Moon, Sun } from "lucide-react";
+import { useTheme } from "next-themes";
 import { Button } from "@/components/ui/button";
 
-function applyTheme(nextDark: boolean) {
-  document.documentElement.classList.toggle("dark", nextDark);
-  window.localStorage.setItem("theme", nextDark ? "dark" : "light");
-}
-
+/** Kept for a later restore — currently not mounted in the site header. */
 export function ThemeToggle() {
-  function toggle() {
-    const next = !document.documentElement.classList.contains("dark");
-    applyTheme(next);
-  }
+  const { resolvedTheme, setTheme } = useTheme();
 
   return (
     <Button
@@ -20,7 +14,9 @@ export function ThemeToggle() {
       variant="ghost"
       size="icon"
       aria-label="Toggle theme"
-      onClick={toggle}
+      onClick={() =>
+        setTheme(resolvedTheme === "dark" ? "light" : "dark")
+      }
       className="text-muted-foreground hover:text-foreground"
     >
       <Sun className="size-5 dark:hidden" />

@@ -116,7 +116,7 @@ Marketing pages use `PageShell` (`layout/PageShell.tsx`): fixed header, main off
 
 ## 6. Theme
 
-`layout/ThemeScript` applies `dark` before paint from `localStorage` or `prefers-color-scheme`. `layout/ThemeToggle` flips the class without React theme state (avoids hydration lint issues).
+Theme is owned by `layout/ThemeProvider` (`next-themes`, `attribute="class"`, `defaultTheme="light"`). `layout/ThemeToggle` uses `useTheme` and is currently not mounted in the header.
 
 ## 7. Content source
 
