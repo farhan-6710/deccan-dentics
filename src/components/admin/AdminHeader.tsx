@@ -19,7 +19,7 @@ export function AdminHeader({
   return (
     <motion.header
       {...SHELL_HEADER_MOTION}
-      className="z-30 flex h-16 shrink-0 items-center justify-between gap-3 border-b border-border bg-background/90 px-4 backdrop-blur-md sm:px-6"
+      className="z-30 flex h-16 shrink-0 items-center justify-between gap-3 border-b border-border bg-card/90 px-4 backdrop-blur-md sm:px-6"
     >
       <AdminHeaderBreadcrumbs
         title={title}
