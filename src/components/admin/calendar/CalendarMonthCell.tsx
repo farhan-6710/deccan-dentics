@@ -19,14 +19,14 @@ export function CalendarMonthCell({
       type="button"
       onClick={() => onSelect(cell.date)}
       className={cn(
-        "flex min-h-[3.75rem] flex-col items-center gap-1 rounded-xl border border-transparent p-1 transition-colors sm:min-h-[5.25rem] sm:gap-1.5 sm:p-1.5",
+        "flex h-full min-h-0 flex-col items-center gap-1 rounded-xl border border-transparent p-1 transition-colors sm:gap-1.5 sm:p-1.5",
         cell.isSelected && "bg-primary/5",
         !cell.isSelected && "hover:bg-muted/50",
       )}
     >
       <span
         className={cn(
-          "inline-flex size-7 items-center justify-center rounded-full text-xs font-medium sm:size-8 sm:text-sm",
+          "inline-flex size-6 items-center justify-center rounded-full text-xs font-medium sm:size-8 sm:text-sm",
           !cell.inCurrentMonth && "text-muted-foreground/45",
           cell.inCurrentMonth && !cell.isSelected && "text-foreground",
           cell.isSelected && "bg-primary text-primary-foreground",

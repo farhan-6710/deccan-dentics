@@ -5,11 +5,15 @@ import type { Appointment } from "@/types/admin";
 import { CalendarHourLines } from "@/components/admin/calendar/CalendarHourLines";
 import { CalendarTimeGutter } from "@/components/admin/calendar/CalendarTimeGutter";
 import { CalendarWeekDayColumn } from "@/components/admin/calendar/CalendarWeekDayColumn";
+import { CALENDAR_TIMELINE_EDGE_PAD_PX } from "@/constants/calendar/layout";
 import {
   appointmentsOnDate,
   groupAppointmentsByDate,
 } from "@/utils/calendar-appointments";
-import { calendarGridHeightPx } from "@/utils/calendar-time";
+import {
+  calendarGridHeightPx,
+  calendarTimelineOuterHeightPx,
+} from "@/utils/calendar-time";
 import { buildWeekDays } from "@/utils/calendar-week";
 import { cn } from "cn";
 
@@ -43,6 +47,7 @@ export function CalendarWeekView({
     [appointments],
   );
   const gridHeight = calendarGridHeightPx();
+  const outerHeight = calendarTimelineOuterHeightPx();
 
   return (
     <div className="mt-4 flex min-h-0 flex-1 flex-col overflow-hidden">
@@ -75,12 +80,16 @@ export function CalendarWeekView({
       <div className="min-h-0 flex-1 overflow-x-auto overflow-y-auto">
         <div
           className="flex min-w-[32rem] sm:min-w-[36rem]"
-          style={{ height: gridHeight + 12 }}
+          style={{ height: outerHeight }}
         >
           <CalendarTimeGutter />
           <div
-            className="relative grid flex-1 grid-cols-7 border-t border-border"
-            style={{ height: gridHeight }}
+            className="relative grid flex-1 grid-cols-7"
+            style={{
+              marginTop: CALENDAR_TIMELINE_EDGE_PAD_PX,
+              marginBottom: CALENDAR_TIMELINE_EDGE_PAD_PX,
+              height: gridHeight,
+            }}
           >
             <CalendarHourLines />
             {days.map((day) => (

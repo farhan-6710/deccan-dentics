@@ -3,7 +3,10 @@ import {
   CALENDAR_DAY_START_HOUR,
   CALENDAR_DEFAULT_DURATION_MINUTES,
 } from "@/constants/calendar/views";
-import { CALENDAR_HOUR_HEIGHT_PX } from "@/constants/calendar/layout";
+import {
+  CALENDAR_HOUR_HEIGHT_PX,
+  CALENDAR_TIMELINE_EDGE_PAD_PX,
+} from "@/constants/calendar/layout";
 import { formatTimeLabel } from "@/utils/time";
 
 export function parseTimeToMinutes(time: string): number | null {
@@ -42,6 +45,11 @@ export function calendarHourMarks(): number[] {
 
 export function calendarGridHeightPx(): number {
   return (CALENDAR_DAY_END_HOUR - CALENDAR_DAY_START_HOUR) * CALENDAR_HOUR_HEIGHT_PX;
+}
+
+/** Timeline scroll content height including gutter label edge padding. */
+export function calendarTimelineOuterHeightPx(): number {
+  return calendarGridHeightPx() + CALENDAR_TIMELINE_EDGE_PAD_PX * 2;
 }
 
 export type BlockLayout = {

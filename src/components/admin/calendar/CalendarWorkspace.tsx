@@ -49,8 +49,8 @@ export function CalendarWorkspace() {
   };
 
   return (
-    <div className="grid min-h-0 gap-4 lg:h-[min(40rem,calc(100dvh-14rem))] lg:grid-cols-[minmax(0,1.75fr)_minmax(17.5rem,1fr)]">
-      <CalendarPanel className="flex h-[min(32rem,70dvh)] flex-col overflow-hidden lg:h-full">
+    <div className="grid min-h-0 gap-4 lg:h-[calc(100dvh-13rem)] lg:min-h-[36rem] lg:grid-cols-[minmax(0,1.75fr)_minmax(17.5rem,1fr)]">
+      <CalendarPanel className="flex h-[min(38rem,78dvh)] flex-col overflow-hidden lg:h-full lg:min-h-0">
         <CalendarToolbar
           title={title}
           view={view}
@@ -88,7 +88,7 @@ export function CalendarWorkspace() {
         )}
       </CalendarPanel>
 
-      <CalendarPanel className="flex h-[min(28rem,60dvh)] flex-col overflow-hidden lg:h-full">
+      <CalendarPanel className="flex h-[min(28rem,60dvh)] flex-col overflow-hidden lg:h-full lg:min-h-0">
         <CalendarDayDetails
           selectedDate={selectedDate}
           patientName={actions.patientName}

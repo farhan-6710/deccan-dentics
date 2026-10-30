@@ -37,8 +37,8 @@ export function CalendarMonthView({
   );
 
   return (
-    <div className="mt-4 flex min-h-0 flex-1 flex-col">
-      <div className="grid grid-cols-7 gap-1 border-b border-border pb-2">
+    <div className="mt-4 flex min-h-0 flex-1 flex-col overflow-hidden">
+      <div className="grid shrink-0 grid-cols-7 gap-1 border-b border-border pb-2">
         {WEEKDAY_SHORT.map((label) => (
           <p
             key={label}
@@ -48,7 +48,7 @@ export function CalendarMonthView({
           </p>
         ))}
       </div>
-      <div className="mt-1 grid flex-1 grid-cols-7 gap-1">
+      <div className="mt-1 grid min-h-0 flex-1 grid-cols-7 grid-rows-6 gap-1">
         {cells.map((cell) => (
           <CalendarMonthCell
             key={cell.dateKey}

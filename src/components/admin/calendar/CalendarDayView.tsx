@@ -6,6 +6,7 @@ import { CalendarDayBlock } from "@/components/admin/calendar/CalendarDayBlock";
 import { CalendarDayEmptySlots } from "@/components/admin/calendar/CalendarDayEmptySlots";
 import { CalendarHourLines } from "@/components/admin/calendar/CalendarHourLines";
 import { CalendarTimeGutter } from "@/components/admin/calendar/CalendarTimeGutter";
+import { CALENDAR_TIMELINE_EDGE_PAD_PX } from "@/constants/calendar/layout";
 import {
   appointmentsOnDate,
   groupAppointmentsByDate,
@@ -13,6 +14,7 @@ import {
 import {
   appointmentBlockLayout,
   calendarGridHeightPx,
+  calendarTimelineOuterHeightPx,
 } from "@/utils/calendar-time";
 import { toDateValue } from "@/utils/date";
 
@@ -38,15 +40,20 @@ export function CalendarDayView({
   );
   const dayItems = appointmentsOnDate(byDate, dateKey);
   const gridHeight = calendarGridHeightPx();
+  const outerHeight = calendarTimelineOuterHeightPx();
 
   return (
     <div className="mt-4 flex min-h-0 flex-1 flex-col overflow-hidden">
       <div className="min-h-0 flex-1 overflow-x-auto overflow-y-auto">
-        <div className="flex" style={{ height: gridHeight + 12 }}>
+        <div className="flex" style={{ height: outerHeight }}>
           <CalendarTimeGutter />
           <div
-            className="relative min-w-0 flex-1 border-t border-border"
-            style={{ height: gridHeight }}
+            className="relative min-w-0 flex-1"
+            style={{
+              marginTop: CALENDAR_TIMELINE_EDGE_PAD_PX,
+              marginBottom: CALENDAR_TIMELINE_EDGE_PAD_PX,
+              height: gridHeight,
+            }}
           >
             <CalendarHourLines />
             <CalendarDayEmptySlots onEmptySlot={onEmptySlot} />
