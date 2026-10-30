@@ -1,23 +1,37 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo } from "react";
+import { useQueryId } from "@/hooks/use-query-id";
 
-/** Keeps a selected id, defaulting to the first row whenever the list changes. */
+/**
+ * Row selection synced to `?id=`. Selecting a row updates the query string;
+ * filters falling back to another row keep the URL aligned.
+ */
 export function useSelectedRow<T>(
   rows: T[],
   getId: (row: T) => string,
-): [string | null, (id: string | null) => void, T | null] {
-  const [selectedId, setSelectedId] = useState<string | null>(null);
+): [string | null, (id: string) => void, T | null] {
+  const [queryId, setQueryId] = useQueryId();
 
   const resolvedId = useMemo(() => {
     if (rows.length === 0) return null;
-    const stillVisible =
-      selectedId !== null && rows.some((row) => getId(row) === selectedId);
-    return stillVisible ? selectedId : getId(rows[0]);
-  }, [rows, selectedId, getId]);
+    if (queryId && rows.some((row) => getId(row) === queryId)) return queryId;
+    return getId(rows[0]);
+  }, [rows, queryId, getId]);
 
-  const selected =
-    rows.find((row) => getId(row) === resolvedId) ?? null;
+  useEffect(() => {
+    if (resolvedId === queryId) return;
+    setQueryId(resolvedId);
+  }, [resolvedId, queryId, setQueryId]);
 
-  return [resolvedId, setSelectedId, selected];
+  const select = useCallback(
+    (id: string) => {
+      setQueryId(id);
+    },
+    [setQueryId],
+  );
+
+  const selected = rows.find((row) => getId(row) === resolvedId) ?? null;
+
+  return [resolvedId, select, selected];
 }

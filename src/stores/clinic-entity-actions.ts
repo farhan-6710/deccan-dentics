@@ -29,7 +29,7 @@ export function createClinicEntityActions(set: SetState, get: GetState) {
       const now = new Date().toISOString();
       const patient: Patient = {
         ...input,
-        id: createId("pat"),
+        id: createId(),
         createdAt: now,
         updatedAt: now,
       };
@@ -52,7 +52,7 @@ export function createClinicEntityActions(set: SetState, get: GetState) {
       const now = new Date().toISOString();
       const appointment: Appointment = {
         ...input,
-        id: createId("apt"),
+        id: createId(),
         createdAt: now,
         updatedAt: now,
       };
@@ -75,7 +75,7 @@ export function createClinicEntityActions(set: SetState, get: GetState) {
     },
     addTodo: (input: TodoInput) => {
       const todo: ClinicTodo = {
-        id: createId("todo"),
+        id: createId(),
         label: input.label.trim(),
         done: false,
       };

@@ -59,6 +59,6 @@ export const useClinicStore = create<ClinicState>()(
       ...createScheduleActions(set),
       setSetting: (key, value) => set({ [key]: value }),
     }),
-    { name: "deccan-clinic-store" },
+    { name: "deccan-clinic-store-v2" },
   ),
 );

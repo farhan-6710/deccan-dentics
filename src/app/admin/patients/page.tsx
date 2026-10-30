@@ -1,9 +1,7 @@
 "use client";
 
-import {
-  AdminMotion,
-  AdminPage,
-} from "@/components/admin/AdminPage";
+import { Suspense } from "react";
+import { AdminMotion, AdminPage } from "@/components/admin/AdminPage";
 import { AdminPageHeader } from "@/components/admin/AdminPageHeader";
 import { PatientsTable } from "@/components/admin/patients/PatientsTable";
 
@@ -16,7 +14,9 @@ export default function AdminPatientsPage() {
         description="Keep a lightweight patient list ready for appointments."
       />
       <AdminMotion>
-        <PatientsTable />
+        <Suspense fallback={null}>
+          <PatientsTable />
+        </Suspense>
       </AdminMotion>
     </AdminPage>
   );

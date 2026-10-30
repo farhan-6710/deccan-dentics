@@ -42,7 +42,7 @@ export function PatientsTable() {
     [patients, filters],
   );
   const getId = useCallback((patient: Patient) => patient.id, []);
-  const [selectedId, setSelectedId, selected] = useSelectedRow(rows, getId);
+  const [selectedId, selectRow, selected] = useSelectedRow(rows, getId);
 
   const save = (input: PatientInput) => {
     const toast = patientSaveToast(editing, input);
@@ -87,7 +87,7 @@ export function PatientsTable() {
           rows={rows}
           getRowId={getId}
           selectedRowId={selectedId}
-          onRowSelect={(patient) => setSelectedId(patient.id)}
+          onRowSelect={(patient) => selectRow(patient.id)}
           emptyMessage="No patients match these filters."
         />
         <PatientDetailsCard

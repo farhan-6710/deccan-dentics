@@ -39,6 +39,7 @@ export function AdminUserMenu({ onLogout }: AdminUserMenuProps) {
     <>
       <DropdownMenu open={menuOpen} onOpenChange={setMenuOpen}>
         <DropdownMenuTrigger
+        className="p-1 border border-border"
           aria-label={`${ADMIN_USER_PROFILE.name} account`}
           render={
             <button
@@ -47,8 +48,11 @@ export function AdminUserMenu({ onLogout }: AdminUserMenuProps) {
             />
           }
         >
-          <span className="flex size-9 items-center justify-center rounded-full bg-primary text-xs font-semibold text-primary-foreground">
+          <span className="flex size-7 items-center justify-center rounded-full bg-primary text-sm font-semibold text-primary-foreground">
             {ADMIN_USER_PROFILE.initials}
+          </span>
+          <span className="hidden max-w-[7.5rem] truncate text-sm font-medium text-foreground sm:inline">
+            {ADMIN_USER_PROFILE.name}
           </span>
           <ChevronDown className="hidden size-4 text-muted-foreground sm:block" />
         </DropdownMenuTrigger>

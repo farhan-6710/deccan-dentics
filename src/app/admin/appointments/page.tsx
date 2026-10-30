@@ -1,9 +1,7 @@
 "use client";
 
-import {
-  AdminMotion,
-  AdminPage,
-} from "@/components/admin/AdminPage";
+import { Suspense } from "react";
+import { AdminMotion, AdminPage } from "@/components/admin/AdminPage";
 import { AdminPageHeader } from "@/components/admin/AdminPageHeader";
 import { AppointmentsTable } from "@/components/admin/appointments/AppointmentsTable";
 
@@ -16,7 +14,9 @@ export default function AdminAppointmentsPage() {
         description="Appointments always link to a patient record via patientId."
       />
       <AdminMotion>
-        <AppointmentsTable />
+        <Suspense fallback={null}>
+          <AppointmentsTable />
+        </Suspense>
       </AdminMotion>
     </AdminPage>
   );

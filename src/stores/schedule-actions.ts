@@ -12,7 +12,7 @@ type SetState = (
 ) => void;
 
 const DEFAULT_SLOT = (): ScheduleTimeSlot => ({
-  id: createId("slot"),
+  id: createId(),
   openTime: "09:00",
   closeTime: "13:00",
 });

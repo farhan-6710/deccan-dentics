@@ -27,11 +27,10 @@ export function AdminHeaderActions({ onLogout }: AdminHeaderActionsProps) {
       </button>
 
       <AdminUserMenu onLogout={onLogout} />
-
       <Button
         type="button"
-        size="sm"
-        className="hidden shrink-0 sm:inline-flex"
+        size="lg"
+        className="hidden shrink-0 sm:inline-flex px-4"
         onClick={() => router.push("/")}
       >
         Back to website
