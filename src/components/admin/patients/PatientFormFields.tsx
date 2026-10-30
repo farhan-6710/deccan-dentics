@@ -57,12 +57,11 @@ export function PatientFormFields({ value, onChange }: PatientFormFieldsProps) {
         />
       </div>
       <div className="space-y-2">
-        <Label htmlFor="patient-profession">Profession</Label>
+        <Label htmlFor="patient-profession">Profession (optional)</Label>
         <Input
           id="patient-profession"
-          value={value.profession}
-          onChange={(e) => set("profession", e.target.value)}
-          required
+          value={value.profession ?? ""}
+          onChange={(e) => set("profession", e.target.value || undefined)}
         />
       </div>
       <div className="space-y-2">

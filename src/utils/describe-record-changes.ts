@@ -36,7 +36,11 @@ export function patientSaveToast(
   if (!editing) {
     return {
       title: "Patient added",
-      description: `${input.name} (${input.age} years, ${input.profession}) was added as ${PATIENT_STATUS_LABELS[input.status]}.`,
+      description: [
+        `${input.name} (${input.age} years`,
+        input.profession ? `, ${input.profession}` : "",
+        `) was added as ${PATIENT_STATUS_LABELS[input.status]}.`,
+      ].join(""),
       type: "success",
     };
   }
@@ -44,7 +48,12 @@ export function patientSaveToast(
   pushIfChanged(changes, "name", editing.name, input.name);
   pushIfChanged(changes, "phone", editing.phone, input.phone);
   pushIfChanged(changes, "age", String(editing.age), String(input.age));
-  pushIfChanged(changes, "profession", editing.profession, input.profession);
+  pushIfChanged(
+    changes,
+    "profession",
+    editing.profession ?? "",
+    input.profession ?? "",
+  );
   pushIfChanged(
     changes,
     "status",

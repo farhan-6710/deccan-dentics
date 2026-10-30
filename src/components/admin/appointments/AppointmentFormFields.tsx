@@ -78,12 +78,11 @@ export function AppointmentFormFields({
         />
       </div>
       <div className="space-y-2 sm:col-span-2">
-        <Label htmlFor="apt-reason">Reason</Label>
+        <Label htmlFor="apt-reason">Reason (optional)</Label>
         <Input
           id="apt-reason"
           value={value.reason}
           onChange={(e) => set("reason", e.target.value)}
-          required
         />
       </div>
       <div className="space-y-2 sm:col-span-2">

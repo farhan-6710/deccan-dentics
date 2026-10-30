@@ -10,7 +10,7 @@ export type Patient = {
   name: string;
   phone: string;
   age: number;
-  profession: string;
+  profession?: string;
   status: PatientStatus;
   email?: string;
   address?: string;

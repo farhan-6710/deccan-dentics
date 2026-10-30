@@ -16,7 +16,6 @@ const EMPTY: PatientInput = {
   name: "",
   phone: "",
   age: 30,
-  profession: "",
   status: "new",
 };
 

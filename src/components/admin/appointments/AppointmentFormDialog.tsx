@@ -88,7 +88,7 @@ function AppointmentFormBody({
         className="space-y-4"
         onSubmit={(event) => {
           event.preventDefault();
-          if (!value.patientId) return;
+          if (!value.patientId || !value.date || !value.time) return;
           onSave(value);
           onClose();
         }}

@@ -45,7 +45,9 @@ export function PatientDetailsCard({
                   {patient.name}
                 </p>
                 <p className="mt-0.5 text-sm text-muted-foreground">
-                  {patient.age} years · {patient.profession}
+                  {[`${patient.age} years`, patient.profession]
+                    .filter(Boolean)
+                    .join(" · ")}
                 </p>
               </div>
               <PatientStatusBadge status={patient.status} />

@@ -22,7 +22,7 @@ export function filterPatients(
     return (
       patient.name.toLowerCase().includes(query) ||
       patient.phone.toLowerCase().includes(query) ||
-      patient.profession.toLowerCase().includes(query)
+      (patient.profession?.toLowerCase().includes(query) ?? false)
     );
   });
 }

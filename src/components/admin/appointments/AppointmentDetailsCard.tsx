@@ -67,8 +67,10 @@ export function AppointmentDetailsCard({
               <Stethoscope className="size-3.5" />
               Reason
             </p>
-            <p className="text-sm leading-snug text-foreground">
-              {appointment.reason}
+            <p
+              className={`text-sm leading-snug ${appointment.reason ? "text-foreground" : "text-muted-foreground"}`}
+            >
+              {appointment.reason || "No reason added"}
             </p>
           </div>
           <div className="border-t border-border/70 pt-3">
