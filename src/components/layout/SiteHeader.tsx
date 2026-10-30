@@ -19,7 +19,7 @@ export function SiteHeader() {
       <div className="mx-auto flex max-w-[var(--container-max)] items-center justify-between gap-4 px-[var(--container-padding)] py-3.5">
         <Link href="/" className="shrink-0" aria-label="Deccan Dentics home">
           <Image
-            src="/images/logo.png"
+            src="/images/brand/logo.png"
             alt="Deccan Dentics Dental Clinic"
             width={220}
             height={52}

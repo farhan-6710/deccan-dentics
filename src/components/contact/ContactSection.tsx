@@ -1,8 +1,9 @@
-import Image from "next/image";
 import { FadeIn } from "@/components/motion/FadeIn";
+import { FloatingTools } from "@/components/motion/FloatingTools";
 import { ContactAside } from "@/components/contact/ContactAside";
 import { ContactForm } from "@/components/contact/ContactForm";
 import { CLINIC } from "@/data/clinic";
+import { SECTION_TOOLS } from "@/data/section-tools";
 
 export function ContactSection() {
   return (
@@ -10,16 +11,9 @@ export function ContactSection() {
       id="contact"
       className="relative overflow-hidden border-b border-border bg-background py-[var(--section-padding-y)]"
     >
-      <Image
-        src="/images/leaf-corner.png"
-        alt=""
-        width={160}
-        height={180}
-        aria-hidden
-        className="pointer-events-none absolute -right-4 top-8 hidden w-24 select-none opacity-40 sm:block md:w-32"
-      />
+      <FloatingTools tools={[...SECTION_TOOLS.contact]} />
 
-      <div className="relative mx-auto max-w-[var(--container-max)] px-[var(--container-padding)]">
+      <div className="relative z-10 mx-auto max-w-[var(--container-max)] px-[var(--container-padding)]">
         <FadeIn className="max-w-2xl">
           <p
             className="text-xs font-semibold uppercase text-primary sm:text-sm"

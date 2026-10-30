@@ -1,7 +1,9 @@
 import Image from "next/image";
 import { FadeIn } from "@/components/motion/FadeIn";
+import { FloatingTools } from "@/components/motion/FloatingTools";
 import { FaqPicker } from "@/components/faq/FaqPicker";
 import { FAQS } from "@/data/faqs";
+import { SECTION_TOOLS } from "@/data/section-tools";
 
 export function FaqSection() {
   return (
@@ -9,11 +11,12 @@ export function FaqSection() {
       id="faq"
       className="relative overflow-hidden border-b border-border bg-muted/40 py-[var(--section-padding-y)]"
     >
-      <div className="relative mx-auto max-w-[var(--container-max)] px-[var(--container-padding)]">
+      <FloatingTools tools={[...SECTION_TOOLS.faq]} />
+      <div className="relative z-10 mx-auto max-w-[var(--container-max)] px-[var(--container-padding)]">
         <div className="grid items-end gap-8 lg:grid-cols-[auto_1fr] lg:gap-12">
           <FadeIn className="mx-auto w-36 sm:w-44 lg:mx-0">
             <Image
-              src="/images/faq.png"
+              src="/images/faq/faq.png"
               alt="Frequently asked questions illustration"
               width={220}
               height={275}

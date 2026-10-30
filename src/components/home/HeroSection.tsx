@@ -7,6 +7,8 @@ import { Button } from "@/components/ui/button";
 import { HeroFeatures } from "@/components/home/HeroFeatures";
 import { HeroTrustBadge } from "@/components/home/HeroTrustBadge";
 import { HeroMotion } from "@/components/motion/FadeIn";
+import { FloatingTools } from "@/components/motion/FloatingTools";
+import { SECTION_TOOLS } from "@/data/section-tools";
 
 export function HeroSection() {
   return (
@@ -14,6 +16,7 @@ export function HeroSection() {
       id="home"
       className="relative overflow-hidden border-b border-border bg-background pb-14 pt-4 md:pb-20 md:pt-16"
     >
+      <FloatingTools tools={[...SECTION_TOOLS.hero]} />
       <div className="relative z-10 mx-auto max-w-[var(--container-max)] px-[var(--container-padding)]">
         <div className="relative lg:min-h-[32rem] xl:min-h-[36rem]">
           <div className="relative z-10 max-w-xl lg:max-w-[30rem] xl:max-w-[34rem]">
@@ -66,7 +69,7 @@ export function HeroSection() {
             className="relative mt-10 w-full sm:mt-8 lg:absolute lg:-right-10 lg:top-[40%] lg:mt-0 lg:w-[min(56%,42rem)] lg:-translate-y-1/2 xl:w-[min(58%,48rem)]"
           >
             <Image
-              src="/images/hero.png"
+              src="/images/hero/hero.png"
               alt="Patient smiling during a gentle dental checkup"
               width={1536}
               height={1024}

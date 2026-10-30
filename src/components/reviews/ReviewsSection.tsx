@@ -1,7 +1,8 @@
-import Image from "next/image";
 import { FadeIn } from "@/components/motion/FadeIn";
+import { FloatingTools } from "@/components/motion/FloatingTools";
 import { ReviewsCarousel } from "@/components/reviews/ReviewsCarousel";
 import { reviews } from "@/data/reviews";
+import { SECTION_TOOLS } from "@/data/section-tools";
 
 export function ReviewsSection() {
   return (
@@ -9,16 +10,9 @@ export function ReviewsSection() {
       id="reviews"
       className="relative overflow-hidden border-b border-border bg-muted/40 py-[var(--section-padding-y)]"
     >
-      <Image
-        src="/images/leaf-accent.png"
-        alt=""
-        width={140}
-        height={180}
-        aria-hidden
-        className="pointer-events-none absolute -left-2 top-12 hidden w-20 select-none opacity-40 sm:block md:w-28"
-      />
+      <FloatingTools tools={[...SECTION_TOOLS.reviews]} />
 
-      <div className="relative mx-auto max-w-[var(--container-max)] px-[var(--container-padding)]">
+      <div className="relative z-10 mx-auto max-w-[var(--container-max)] px-[var(--container-padding)]">
         <FadeIn className="max-w-2xl">
           <p
             className="text-xs font-semibold uppercase text-primary sm:text-sm"

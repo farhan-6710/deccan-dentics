@@ -1,6 +1,8 @@
 import Image from "next/image";
 import { FadeIn } from "@/components/motion/FadeIn";
+import { FloatingTools } from "@/components/motion/FloatingTools";
 import { WhyChooseReason } from "@/components/why-choose-us/WhyChooseReason";
+import { SECTION_TOOLS } from "@/data/section-tools";
 import { WHY_CHOOSE_US } from "@/data/why-choose-us";
 
 export function WhyChooseUsSection() {
@@ -15,8 +17,9 @@ export function WhyChooseUsSection() {
         aria-hidden
         className="pointer-events-none absolute -left-24 top-1/2 size-[28rem] -translate-y-1/2 rounded-full bg-secondary/70 blur-3xl"
       />
+      <FloatingTools tools={[...SECTION_TOOLS.whyChooseUs]} />
 
-      <div className="relative mx-auto grid max-w-[var(--container-max)] items-center gap-12 px-[var(--container-padding)] lg:grid-cols-[2fr_3fr] lg:gap-16">
+      <div className="relative z-10 mx-auto grid max-w-[var(--container-max)] items-center gap-12 px-[var(--container-padding)] lg:grid-cols-[2fr_3fr] lg:gap-16">
         <FadeIn className="mx-auto w-full max-w-sm lg:mx-0 lg:max-w-none">
           <div className="relative mx-auto flex aspect-square max-w-[22rem] items-center justify-center lg:max-w-none">
             <div

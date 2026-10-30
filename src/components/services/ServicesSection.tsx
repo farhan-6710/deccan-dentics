@@ -13,6 +13,8 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { FadeIn } from "@/components/motion/FadeIn";
+import { FloatingTools } from "@/components/motion/FloatingTools";
+import { SECTION_TOOLS } from "@/data/section-tools";
 import { SERVICES } from "@/data/services";
 
 const ICONS = [Syringe, WandSparkles, Smile, Sparkles, Crown, Baby] as const;
@@ -25,9 +27,10 @@ export function ServicesSection() {
   return (
     <section
       id="services"
-      className="border-b border-border bg-muted/40 py-[var(--section-padding-y)]"
+      className="relative overflow-hidden border-b border-border bg-muted/40 py-[var(--section-padding-y)]"
     >
-      <div className="mx-auto max-w-[var(--container-max)] px-[var(--container-padding)]">
+      <FloatingTools tools={[...SECTION_TOOLS.services]} />
+      <div className="relative z-10 mx-auto max-w-[var(--container-max)] px-[var(--container-padding)]">
         <FadeIn className="mx-auto max-w-2xl text-center">
           <p
             className="text-xs font-semibold uppercase text-primary sm:text-sm"

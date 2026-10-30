@@ -1,7 +1,8 @@
-import Image from "next/image";
 import { FadeIn } from "@/components/motion/FadeIn";
+import { FloatingTools } from "@/components/motion/FloatingTools";
 import { AboutStats } from "@/components/about/AboutStats";
 import { CLINIC } from "@/data/clinic";
+import { SECTION_TOOLS } from "@/data/section-tools";
 
 export function AboutSection() {
   const { about, stats } = CLINIC;
@@ -11,16 +12,9 @@ export function AboutSection() {
       id="about"
       className="relative overflow-hidden border-b border-border bg-background py-[var(--section-padding-y)]"
     >
-      <Image
-        src="/images/leaf-soft.png"
-        alt=""
-        width={160}
-        height={200}
-        aria-hidden
-        className="pointer-events-none absolute -left-4 bottom-8 hidden w-24 select-none opacity-35 sm:block md:w-32"
-      />
+      <FloatingTools tools={[...SECTION_TOOLS.about]} />
 
-      <div className="relative mx-auto grid max-w-[var(--container-max)] items-start gap-12 px-[var(--container-padding)] lg:grid-cols-[3fr_2fr] lg:gap-14">
+      <div className="relative z-10 mx-auto grid max-w-[var(--container-max)] items-start gap-12 px-[var(--container-padding)] lg:grid-cols-[3fr_2fr] lg:gap-14">
         <FadeIn className="min-w-0">
           <p
             className="text-xs font-semibold uppercase text-primary sm:text-sm"

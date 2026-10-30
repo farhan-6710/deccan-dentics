@@ -29,12 +29,11 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html
-      lang="en"
-      suppressHydrationWarning
-      className={`${libreBaskerville.variable} ${merriweather.variable} ${caveat.variable} h-full antialiased`}
-    >
-      <body className="flex min-h-full flex-col font-body">
+    <html lang="en">
+      <body
+        suppressHydrationWarning
+        className={`${libreBaskerville.variable} ${merriweather.variable} ${caveat.variable} h-full antialiased`}
+      >
         <ThemeScript />
         {children}
       </body>

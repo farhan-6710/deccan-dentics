@@ -10,7 +10,7 @@ export function SiteFooter() {
       <div className="mx-auto grid max-w-[var(--container-max)] gap-10 px-[var(--container-padding)] py-14 md:grid-cols-2 lg:grid-cols-4 lg:gap-8">
         <div className="space-y-4 lg:col-span-1">
           <Image
-            src="/images/logo.png"
+            src="/images/brand/logo.png"
             alt={CLINIC.name}
             width={200}
             height={48}

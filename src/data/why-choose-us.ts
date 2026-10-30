@@ -4,7 +4,7 @@ export const WHY_CHOOSE_US = {
   intro:
     "Care that feels personal—experienced clinicians, clear plans, and modern tools across every Deccan Dentics visit.",
   image: {
-    src: "/images/why-choose-us-img.png",
+    src: "/images/why-choose-us/why-choose-us-img.png",
     alt: "Healthy tooth illustration representing precise dental care",
     width: 439,
     height: 429,

@@ -9,7 +9,7 @@ export const SERVICES = [
       "Durable, natural aesthetics",
       "Restore bite strength and comfort",
     ],
-    image: "/images/general-dentistry.png",
+    image: "/images/services/dental-implants.png",
   },
   {
     id: "cosmetic",
@@ -21,7 +21,7 @@ export const SERVICES = [
       "Veneers and bonding options",
       "Subtle, camera-ready results",
     ],
-    image: "/images/general-dentistry.png",
+    image: "/images/services/cosmetic-dentistry.png",
   },
   {
     id: "root-canals",
@@ -33,7 +33,7 @@ export const SERVICES = [
       "Advanced diagnostics when needed",
       "Preserve your natural tooth",
     ],
-    image: "/images/general-dentistry.png",
+    image: "/images/services/root-canal.png",
   },
   {
     id: "whitening",
@@ -45,7 +45,7 @@ export const SERVICES = [
       "Customized shade goals",
       "Guidance for lasting brightness",
     ],
-    image: "/images/general-dentistry.png",
+    image: "/images/services/teeth-whitening.png",
   },
   {
     id: "crowns",
@@ -57,7 +57,7 @@ export const SERVICES = [
       "Protect cracked or weak teeth",
       "Blend with your smile",
     ],
-    image: "/images/general-dentistry.png",
+    image: "/images/services/dental-crowns.png",
   },
   {
     id: "kids",
@@ -69,7 +69,7 @@ export const SERVICES = [
       "Preventive check-ups & cleanings",
       "Parents welcome in the room",
     ],
-    image: "/images/general-dentistry.png",
+    image: "/images/services/kids-dentistry.png",
   },
 ] as const;
 

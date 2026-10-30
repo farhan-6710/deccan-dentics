@@ -46,6 +46,7 @@ Checked 30 Oct 2026.
 - shadcn style is `base-nova`. Primitives sit on Base UI, not Radix.
 - `cn` comes from the `cn` package. `src/lib/utils.ts` re-exports it.
 - Components are grouped by feature under `src/components/` (`home`, `services`, `why-choose-us`, `about`, `reviews`, `branches`, `faq`, `contact`, plus `layout`, `motion`, `ui`). See `ARCHITECTURE.md`.
+- Images live under `public/images/{brand,hero,services,faq,about,why-choose-us,tools,decor,source}/`. Floating dental tools use `FloatingTools` (desktop only).
 - Theme is a `dark` class on `<html>`, written by `layout/ThemeToggle`. Move this to `next-themes` rather than adding a second toggle.
 - Dev server is `next dev --webpack` even though `next.config.ts` also mentions Turbopack CSS. Leave that alone unless dev is being fixed on purpose.
 - No database, auth, or email provider is installed. Do not add one inside a visual change.
@@ -65,7 +66,7 @@ Checked 30 Oct 2026.
 - No payments, accounts, OTP, or medical-history fields in this version.
 - Source files we write stay at or under 120 lines. `src/app/globals.css` is the token file and may be longer. See `RULES.md`.
 - `select.tsx` from shadcn is already over 120 lines. Split it before adding behavior, rather than letting it grow.
-- Decorative leaves must not block clicks.
+- Floating tool accents are decorative only (`pointer-events-none`, desktop). Do not block clicks or text.
 
 ## 8. How to record a new decision
 

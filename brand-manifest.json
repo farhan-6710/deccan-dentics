@@ -34,7 +34,7 @@
     ]
   },
   "logo": {
-    "file": "/images/logo.png",
+    "file": "/images/brand/logo.png",
     "wordmark": "Deccan Dentics",
     "clearSpace": "At least the height of the tooth mark on every side.",
     "minHeight": "2.75rem"

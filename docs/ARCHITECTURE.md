@@ -52,8 +52,23 @@ src/components/
 src/constants/               Shared constants (nav)
 src/data/                    Clinic content (clinic, services, faqs, reviews, why-choose-us)
 src/lib/                     cn re-export only
-public/images/               Brand and section images
+public/images/               Assets grouped by feature (see below)
 docs/                        Product + engineering docs
+```
+
+**Images**
+
+```text
+public/images/
+  brand/          logo
+  hero/           hero portrait
+  services/       per-service art
+  faq/            FAQ illustration
+  about/          about imagery
+  why-choose-us/  why-choose art
+  tools/          cropped dental instruments (floating accents)
+  decor/          misc accents (non-leaf)
+  source/         original collages (not used in UI)
 ```
 
 **Rule of thumb:** put a section and its private children in the matching feature folder. Shared chrome goes in `layout/`. Shared motion helpers go in `motion/`. Never put feature UI in `ui/`.
@@ -87,6 +102,7 @@ Every page uses `PageShell` (`layout/PageShell.tsx`): fixed header, main offset,
 | `contact/ContactSection` | Enquiry form, map, clinic details rail |
 | `motion/FadeIn` | Scroll-in when section is in view |
 | `motion/HeroMotion` | Load-time hero entrance only |
+| `motion/FloatingTools` | Desktop-only floating instrument accents |
 
 ## 6. Theme
 

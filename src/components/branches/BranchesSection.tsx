@@ -1,7 +1,8 @@
-import Image from "next/image";
 import { FadeIn } from "@/components/motion/FadeIn";
+import { FloatingTools } from "@/components/motion/FloatingTools";
 import { BranchPicker } from "@/components/branches/BranchPicker";
 import { CLINIC } from "@/data/clinic";
+import { SECTION_TOOLS } from "@/data/section-tools";
 
 export function BranchesSection() {
   return (
@@ -9,16 +10,9 @@ export function BranchesSection() {
       id="branches"
       className="relative overflow-hidden border-b border-border bg-background py-[var(--section-padding-y)]"
     >
-      <Image
-        src="/images/leaf-branch.png"
-        alt=""
-        width={180}
-        height={220}
-        aria-hidden
-        className="pointer-events-none absolute -right-6 top-10 hidden w-28 select-none opacity-40 sm:block md:w-36 lg:opacity-50"
-      />
+      <FloatingTools tools={[...SECTION_TOOLS.branches]} />
 
-      <div className="relative mx-auto max-w-[var(--container-max)] px-[var(--container-padding)]">
+      <div className="relative z-10 mx-auto max-w-[var(--container-max)] px-[var(--container-padding)]">
         <FadeIn className="max-w-2xl">
           <p
             className="text-xs font-semibold uppercase text-primary sm:text-sm"

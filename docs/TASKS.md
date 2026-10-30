@@ -26,7 +26,7 @@ Mark an item done only after it is in the repo and checked in the browser or by 
 ## 3. Marketing site
 
 - [x] Fixed header with desktop nav + mobile menu.
-- [x] Hero with clinic tone, CTAs, features, portrait, leaves, trust badge.
+- [x] Hero with clinic tone, CTAs, features, portrait, trust badge.
 - [x] Services section (tabbed) from live-site treatments.
 - [x] Why choose us section (live-site differentiators + `why-choose-us-img`).
 - [x] Branches section (interactive picker for 5 Hyderabad clinics).

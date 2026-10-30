@@ -86,7 +86,7 @@ Then style it with the utilities in `src/app/globals.css` rather than a one-off 
 ```text
 brand-manifest.json     Brand contract: voice, color, type, branches, services
 docs/                   PRD, architecture, design, memory, rules, tasks, security
-public/images/          Logo, hero, and leaf artwork
+public/images/          Brand, hero, services, tools, and section artwork
 src/app/                Routes, root layout, global CSS
 src/components/         Header, hero, and feature components
 src/components/ui/      shadcn primitives
