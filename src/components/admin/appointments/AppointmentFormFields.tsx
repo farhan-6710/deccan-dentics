@@ -33,6 +33,9 @@ export function AppointmentFormFields({
     key: K,
     next: AppointmentInput[K],
   ) => onChange({ ...value, [key]: next });
+  const selectedPatientName =
+    patients.find((patient) => patient.id === value.patientId)?.name ??
+    "Select patient";
 
   return (
     <div className="grid gap-3 sm:grid-cols-2">
@@ -45,7 +48,9 @@ export function AppointmentFormFields({
           }}
         >
           <SelectTrigger className="w-full">
-            <SelectValue placeholder="Select patient" />
+            <SelectValue placeholder="Select patient">
+              {selectedPatientName}
+            </SelectValue>
           </SelectTrigger>
           <SelectContent>
             {patients.map((patient) => (
