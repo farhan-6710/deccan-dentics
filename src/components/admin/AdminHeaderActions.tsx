@@ -1,7 +1,8 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { Bell, Search } from "lucide-react";
+import { Bell } from "lucide-react";
+import { AdminNavSearch } from "@/components/admin/AdminNavSearch";
 import { AdminUserMenu } from "@/components/admin/AdminUserMenu";
 import { Button } from "@/components/ui/button";
 
@@ -14,15 +15,7 @@ export function AdminHeaderActions({ onLogout }: AdminHeaderActionsProps) {
 
   return (
     <div className="flex min-w-0 items-center gap-2 sm:gap-3">
-      <label className="relative hidden min-w-0 md:block md:w-56 lg:w-72">
-        <span className="sr-only">Search</span>
-        <Search className="pointer-events-none absolute top-1/2 left-3 size-4 -translate-y-1/2 text-muted-foreground" />
-        <input
-          type="search"
-          placeholder="Search patients, appointments..."
-          className="h-10 w-full rounded-full border border-input bg-background py-2 pr-3 pl-9 text-sm outline-none transition-colors placeholder:text-muted-foreground focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50"
-        />
-      </label>
+      <AdminNavSearch />
 
       <button
         type="button"

@@ -52,7 +52,7 @@ Checked 30 Oct 2026.
 - Dev server is `next dev --webpack` even though `next.config.ts` also mentions Turbopack CSS. Leave that alone unless dev is being fixed on purpose.
 - No database or email provider is installed. Do not add one inside a visual change.
 - Admin unlock is client-only: password `deccan-dentics-1234`, key `deccan-admin-authorized` in `sessionStorage`. Not real authorization. Replace before any real PHI.
-- Admin state: single Zustand store `useClinicStore` (`src/stores/clinic-store.ts`) holds patients, appointments, schedule days, and todos. Seed/constants live under `src/constants/{patients,appointments,schedule,todos,dashboard}/`. Models in `src/types/admin.ts` and `src/types/todo.ts`.
+- Admin state: Zustand `useClinicStore` holds patients, appointments, schedule days, and todos. Preferences live in `useSettingsStore` with `persist` (`deccan-admin-settings` in localStorage). Header search filters `ADMIN_NAV` (includes Account + Settings). Seed/constants under `src/constants/{patients,appointments,schedule,todos,dashboard,settings}/`. Models in `src/types/admin.ts`, `todo.ts`, `settings.ts`.
 - Dashboard stats filter against fixed `DASHBOARD_REFERENCE_DATE` (`2026-10-30`) and seed `createdAt`/`updatedAt` values. Do not use `new Date()` during Client Component render on statically prerendered admin pages — defer with `useEffect` (Next blocks prerender otherwise).
 - Schedule days use `slots[]` (multiple open/close windows). Sunday seeds closed. Destructive actions (delete patient/appointment, remove slot, close day, log out) go through `ConfirmationModal` via `useConfirmDialog`.
 - Appointment delivery is undecided. The public form must not fake a successful send.

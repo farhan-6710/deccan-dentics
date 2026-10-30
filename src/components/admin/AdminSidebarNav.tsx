@@ -2,7 +2,15 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { CalendarDays, Clock3, LayoutDashboard, Users } from "lucide-react";
+import {
+  CalendarDays,
+  Clock3,
+  LayoutDashboard,
+  Settings,
+  UserRound,
+  Users,
+  type LucideIcon,
+} from "lucide-react";
 import {
   Tooltip,
   TooltipContent,
@@ -11,12 +19,14 @@ import {
 import { ADMIN_NAV } from "@/constants/admin";
 import { cn } from "cn";
 
-const ICONS = {
+const ICONS: Record<string, LucideIcon> = {
   "/admin/dashboard": LayoutDashboard,
   "/admin/schedule": Clock3,
   "/admin/patients": Users,
   "/admin/appointments": CalendarDays,
-} as const;
+  "/admin/account": UserRound,
+  "/admin/settings": Settings,
+};
 
 type AdminSidebarNavProps = {
   collapsed: boolean;
@@ -38,7 +48,7 @@ export function AdminSidebarNav({
       )}
     >
       {ADMIN_NAV.map((item) => {
-        const Icon = ICONS[item.href];
+        const Icon = ICONS[item.href] ?? LayoutDashboard;
         const active =
           "exact" in item && item.exact
             ? pathname === item.href

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import {
   ChevronDown,
   CircleHelp,
@@ -25,8 +26,14 @@ type AdminUserMenuProps = {
 };
 
 export function AdminUserMenu({ onLogout }: AdminUserMenuProps) {
+  const router = useRouter();
   const [menuOpen, setMenuOpen] = useState(false);
   const [confirmOpen, setConfirmOpen] = useState(false);
+
+  const go = (href: string) => {
+    setMenuOpen(false);
+    router.push(href);
+  };
 
   return (
     <>
@@ -52,17 +59,17 @@ export function AdminUserMenu({ onLogout }: AdminUserMenuProps) {
                 {ADMIN_USER_PROFILE.name}
               </p>
               <p className="text-xs font-normal text-muted-foreground">
-                Clinic admin
+                {ADMIN_USER_PROFILE.role}
               </p>
             </DropdownMenuLabel>
           </DropdownMenuGroup>
           <DropdownMenuSeparator />
           <DropdownMenuGroup>
-            <DropdownMenuItem onClick={(event) => event.preventDefault()}>
+            <DropdownMenuItem onClick={() => go("/admin/account")}>
               <UserRound />
               Profile
             </DropdownMenuItem>
-            <DropdownMenuItem onClick={(event) => event.preventDefault()}>
+            <DropdownMenuItem onClick={() => go("/admin/settings")}>
               <Settings />
               Preferences
             </DropdownMenuItem>
